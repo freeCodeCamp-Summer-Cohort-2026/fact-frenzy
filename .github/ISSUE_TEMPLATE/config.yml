@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Discussion
+    url: https://discord.gg/freecodecamp
+    about: For questions and general discussions, use #fact-frenzy channel
+  - name: 💬 GitHub Discussion
+    url: http://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy/discussions
+    about: For documented trail of ideas, use GitHub Discussions
