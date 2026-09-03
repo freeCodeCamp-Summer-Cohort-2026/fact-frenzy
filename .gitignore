@@ -1,1 +1,117 @@
-.mypy_cache
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Keep example environment files tracked
+!.env.example
+
+
+# =========================
+# Python / FastAPI
+# =========================
+
+# Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyright/
+.coverage
+.coverage.*
+htmlcov/
+
+# Packaging / builds
+build/
+dist/
+*.egg-info/
+.eggs/
+
+
+# =========================
+# Node.js / Next.js
+# =========================
+
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build output
+dist/
+build/
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Package manager caches
+.npm/
+.pnpm-store/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+
+# =========================
+# Testing / Coverage
+# =========================
+coverage/
+
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+
+*.swp
+*.swo
+
+
+# =========================
+# Operating System
+# =========================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+
+# =========================
+# Logs / Temporary files
+# =========================
+*.log
+*.tmp
+*.temp
+
+
+# =========================
+# Docker / PostgreSQL local data
+# =========================
+
+# Only needed if PostgreSQL data is bind-mounted locally
+postgres-data/
+pgdata/
