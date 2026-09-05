@@ -14,11 +14,11 @@ This is a collaborative project, and though a number of issues are already creat
 
 ## Naming branches, commits and PRs
 
-Use the [Conventional Commits standard](https://www.conventionalcommits.org/en/v1.0.0/)for naming: `<type>[optional scope]: <description>`
+Use the [Conventional Commits standard](https://www.conventionalcommits.org/en/v1.0.0/) for naming: `<type>[optional scope]: <description>`
 
 Commits and PRs examples
 
-- `docs: update instructions for claming issues in CONTRIBUTING.md`
+- `docs: update instructions for claiming issues in CONTRIBUTING.md`
 - `feat(api): add POST method for new quiz questions`
 - `fix(web): increase colour contrast to adhere to WCAG guidelines`
 
