@@ -8,16 +8,16 @@ _Summary of functionality here_
 
 ## Tech Stack
 
-- **Frontend**: Typescript + React + Next.js
+- **Frontend**: TypeScript + React + Next.js
 - **Backend**: Python + FastAPI
-- **Database**: PostreSQL + Prisma
-- **DB hosting**: Docker
+- **Database**: PostgreSQL + SQLModel
+- **Containerization**: Docker
 
 ## Quick Start
 
 _To be added_
 
-### Installations
+### Installation
 
 **Clone the repo**
 
