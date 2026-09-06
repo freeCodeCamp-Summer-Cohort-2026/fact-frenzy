@@ -1,13 +1,18 @@
+import logging
 from contextlib import asynccontextmanager
 from app.database import create_db_table
 from fastapi import FastAPI
-
 from app.routers import users
 
+logger = logging.getLogger("uvicorn.error")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_db_table()
+    try:
+        create_db_table()
+    except Exception as exc:
+        logger.exception("Failed to create database tables — aborting startup")
+        raise exc
     yield
 
 
@@ -24,4 +29,4 @@ def main():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

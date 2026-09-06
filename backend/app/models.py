@@ -1,12 +1,12 @@
 import datetime
 
-from pydantic import field_validator
+from pydantic import EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
     name: str = Field(min_length=1, max_length=100)
-    email: str = Field(min_length=6, max_length=100)
+    email: EmailStr = Field(max_length=100)
 
     @field_validator("name")
     @classmethod
@@ -17,17 +17,6 @@ class UserBase(SQLModel):
             raise ValueError("Name cannot be empty after removing whitespaces.")
 
         return name
-
-    @field_validator("email")
-    @classmethod
-    def validate_email(cls, email: str) -> str:
-        email = " ".join(email.split())
-
-        if not email or "@" not in email:
-            raise ValueError("Email should contain @")
-
-        return email
-
 
 class UserRead(UserBase):
     id: int
