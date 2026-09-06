@@ -1,0 +1,67 @@
+import datetime
+
+from pydantic import field_validator
+from sqlmodel import Field, SQLModel
+
+
+class UserBase(SQLModel):
+    name: str = Field(min_length=1, max_length=100)
+    email: str = Field(min_length=6, max_length=100)
+
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, name: str) -> str:
+        name = " ".join(name.split())
+
+        if not name:
+            raise ValueError("Name cannot be empty after removing whitespaces.")
+
+        return name
+
+    @field_validator("email")
+    @classmethod
+    def validate_email(cls, email: str) -> str:
+        email = " ".join(email.split())
+
+        if not email or "@" not in email:
+            raise ValueError("Email should contain @")
+
+        return email
+
+
+class UserRead(UserBase):
+    id: int
+    created_at: datetime.datetime
+
+
+class User(UserBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    created_at: datetime.datetime = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.UTC)
+    )
+
+
+class Category(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(min_length=1, max_length=100, unique=True)
+
+
+class Quiz(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = Field(min_length=1, max_length=200)
+    description: str | None = Field(default=None, max_length=500)
+    category_id: int = Field(foreign_key="category.id")
+
+
+class Question(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    question: str = Field(min_length=1, max_length=500)
+
+    option_a: str = Field(min_length=1, max_length=200)
+    option_b: str = Field(min_length=1, max_length=200)
+    option_c: str = Field(min_length=1, max_length=200)
+    option_d: str = Field(min_length=1, max_length=200)
+
+    correct_answer: str = Field(min_length=1, max_length=1)
+
+    quiz_id: int = Field(foreign_key="quiz.id")
