@@ -10,9 +10,9 @@ logger = logging.getLogger("uvicorn.error")
 async def lifespan(app: FastAPI):
     try:
         create_db_table()
-    except Exception as exc:
+    except Exception:
         logger.exception("Failed to create database tables — aborting startup")
-        raise exc
+        raise
     yield
 
 
