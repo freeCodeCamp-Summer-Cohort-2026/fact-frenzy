@@ -43,7 +43,22 @@ npm run dev
 
 #### Backend
 
-_To be filled in_
+**Set up environment variables**
+```bash
+cp backend/.env.example backend/.env
+```
+
+**Start up database**
+```bash
+docker compose config
+docker compose up -d
+```
+
+**Run API**
+```bash
+cv backend
+uv run uvicorn app.main:app --reload
+```
 
 ## Repository structure
 
