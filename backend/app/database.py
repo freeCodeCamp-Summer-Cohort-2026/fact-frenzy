@@ -2,9 +2,10 @@
 database Engine and session setup
 """
 
-from sqlmodel import Session, SQLModel, create_engine
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 

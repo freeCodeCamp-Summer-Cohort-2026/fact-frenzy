@@ -1,7 +1,9 @@
 import logging
 from contextlib import asynccontextmanager
-from app.database import create_db_table
+
 from fastapi import FastAPI
+
+from app.database import create_db_table
 from app.routers import users
 
 logger = logging.getLogger("uvicorn.error")
