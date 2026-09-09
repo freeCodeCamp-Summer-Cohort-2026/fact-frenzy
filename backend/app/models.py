@@ -22,6 +22,7 @@ class UserBase(SQLModel):
 class UserRead(UserBase):
     id: uuid.UUID
     created_at: datetime.datetime
+    is_admin: bool
 
 
 class User(UserBase, table=True):
@@ -29,6 +30,7 @@ class User(UserBase, table=True):
     created_at: datetime.datetime = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
+    is_admin: bool = Field(default=False)
 
 
 class Category(SQLModel, table=True):
