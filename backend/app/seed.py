@@ -1,6 +1,6 @@
 from sqlmodel import Session
 
-from database import create_db_table, drop_db_table, engine
+from database import create_db_table, engine
 from models import User
 
 USERS = [
@@ -13,7 +13,6 @@ USERS = [
 
 
 def seed() -> None:
-    drop_db_table()
     create_db_table()
 
     with Session(engine) as session:
