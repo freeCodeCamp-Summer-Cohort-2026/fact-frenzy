@@ -8,8 +8,9 @@ USERS = [
     {"name": "Bob Smith", "email": "b.smith@testcorp.net"},
     {"name": "Charlie Brown", "email": "charlie_b@mail.org"},
     {"name": "Dana", "email": "dana@fastapi.io"},
-    {"name": "Dr. Evelyn Reed-Jones", "email": "evelyn.rj@research.edu"}
+    {"name": "Dr. Evelyn Reed-Jones", "email": "evelyn.rj@research.edu"},
 ]
+
 
 def seed() -> None:
     drop_db_table()
@@ -27,4 +28,3 @@ def seed() -> None:
 
 if __name__ == "__main__":
     seed()
-
