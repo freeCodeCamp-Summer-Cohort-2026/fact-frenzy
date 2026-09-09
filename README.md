@@ -54,8 +54,6 @@ A platform for learning general-knowledge science topics in a fun, gamified way.
 
 ## Quick Start
 
-_To be added_
-
 ### Installation
 
 **Clone the repo**
@@ -91,6 +89,11 @@ cp backend/.env.example backend/.env
 ```bash
 docker compose config
 docker compose up -d
+```
+
+**Seed database**
+```bash
+uv run backend/app/seed.py
 ```
 
 **Run API**
