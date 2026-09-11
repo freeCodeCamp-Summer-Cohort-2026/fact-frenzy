@@ -12,7 +12,7 @@ export default function Home() {
 	const router = useRouter();
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center bg-[#2F3E49] font-sans">
-			<main className="flex flex-1 w-full max-w-5xl flex-col items-center justify-between py-32 px-16 bg-[#2F3E49]">
+			<main className="flex flex-1 w-full max-w-5xl flex-col items-center justify-between pt-20 pb-10 px-16 bg-[#2F3E49]">
 				<div className="flex flex-col items-center gap-6 text-center">
 					<h1 className="text-5xl font-bold leading-10 text-neutral-100">
 						FACT FRENZY!

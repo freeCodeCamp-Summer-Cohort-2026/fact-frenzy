@@ -8,13 +8,13 @@ To do:
 
 export default function Header() {
 	return (
-		<header className="top-2 w-full">
+		<header className="w-full">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6">
-				<nav className="flex h-15 items-center justify-between gap-3 bg-white/80 px-3">
+				<nav className="flex h-13 items-center justify-between gap-3 bg-white/80 px-3">
 					{/* navigation links */}
 					<ul className="flex gap-x-6 text-lg font-semibold">
 						<li>
-							<Link href="/" className="hover:text-gray-300">
+							<Link href="/" className="hover:text-gray-600">
 								Home
 							</Link>
 						</li>
@@ -27,7 +27,7 @@ export default function Header() {
 						<li>
 							<Link
 								href="/login"
-								className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-800 px-4 text-gray-50 transition-colors hover:bg-slate-700"
+								className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-slate-800 px-4 text-gray-50 transition-colors hover:bg-slate-700"
 							>
 								Login / Sign Up
 							</Link>
