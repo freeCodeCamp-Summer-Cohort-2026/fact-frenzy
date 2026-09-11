@@ -3,13 +3,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 /* Still to do (an incomplete list)
-- navbar and footer (to be created in components so they can be reused)
+- footer needs to be created in components
 - colour scheme is just to get something started; not finalized at all (and haven't touched dark scheme yet)
 - there are no breakpoints for responsive design yet; those need to be added
 */
 
 export default function Home() {
-  const router = useRouter();
+	const router = useRouter();
 	return (
 		<div className="flex flex-col flex-1 items-center justify-center bg-[#2F3E49] font-sans">
 			<main className="flex flex-1 w-full max-w-5xl flex-col items-center justify-between py-32 px-16 bg-[#2F3E49]">
