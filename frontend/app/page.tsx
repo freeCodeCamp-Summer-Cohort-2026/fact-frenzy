@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 /* Still to do (an incomplete list)
-- footer needs to be created in components
 - colour scheme is just to get something started; not finalized at all (and haven't touched dark scheme yet)
 - there are no breakpoints for responsive design yet; those need to be added
 */
