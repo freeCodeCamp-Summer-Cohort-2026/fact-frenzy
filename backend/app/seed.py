@@ -1,7 +1,11 @@
 from sqlmodel import Session, select
 
+from core.security import hash_password
 from database import create_db_table, engine
 from models import User
+
+
+SEED_PASSWORD = "dev-password123"  # Default password for seeded users
 
 USERS = [
     {"name": "Alice Johnson", "email": "alice.johnson@example.com", "is_admin": True},
@@ -24,7 +28,8 @@ def seed() -> None:
             if existing_user:
                 continue
 
-            user = User(**data)
+            password_hash = hash_password(SEED_PASSWORD)
+            user = User(**data, password_hash=password_hash)
             session.add(user)
 
         session.commit()
