@@ -51,7 +51,7 @@ npm run lint
 7. `git merge upstream/main` (Merge commits from upstream/main into your local main branch to update it with the original repository's latest changes.)   
 8. `git push origin main` (Push your updated local main branch to your fork on GitHub to keep it in sync.)   
 9. `git checkout -b feature/xyz` (Create a new `feature/xyz` branch, which is a snapshot of `main` _at this moment_.)
-10. Write your code. Meanwhile, teammates may push to `main`. Divergence happens. Your `feature` branch and local `main` are now both behind the remote `main`. 
+10. Write your code. Meanwhile, teammates may push to `main`. Divergence happens. Your feature branch and local `main` are now both behind the remote `main`. 
 11. `git add .` (Stage all changes you made in your feature branch.)  
 12. `git commit -m "feat: add some new feature"` (Create a local commit with your feature work.)
 
@@ -75,7 +75,7 @@ npm run lint
 
 - **Note 2:** Instead of steps 13, 14, 15, and 16, you can go to your fork on GitHub, click the **Sync fork** button, and then run:
 
-  `git checkout main`
+  `git checkout main`  
   `git pull origin main`
 
 ## Questions
