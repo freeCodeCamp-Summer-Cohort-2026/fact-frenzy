@@ -98,7 +98,7 @@ uv run backend/app/seed.py
 
 **Run API**
 ```bash
-cv backend
+cd backend
 uv run uvicorn app.main:app --reload
 ```
 
