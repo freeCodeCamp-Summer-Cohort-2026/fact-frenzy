@@ -19,10 +19,15 @@ class UserBase(SQLModel):
 
         return name
 
+
 class UserRead(UserBase):
     id: uuid.UUID
     created_at: datetime.datetime
     is_admin: bool
+
+
+class UserCreate(UserBase):
+    password: str
 
 
 class User(UserBase, table=True):
@@ -31,6 +36,8 @@ class User(UserBase, table=True):
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
     is_admin: bool = Field(default=False)
+
+    hashed_password: str = Field(default=None)
 
 
 class Category(SQLModel, table=True):
