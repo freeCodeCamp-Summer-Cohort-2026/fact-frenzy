@@ -1,7 +1,11 @@
+import logging
+
 from pwdlib import PasswordHash
 from pwdlib.exceptions import UnknownHashError
 
 password_hasher = PasswordHash.recommended()
+
+logger = logging.getLogger(__name__)
 
 
 def hash_password(plain_password: str) -> str:
@@ -14,4 +18,5 @@ def verify_password(plain_password: str, stored_hash: str) -> bool:
     try:
         return password_hasher.verify(plain_password, stored_hash)
     except UnknownHashError:
+        logger.error("verify_password: unrecognised hash format for stored hash")
         return False
