@@ -20,8 +20,8 @@ A platform for learning general-knowledge science topics in a fun, gamified way.
 
 - Mode is timed. 
 - Meant to test what a user has learned in Practice mode. 
-- Correctly placing a card earns points toward users weekly leadboard point score (but NOT the lifetime bank)
-- Incorrect placement of cards deducts points in challenge mode fromt he weekly leaderboard, which has a floor of **zero**. So that it can never drop BELOW zero. 
+- Correctly placing a card earns points toward users weekly leaderboard point score (but NOT the lifetime bank)
+- Incorrect placement of cards deducts points in challenge mode from the weekly leaderboard, which has a floor of **zero**. So that it can never drop BELOW zero. 
 - Challenge mode while it takes point on incorrect answers and deducts from leaderboard, it does not ever deduct from the lifetime bank. 
 - Bank is only ever added to and in one mode: *practice mode*. 
 - Repeated attempts at the same challenge are limited on purpose to prevent point farming by replaying an easy topic repeatedly. 
@@ -34,7 +34,7 @@ A platform for learning general-knowledge science topics in a fun, gamified way.
 
 **Streaks:**
 
-- A treak increases when a user has a correct answer on any given day either in practice or challenge mode. 
+- A streak increases when a user has a correct answer on any given day either in practice or challenge mode. 
 - Streaks carry over day to day as long as the user logs in/maintains daily activity. Missing a day resets streak to zero. 
 - Streaks do not affect lifetime bank or weekly leaderboard points directly. Losing a streak never removes points already earned. 
 
@@ -124,6 +124,6 @@ See [CONTRIBUTING.md](https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-fr
 
 ## License
 
-This project is licensed under the MIT license. See LICENSE.md for details.
+This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
 
 
