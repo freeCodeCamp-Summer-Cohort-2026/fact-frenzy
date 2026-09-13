@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
+  # Ruff version. Need to use latest with `pre-commit autoupdate`.
   rev: v0.16.7
   hooks:
     # Run the linter.

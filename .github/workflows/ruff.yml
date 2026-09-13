@@ -15,4 +15,4 @@ jobs:
       - name: Ruff Format
         uses: astral-sh/ruff-action@v4.1.0
         with:
-         args: format --output-format=github
+         args: format --check

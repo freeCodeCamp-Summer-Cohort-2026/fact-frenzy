@@ -91,6 +91,11 @@ docker compose config
 docker compose up -d
 ```
 
+**Setup virtual environment**
+```bash
+uv sync --no-dev
+```
+
 **Seed database**
 ```bash
 uv run backend/app/seed.py

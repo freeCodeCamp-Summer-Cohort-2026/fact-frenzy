@@ -35,7 +35,7 @@ Branches examples
 npm run lint
 
 # backend linting and testing (to be added)
-uv pip install --group dev
+uv sync
 pre-commit install
 ```
 
