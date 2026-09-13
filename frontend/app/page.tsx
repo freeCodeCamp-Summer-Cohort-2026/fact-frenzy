@@ -29,15 +29,6 @@ export default function Home() {
 					>
 						Try it!
 					</button>
-					{/* 
-          Moving the button below to the header; keeping the code here to copy over to header when creted
-					<button
-						className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-5 text-gray-50 transition-colors hover:bg-slate-700"
-						onClick={() => router.push("/login")}
-					>
-						Login/Sign up
-					</button>
-          */}
 				</div>
 				<Image
 					className="my-4 border-2 border-gray-300"

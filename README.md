@@ -78,6 +78,8 @@ cd frontend
 npm run dev
 ```
 
+Go to [http://localhost:3000](http://localhost:3000) in a browser to view the website locally.
+
 #### Backend
 
 **Set up environment variables**
