@@ -19,3 +19,7 @@ dev = [
     "pre-commit>=4.6.2",
     "ruff>=0.16.7",
 ]
+
+[tool.ruff]
+# Set the maximum line length to 79.
+line-length = 79
