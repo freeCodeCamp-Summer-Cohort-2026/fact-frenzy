@@ -35,6 +35,8 @@ Branches examples
 npm run lint
 
 # backend linting and testing (to be added)
+uv pip install --group dev
+pre-commit install
 ```
 
 2. Use [the PR template for this repo](https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy/blob/main/.github/pull_request_template.md) when creating PRs. 
