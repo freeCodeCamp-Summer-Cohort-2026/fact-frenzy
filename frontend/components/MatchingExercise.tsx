@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { countryCapitalPairs } from "../app/try/data";
 
 function shuffle<T>(array: T[]): T[] {
@@ -23,6 +23,14 @@ export default function MatchingExercise() {
     setShuffledPairs(shuffle(countryCapitalPairs));
     }, []);
 
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+    return () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+    };
+    }, []);
+
     const allMatched=Object.keys(matched).length===countryCapitalPairs.length;
 
     // This is for remembering which capital card is being dragged
@@ -38,6 +46,10 @@ export default function MatchingExercise() {
     // This is called when a capital card is dropped onto a country card's drop zone
     function handleDrop(e: React.DragEvent, countryId: string) {
         e.preventDefault();
+
+        // Early return if this country is already matched
+        if (matched[countryId]) return;
+
         const droppedCapitalId=e.dataTransfer.getData("text/plain")
 
         if (droppedCapitalId===countryId) {
@@ -47,7 +59,10 @@ export default function MatchingExercise() {
         } else {
             // wrong - show brief ref feedback and then clear it so they can try again
             setFeedback((prev)=>({...prev, [countryId]: "wrong"}));
-            setTimeout(()=>{
+
+            if (timerRef.current) clearTimeout(timerRef.current);
+
+            timerRef.current=setTimeout(()=>{
                 setFeedback((prev)=>({...prev, [countryId]: null}));
             }, 800);
         }

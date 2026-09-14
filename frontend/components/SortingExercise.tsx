@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { sortingFact } from "../app/try/data";
 
 type FeedbackState = "correct" | "wrong" | null;
@@ -9,6 +9,16 @@ export default function SortingExercise() {
     const [feedback, setFeedback] = useState<FeedbackState>(null);
 	const [solved, setSolved] = useState(false);
     const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
+
+    // reference to track the timeout timer
+    const timerRef=useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // automatically clear the timer if component unmounts
+    useEffect(()=>{
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     function evaluateChoice(binIsTrue: boolean) {
         if (solved) return;
@@ -22,7 +32,11 @@ export default function SortingExercise() {
             setSolved(true);
         } else {
             setFeedback("wrong");
-            setTimeout(() => {
+
+            // clear any existing timer before starting a new one
+            if (timerRef.current) clearTimeout(timerRef.current);
+
+            timerRef.current = setTimeout(() => {
                 setFeedback(null);
                 setSelectedBin(null);
             }, 800);
