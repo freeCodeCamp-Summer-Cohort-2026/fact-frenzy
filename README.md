@@ -93,6 +93,11 @@ docker compose config
 docker compose up -d
 ```
 
+**Setup virtual environment**
+```bash
+uv sync --no-dev
+```
+
 **Seed database**
 ```bash
 uv run backend/app/seed.py
@@ -100,7 +105,7 @@ uv run backend/app/seed.py
 
 **Run API**
 ```bash
-cv backend
+cd backend
 uv run uvicorn app.main:app --reload
 ```
 

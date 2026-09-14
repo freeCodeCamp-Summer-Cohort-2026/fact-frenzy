@@ -15,7 +15,9 @@ class UserBase(SQLModel):
         name = " ".join(name.split())
 
         if not name:
-            raise ValueError("Name cannot be empty after removing whitespaces.")
+            raise ValueError(
+                "Name cannot be empty after removing whitespaces."
+            )
 
         return name
 

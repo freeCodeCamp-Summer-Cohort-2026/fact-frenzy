@@ -1,7 +1,6 @@
-from sqlmodel import Session, select
-
 from database import create_db_table, engine
 from models import User
+from sqlmodel import Session, select
 
 USERS = [
     {

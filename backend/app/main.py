@@ -8,6 +8,7 @@ from app.routers import users
 
 logger = logging.getLogger("uvicorn.error")
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
@@ -18,7 +19,9 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="Fact Frenzy", description="", version="0.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Fact Frenzy", description="", version="0.0.0", lifespan=lifespan
+)
 
 app.include_router(users.router)
 
