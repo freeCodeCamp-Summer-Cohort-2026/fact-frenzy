@@ -69,10 +69,12 @@ export default function MatchingExercise() {
     }
 
     return (
-        <div className="matching-exercise">
-            <h2>Match each country to its capital</h2>
+        <div className="flex flex-col gap-6 max-w-2xl mx-auto p-4">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                Match each capital to its country
+            </h2>
 
-            <div className="capitals">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {shuffledPairs.map((pair)=>{
                     // after a capital has been matched successfully, hide it from the draggable pool
                     if (matched[pair.id]) return null;
@@ -82,7 +84,7 @@ export default function MatchingExercise() {
                         key={pair.id}
 						draggable
                         onDragStart={(e) => handleDragStart(e, pair.id)}
-						className="capital-card"
+						className="p-3 bg-slate-800 text-white rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-slate-700 transition-colors select-none"
                         >
                             {pair.capital}
                         </div>
@@ -90,28 +92,34 @@ export default function MatchingExercise() {
                 })}
             </div>
 
-            <div className="countries">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {countryCapitalPairs.map((pair)=>{
                     const isMatched=matched[pair.id]
                     const state=feedback[pair.id]
 
+                    let zoneStyle = "border-2 border-dashed border-slate-400 dark:border-slate-600 bg-slate-100 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100";
+                    if (isMatched || state === "correct") zoneStyle = "border-2 border-solid border-emerald-500 bg-emerald-100 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200";
+                    if (state === "wrong") zoneStyle = "border-2 border-solid border-rose-500 bg-rose-100 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200";
+
                     return (
                         <div
                         key={pair.id}
-                        onDragOver={handleDragOver}
+                        onDragOver={(e) => !isMatched && handleDragOver(e)}
                         onDrop={(e)=>handleDrop(e, pair.id)}
-                        className={`drop-zone ${state==="correct" ? "drop-zone--correct" : ""} ${
-								state === "wrong" ? "drop-zone--wrong" : ""
-							}`}
+                        className={`p-3 rounded-lg text-center text-sm font-semibold flex flex-col items-center justify-center min-h-16 transition-colors ${zoneStyle}`}
                         >
                             <span>{pair.country}</span>
-                            {isMatched && <span className="matched-capital">→ {pair.capital}</span>}
+                            {isMatched && <span className="text-xs mt-1 text-emerald-700 dark:text-emerald-400">→ {pair.capital}</span>}
                         </div>
                     )
                 })}
             </div>
 
-            {allMatched && <p className="success-message">All matched! Nice work.</p>}
+            {allMatched && (
+                <p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center text-lg">
+                    All matched! Nice work.
+                </p>
+            )}
 
         </div>
 
