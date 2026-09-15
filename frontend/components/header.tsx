@@ -27,7 +27,7 @@ export default function Header() {
 						<li>
 							<Link
 								href="/login"
-								className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-slate-800 px-4 text-gray-50 transition-colors hover:bg-slate-700"
+								className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#ea058c] px-4 text-gray-50 transition-colors hover:bg-slate-700"
 							>
 								Login / Sign Up
 							</Link>
