@@ -42,6 +42,11 @@ class User(UserBase, table=True):
     hashed_password: str = Field(default=None)
 
 
+class UserLogin(SQLModel):
+    email: EmailStr
+    password: str
+
+
 class Category(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(min_length=1, max_length=100, unique=True)
