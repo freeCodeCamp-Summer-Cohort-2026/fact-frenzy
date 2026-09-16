@@ -60,6 +60,7 @@ The recommended approach is to work directly in the main repository using featur
 2. `cd src` (Move to the directory you want to put the code in, example being "src")
 3. `git clone https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy.git` (Clone the main repository directly on your computer)
 4. `cd fact-frenzy` (Navigate into your local repository folder)
+5. Follow `README.md` Quick Start
 
 #### Start contributing:
 1. `git checkout main` (Switch to the main branch)
@@ -84,6 +85,7 @@ The recommended approach is to work directly in the main repository using featur
 2. `git clone https://github.com/YOUR_USERNAME/fact-frenzy.git` (Clone your fork locally on your computer.)   
 3. `cd fact-frenzy` (Navigate into your local repository folder.) 
 4. `git remote add upstream https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy.git` (Add the original repository as `upstream` so you can fetch its commits later; only needed once per clone.)  
+5. Follow `README.md` Quick Start
 
 #### Start contributing:
 5. `git checkout main` (Switch to your local main branch.)
