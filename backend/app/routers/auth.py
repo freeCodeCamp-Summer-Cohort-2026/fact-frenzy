@@ -1,9 +1,9 @@
 from typing import Annotated
 
-from core.security import verify_password
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
+from app.core.security import verify_password
 from app.database import get_session
 from app.models import User, UserLogin, UserRead
 
