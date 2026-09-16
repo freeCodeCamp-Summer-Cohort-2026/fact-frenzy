@@ -1,10 +1,9 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
-
 from app.database import get_session
 from app.models import User, UserLogin, UserRead
+from fastapi import APIRouter, Depends, HTTPException
+from sqlmodel import Session, select
 
 router = APIRouter(prefix="/users", tags=["users"])
 
