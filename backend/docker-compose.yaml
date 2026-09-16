@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:16-alpine
     env_file:
-      - backend/.env
+      - .env
     ports:
       - "5432:5432"
     volumes:
@@ -12,6 +12,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  api:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   factfrenzy_pgdata:

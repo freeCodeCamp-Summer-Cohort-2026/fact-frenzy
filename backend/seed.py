@@ -1,6 +1,7 @@
-from database import create_db_table, engine
-from models import User
 from sqlmodel import Session, select
+
+from app.database import create_db_table, engine
+from app.models import User
 
 USERS = [
     {
