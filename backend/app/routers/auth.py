@@ -1,11 +1,11 @@
 from typing import Annotated
 
+from core.security import verify_password
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from app.database import get_session
 from app.models import User, UserLogin, UserRead
-from core.security import verify_password
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
