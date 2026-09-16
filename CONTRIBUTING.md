@@ -36,7 +36,15 @@ npm run lint
 
 # backend linting and testing (to be added)
 uv sync
-pre-commit install
+uv pre-commit install
+
+# Run pre-commit manually
+# uv run pre-commit
+
+# Run ruff manually
+# uv run ruff
+# uv run ruff --fix # automatically fixes issues if possible
+# uv run ruff format
 ```
 
 2. Use [the PR template for this repo](https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy/blob/main/.github/pull_request_template.md) when creating PRs. 
