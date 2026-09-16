@@ -109,12 +109,14 @@ run. To load some examples once the stack is up:
 docker-compose exec api python seed.py
 ```
 
-##### **Seed database**
+##### **Alternative - Run API locally (with database running via Docker)**
 ```bash
-docker-compose exec api python seed.py
+cd backend
+
+# Launch db after running docker compose
+docker-compose up db
 ```
 
-##### **Alternative - Run API locally (with database running via Docker)**
 ```bash
 cd backend
 
