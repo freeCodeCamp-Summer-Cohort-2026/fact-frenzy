@@ -133,7 +133,7 @@ uv sync --frozen --no-dev # remove --no-dev if planning to contribute
 export DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}
 
 # Seed database if needed
-uv run backend/seed.py
+uv run seed.py
 
 # Run API locally
 uv run uvicorn app.main:app --reload
