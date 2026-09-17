@@ -54,7 +54,7 @@ A platform for learning general-knowledge science topics in a fun, gamified way.
 
 ## Quick Start
 
-### Installation
+#### Installation
 
 **Clone the repo**
 
@@ -64,14 +64,14 @@ git clone https://github.com/freeCodeCamp-Summer-Cohort-2026/fact-frenzy.git
 
 #### Frontend
 
-**Install dependencies**
+##### **Install dependencies**
 
 ```bash
 cd frontend
 npm install
 ```
 
-**Frontend development**
+##### **Frontend development**
 
 ```bash
 cd frontend
@@ -82,30 +82,64 @@ Go to [http://localhost:3000](http://localhost:3000) in a browser to view the we
 
 #### Backend
 
-**Set up environment variables**
+##### **Set up environment variables**
 ```bash
 cp backend/.env.example backend/.env
 ```
 
-**Start up database**
+##### **Docker setup and startup**
 ```bash
-docker compose config
-docker compose up -d
+cd backend/
+docker-compose up --build
+
+# Check containers
+# docker compose up -d
+
+# Close with 
+# docker-compose down
 ```
 
-**Setup virtual environment**
+The API will be available at `http://localhost:8000`. Interactive docs
+(Swagger UI) are at `http://localhost:8000/docs`.
+
+Tables are created automatically on startup - there's no migration step to
+run. To load some examples once the stack is up:
+
 ```bash
-uv sync --no-dev
+docker-compose exec api python seed.py
 ```
 
-**Seed database**
-```bash
-uv run backend/app/seed.py
-```
-
-**Run API**
+##### **Alternative - Run API locally (with database running via Docker)**
 ```bash
 cd backend
+
+# Launch db after running docker compose
+docker-compose up db
+```
+
+```bash
+cd backend
+
+# Setup virtual environment
+uv sync --frozen --no-dev # remove --no-dev if planning to contribute
+
+# Regenerate lock file if needed
+# rm uv.lock
+# uv lock
+
+# If using pip instead, may need to update the requirements.txt file
+# uv export --format requirements-txt --no-dev --no-emit-project --output-file requirements.txt
+
+# Point DATABASE_URL at a Postgres instance you have running, e.g. one
+# started with `docker-compose up db`.
+# Replace ${POSTGRES_USER} with the actual POSTGRES_USER in .env file
+# Same with ${POSTGRES_PASSWORD} and ${POSTGRES_DB}
+export DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}
+
+# Seed database if needed
+uv run seed.py
+
+# Run API locally
 uv run uvicorn app.main:app --reload
 ```
 
