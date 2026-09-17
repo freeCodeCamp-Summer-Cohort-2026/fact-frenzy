@@ -11,13 +11,16 @@ tracking exists on the backend/user model.
 export default function StreakBadge({ streak }: StreakBadgeProps) {
   return (
     <div className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900">
-      <span aria-hidden="true">🔥 {streak}</span>
+      <span aria-hidden="true" className="inline-flex items-center gap-2">
+        <span>🔥</span>
+        <span>{streak}</span>
+      </span>
       
       {/* Screen readers announce "12 days streak" */}
       <span className="sr-only">
         {streak} {streak === 1 ? "day" : "days"} streak
       </span>
-      
+
     </div>
   );
 }
