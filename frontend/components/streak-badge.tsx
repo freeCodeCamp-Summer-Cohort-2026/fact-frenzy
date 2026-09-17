@@ -13,7 +13,7 @@ export default function StreakBadge({ streak }: StreakBadgeProps) {
     <div className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-slate-900">
       <span aria-hidden="true">🔥</span>
       <span>
-        {streak} day{streak === 1 ? "" : "s"} streak
+        {streak}
       </span>
     </div>
   );
