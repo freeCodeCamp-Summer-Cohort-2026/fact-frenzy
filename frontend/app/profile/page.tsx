@@ -10,6 +10,7 @@ export default function ProfilePage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   function handleProfileSubmit(e: FormEvent) {
     e.preventDefault();
@@ -19,6 +20,12 @@ export default function ProfilePage() {
 
   function handlePasswordSubmit(e: FormEvent) {
     e.preventDefault();
+    setPasswordError("");
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError("New passwords don't match.");
+      return;
+    }
     // TODO: we can send the password change request to the backend once it exists
     console.log("Password reset (not yet wired up)");
   }
@@ -92,6 +99,7 @@ export default function ProfilePage() {
               New password
               <input
                 type="password"
+                required
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 className="rounded-lg border border-slate-300 px-3 py-2 font-normal text-slate-900"
@@ -106,6 +114,13 @@ export default function ProfilePage() {
                 className="rounded-lg border border-slate-300 px-3 py-2 font-normal text-slate-900"
               />
             </label>
+
+            {passwordError && (
+              <p className="text-sm font-medium text-red-600">
+                {passwordError}
+              </p>
+            )}
+
             <button
               type="submit"
               className="mt-2 flex h-11 items-center justify-center rounded-full bg-slate-800 px-5 font-semibold text-gray-50 transition-colors hover:bg-slate-700"

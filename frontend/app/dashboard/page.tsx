@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import DashboardShell from "@/components/dashboard-shell";
 
 /*
@@ -8,8 +9,14 @@ too, see app/login/page.tsx).
 const mockUser = {
   name: "Alex",
   streak: 4,
+  is_admin: true,
 };
 
 export default function DashboardPage() {
-  return <DashboardShell user={mockUser} role="user" />;
+  // if user isn't an admin/creator, redirect to the dashboard page
+  if (!mockUser.is_admin) {
+    redirect("/dashboard")
+  }
+
+  return <DashboardShell user={mockUser} role="creator" />;
 }
