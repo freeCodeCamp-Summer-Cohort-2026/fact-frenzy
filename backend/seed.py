@@ -1,7 +1,8 @@
-from core.security import hash_password
-from database import create_db_table, engine
-from models import User
 from sqlmodel import Session, select
+
+from app.core.security import hash_password
+from app.database import create_db_table, engine
+from app.models import User
 
 SEED_PASSWORD = "dev-password123"  # Default password for seeded users
 
