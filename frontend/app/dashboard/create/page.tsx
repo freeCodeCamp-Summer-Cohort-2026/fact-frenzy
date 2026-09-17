@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
 import DashboardShell from "@/components/dashboard-shell";
 
-/*
-TODO: Replace this mock session with the real auth session once backend
-session handling is wired up.
-*/
+// TODO: SECURITY PLACEHOLDER - Mock session with hardcoded admin role for dev testing. Replace with real session check before production.
 const mockSession = {
   user: {
     name: "Jordan",
@@ -14,7 +11,7 @@ const mockSession = {
 };
 
 export default function CreatorDashboardPage() {
-  // Route guard: Redirect non-creators/non-admins to the main user dashboard
+  // TODO: SECURITY - Replace mock check with real server-side auth verification before production
   if (!mockSession?.user?.is_admin) {
     redirect("/dashboard");
   }
