@@ -15,7 +15,7 @@ const mockUser = {
 export default function DashboardPage() {
   // if user isn't an admin/creator, redirect to the dashboard page
   if (!mockUser.is_admin) {
-    redirect("/dashboard")
+    redirect("/")
   }
 
   return <DashboardShell user={mockUser} role="creator" />;
