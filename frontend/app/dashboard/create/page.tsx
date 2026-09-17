@@ -9,7 +9,7 @@ const mockSession = {
   user: {
     name: "Jordan",
     streak: 12,
-    is_admin: false, // Default security check
+    is_admin: true,
   },
 };
 
@@ -21,3 +21,4 @@ export default function CreatorDashboardPage() {
 
   return <DashboardShell user={mockSession.user} role="creator" />;
 }
+
