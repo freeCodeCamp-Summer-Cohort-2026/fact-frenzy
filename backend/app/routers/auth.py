@@ -13,7 +13,7 @@ from app.core.security import (
     verify_token,
 )
 from app.database import get_session
-from app.models import User
+from app.models import RefreshRequest, User
 from app.schemas.auth import (
     SigninRequest,
     SignupRequest,
@@ -158,11 +158,11 @@ def get_current_user_info(
     response_model=TokenResponse,
 )
 def refresh_access_token(
-    refresh_token: str,
+    body: RefreshRequest,
 ):
     try:
         user_id = verify_token(
-            refresh_token,
+            body.refresh_token,
             token_type="refresh",
         )
 
@@ -176,7 +176,7 @@ def refresh_access_token(
 
     return TokenResponse(
         access_token=new_access_token,
-        refresh_token=refresh_token,
+        refresh_token=body.refresh_token,
         token_type="bearer",
     )
 
