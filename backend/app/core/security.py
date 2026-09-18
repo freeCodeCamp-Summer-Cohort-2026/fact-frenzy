@@ -77,20 +77,16 @@ def verify_token(
             settings.secret_key,
             algorithms=[settings.algorithm],
         )
+    except JWTError as exc:
+        raise ValueError("Invalid or expired token.") from exc
 
-        user_id = payload.get("sub")
-        token_type_from_payload = payload.get("type")
+    user_id = payload.get("sub")
+    token_type_from_payload = payload.get("type")
 
-        if not user_id:
-            raise ValueError("Token does not contain a user ID.")
+    if not user_id:
+        raise ValueError("Token does not contain a user ID.")
 
-        if token_type_from_payload != token_type:
-            raise ValueError("Invalid token type.")
+    if token_type_from_payload != token_type:
+        raise ValueError("Invalid token type.")
 
-        return uuid.UUID(user_id)
-
-    except JWTError:
-        raise ValueError("Invalid or expired token.")
-
-    except ValueError:
-        raise ValueError("Invalid or expired token.")
+    return uuid.UUID(user_id)
