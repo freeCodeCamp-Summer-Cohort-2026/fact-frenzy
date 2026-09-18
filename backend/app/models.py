@@ -1,5 +1,6 @@
 import datetime
 from uuid import UUID, uuid4
+
 from pydantic import EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 
@@ -20,18 +21,11 @@ class UserRead(UserBase):
 
 
 class User(SQLModel, table=True):
-    id: UUID = Field(
-        default_factory=uuid4,
-        primary_key=True
-    )
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
 
     name: str = Field(max_length=100)
 
-    email: str = Field(
-        max_length=100,
-        unique=True,
-        index=True
-    )
+    email: str = Field(max_length=100, unique=True, index=True)
 
     password_hash: str
 
@@ -40,7 +34,6 @@ class User(SQLModel, table=True):
     created_at: datetime.datetime = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
-
 
 
 class Category(SQLModel, table=True):

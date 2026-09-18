@@ -1,4 +1,3 @@
-import uuid
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -59,7 +58,6 @@ def get_current_user(
         )
 
     return user
-
 
 
 @router.post(
@@ -153,7 +151,6 @@ def get_current_user_info(
     return current_user
 
 
-
 @router.post(
     "/refresh",
     response_model=TokenResponse,
@@ -186,6 +183,4 @@ def refresh_access_token(
 def logout_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
-    return {
-        "message": "Successfully logged out."
-    }
+    return {"message": "Successfully logged out."}

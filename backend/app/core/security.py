@@ -6,7 +6,6 @@ from pwdlib import PasswordHash
 
 from app.core.config import settings
 
-
 password_hasher = PasswordHash.recommended()
 
 
@@ -90,5 +89,5 @@ def verify_token(
 
         return uuid.UUID(user_id)
 
-    except (JWTError, ValueError):
+    except JWTError, ValueError:
         raise ValueError("Invalid or expired token.")
