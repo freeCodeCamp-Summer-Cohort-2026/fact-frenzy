@@ -7,12 +7,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Ruff Check
+      - name: Run Ruff check
         uses: astral-sh/ruff-action@v4.1.0
         with:
-         args: check --output-format=github
+          working-directory: backend
+          args: check .
 
-      - name: Ruff Format
+      - name: Check Ruff formatting
         uses: astral-sh/ruff-action@v4.1.0
         with:
-         args: format --check
+          working-directory: backend
+          args: format --check .
