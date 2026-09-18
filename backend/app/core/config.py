@@ -13,9 +13,7 @@ class Settings(BaseSettings):
     @classmethod
     def validate_secret_key(cls, value: str) -> str:
         if len(value) < 32:
-            raise ValueError(
-                "SECRET_KEY must be at least 32 characters long."
-            )
+            raise ValueError("SECRET_KEY must be at least 32 characters long.")
         return value
 
     model_config = SettingsConfigDict(
