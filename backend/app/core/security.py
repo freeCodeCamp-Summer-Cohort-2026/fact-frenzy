@@ -89,5 +89,5 @@ def verify_token(
 
         return uuid.UUID(user_id)
 
-    except JWTError, ValueError:
+    except (JWTError, ValueError):
         raise ValueError("Invalid or expired token.")
