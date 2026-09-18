@@ -4,17 +4,10 @@ import uuid
 from jose import JWTError, jwt
 from pwdlib import PasswordHash
 
+from app.core.config import settings
 
-# Password hashing
+
 password_hasher = PasswordHash.recommended()
-
-
-# JWT configuration
-SECRET_KEY = "change-this-in-production"
-ALGORITHM = "HS256"
-
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-REFRESH_TOKEN_EXPIRE_DAYS = 7
 
 
 def hash_password(password: str) -> str:
@@ -37,7 +30,7 @@ def create_access_token(user_id: uuid.UUID) -> str:
     """Create a short-lived access token."""
 
     expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+        minutes=settings.access_token_expire_minutes
     )
 
     payload = {
@@ -48,8 +41,8 @@ def create_access_token(user_id: uuid.UUID) -> str:
 
     return jwt.encode(
         payload,
-        SECRET_KEY,
-        algorithm=ALGORITHM,
+        settings.secret_key,
+        algorithm=settings.algorithm,
     )
 
 
@@ -57,7 +50,7 @@ def create_refresh_token(user_id: uuid.UUID) -> str:
     """Create a long-lived refresh token."""
 
     expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
-        days=REFRESH_TOKEN_EXPIRE_DAYS
+        days=settings.refresh_token_expire_days
     )
 
     payload = {
@@ -68,19 +61,22 @@ def create_refresh_token(user_id: uuid.UUID) -> str:
 
     return jwt.encode(
         payload,
-        SECRET_KEY,
-        algorithm=ALGORITHM,
+        settings.secret_key,
+        algorithm=settings.algorithm,
     )
 
 
-def verify_token(token: str, token_type: str = "access") -> uuid.UUID:
+def verify_token(
+    token: str,
+    token_type: str = "access",
+) -> uuid.UUID:
     """Verify a JWT and return the user ID."""
 
     try:
         payload = jwt.decode(
             token,
-            SECRET_KEY,
-            algorithms=[ALGORITHM],
+            settings.secret_key,
+            algorithms=[settings.algorithm],
         )
 
         user_id = payload.get("sub")
