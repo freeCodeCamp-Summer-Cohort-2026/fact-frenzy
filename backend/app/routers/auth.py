@@ -28,13 +28,15 @@ router = APIRouter(
 
 security = HTTPBearer()
 
+SessionDep = Annotated[Session, Depends(get_session)]
+
 
 def get_current_user(
     credentials: Annotated[
         HTTPAuthorizationCredentials,
         Depends(security),
     ],
-    session: Annotated[Session, Depends(get_session)],
+    session: SessionDep,
 ) -> User:
 
     try:
@@ -67,7 +69,7 @@ def get_current_user(
 )
 def signup_user(
     user_data: SignupRequest,
-    session: Annotated[Session, Depends(get_session)],
+    session: SessionDep,
 ):
     existing_user = session.exec(
         select(User).where(User.email == user_data.email)
@@ -110,7 +112,7 @@ def signup_user(
 )
 def signin_user(
     credentials: SigninRequest,
-    session: Annotated[Session, Depends(get_session)],
+    session: SessionDep,
 ):
     user = session.exec(
         select(User).where(User.email == credentials.email)

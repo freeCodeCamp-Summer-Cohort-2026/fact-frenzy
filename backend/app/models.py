@@ -1,7 +1,7 @@
 import datetime
 from uuid import UUID, uuid4
 
-from pydantic import EmailStr, field_validator
+from pydantic import BaseModel, EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 
 
@@ -18,6 +18,10 @@ class UserRead(UserBase):
     id: UUID
     created_at: datetime.datetime
     is_admin: bool
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
 
 
 class User(SQLModel, table=True):
