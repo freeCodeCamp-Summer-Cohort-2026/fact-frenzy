@@ -1,6 +1,5 @@
 import datetime
-import uuid
-
+from uuid import UUID, uuid4
 from pydantic import EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 
@@ -9,48 +8,38 @@ class UserBase(SQLModel):
     name: str = Field(min_length=1, max_length=100)
     email: EmailStr = Field(max_length=100, unique=True, index=True)
 
-    @field_validator("name")
-    @classmethod
-    def validate_name(cls, name: str) -> str:
-        name = " ".join(name.split())
-
-        if not name:
-            raise ValueError(
-                "Name cannot be empty after removing whitespaces."
-            )
-
-        return name
-
-    @field_validator("email", mode="before")
-    @classmethod
-    def normalize_email(cls, email: str) -> str:
-        email = email.strip().lower()
-
-        if not email:
-            raise ValueError("Email cannot be empty.")
-
-        return email
-
-
-class UserRead(UserBase):
-    id: uuid.UUID
-    created_at: datetime.datetime
-    is_admin: bool
-
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, max_length=128)
 
 
-class User(UserBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+class UserRead(UserBase):
+    id: UUID
+    created_at: datetime.datetime
+    is_admin: bool
+
+
+class User(SQLModel, table=True):
+    id: UUID = Field(
+        default_factory=uuid4,
+        primary_key=True
+    )
+
+    name: str = Field(max_length=100)
+
+    email: str = Field(
+        max_length=100,
+        unique=True,
+        index=True
+    )
+
+    password_hash: str
+
+    is_admin: bool = Field(default=False)
+
     created_at: datetime.datetime = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
-    password_hash: str = Field(min_length=1, max_length=1024)
-    is_admin: bool = Field(default=False)
-
-    hashed_password: str = Field(default=None)
 
 
 
@@ -76,5 +65,15 @@ class Question(SQLModel, table=True):
     option_d: str = Field(min_length=1, max_length=200)
 
     correct_answer: str = Field(min_length=1, max_length=1)
+
+    @field_validator("correct_answer")
+    @classmethod
+    def validate_correct_answer(cls, value: str) -> str:
+        value = value.upper()
+
+        if value not in {"A", "B", "C", "D"}:
+            raise ValueError("Correct answer must be A, B, C, or D.")
+
+        return value
 
     quiz_id: int = Field(foreign_key="quiz.id")
