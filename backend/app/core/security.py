@@ -89,4 +89,7 @@ def verify_token(
     if token_type_from_payload != token_type:
         raise ValueError("Invalid token type.")
 
-    return uuid.UUID(user_id)
+    try:
+        return uuid.UUID(user_id)
+    except ValueError as exc:
+        raise ValueError("Invalid or expired token.") from exc
