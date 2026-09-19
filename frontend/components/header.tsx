@@ -19,7 +19,11 @@ export default function Header() {
 							</Link>
 						</li>
 						{/* placeholder links */}
-						<li>Link2</li>
+						<li>
+							<Link href="/test_cors">
+							Link2
+							</Link>
+						</li>
 						<li>Link3</li>
 					</ul>
 					{/* Login/Sign in button; plus optional separate sign up button below */}
