@@ -9,6 +9,30 @@ class UserBase(SQLModel):
     name: str = Field(min_length=1, max_length=100)
     email: EmailStr = Field(max_length=100, unique=True, index=True)
 
+    @field_validator("name", mode="before")
+    @classmethod
+    def validate_name(cls, name: str) -> str:
+        if isinstance(name, str):
+            name = " ".join(name.split())
+
+            if not name:
+                raise ValueError(
+                    "Name cannot be empty after removing whitespaces."
+                )
+
+        return name
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def normalize_email(cls, email: str) -> str:
+        if isinstance(email, str):
+            email = email.strip().lower()
+
+            if not email:
+                raise ValueError("Email cannot be empty.")
+
+        return email
+
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, max_length=128)
@@ -24,17 +48,10 @@ class RefreshRequest(BaseModel):
     refresh_token: str
 
 
-class User(SQLModel, table=True):
+class User(UserBase, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-
-    name: str = Field(max_length=100)
-
-    email: str = Field(max_length=100, unique=True, index=True)
-
-    password_hash: str
-
+    password_hash: str = Field(min_length=1, max_length=1024)
     is_admin: bool = Field(default=False)
-
     created_at: datetime.datetime = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )

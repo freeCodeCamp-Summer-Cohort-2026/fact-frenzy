@@ -93,16 +93,24 @@ def signup_user(
 
     try:
         session.commit()
-        session.refresh(user)
 
     except IntegrityError as exc:
+        # reset the session after the failed transaction
         session.rollback()
 
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Email already registered.",
-        ) from exc
+        if (
+            "unique" in str(exc.orig).lower()
+            or "ix_user_email" in str(exc.orig).lower()
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Email already registered.",
+            ) from exc
 
+        raise
+
+    # Refresh after successful commit
+    session.refresh(user)
     return user
 
 
@@ -159,6 +167,7 @@ def get_current_user_info(
 )
 def refresh_access_token(
     body: RefreshRequest,
+    session: SessionDep,
 ):
     try:
         user_id = verify_token(
@@ -172,6 +181,12 @@ def refresh_access_token(
             detail="Invalid or expired refresh token.",
         )
 
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found or account inactive.",
+        )
     new_access_token = create_access_token(user_id)
 
     return TokenResponse(
@@ -185,4 +200,10 @@ def refresh_access_token(
 def logout_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
+    """
+    Stateless logout endpoint.
+
+    Since authentication uses stateless Bearer JWT tokens, actual logout
+    is handled on the client side by removing the tokens from client storage.
+    """
     return {"message": "Successfully logged out."}
