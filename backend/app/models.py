@@ -9,16 +9,15 @@ class UserBase(SQLModel):
     name: str = Field(min_length=1, max_length=100)
     email: EmailStr = Field(max_length=100, unique=True, index=True)
 
-    @field_validator("name", mode="before")
+    @field_validator("name")
     @classmethod
     def validate_name(cls, name: str) -> str:
-        if isinstance(name, str):
-            name = " ".join(name.split())
+        name = " ".join(name.split())
 
-            if not name:
-                raise ValueError(
-                    "Name cannot be empty after removing whitespaces."
-                )
+        if not name:
+            raise ValueError(
+                "Name cannot be empty after removing whitespaces."
+            )
 
         return name
 

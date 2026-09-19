@@ -8,15 +8,16 @@ class SignupRequest(BaseModel):
     email: EmailStr = Field(max_length=100)
     password: str = Field(min_length=8, max_length=128)
 
-    @field_validator("name", mode="before")
+    @field_validator("name")
     @classmethod
     def validate_name(cls, name: str) -> str:
-        if isinstance(name, str):
-            name = " ".join(name.split())
-            if not name:
-                raise ValueError(
-                    "Name cannot be empty after removing whitespaces."
-                )
+        name = " ".join(name.split())
+
+        if not name:
+            raise ValueError(
+                "Name cannot be empty after removing whitespaces."
+            )
+
         return name
 
     @field_validator("email", mode="before")
@@ -24,8 +25,10 @@ class SignupRequest(BaseModel):
     def normalize_email(cls, email: str) -> str:
         if isinstance(email, str):
             email = email.strip().lower()
+
             if not email:
                 raise ValueError("Email cannot be empty.")
+
         return email
 
 
