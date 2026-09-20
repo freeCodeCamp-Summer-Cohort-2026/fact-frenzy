@@ -24,7 +24,7 @@ export default function Home() {
 				</div>
 				<div className="my-6 flex flex-col w-1/4 text-xl font-bold sm:flex-row">
 					<button
-						className="flex h-12 w-full items-center justify-center rounded-full bg-[#C3CED6] px-5 text-slate-900 transition-colors hover:bg-slate-200"
+						className="flex h-12 w-full items-center justify-center rounded-full bg-[#ea058c] px-5 text-slate-900 transition-colors hover:bg-slate-200"
 						onClick={() => router.push("/try")}
 					>
 						Try it!
