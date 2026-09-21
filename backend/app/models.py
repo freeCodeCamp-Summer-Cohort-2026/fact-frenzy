@@ -67,23 +67,28 @@ class Lab(SQLModel, table=True):
     description: str | None = Field(default=None, max_length=500)
     category_id: int = Field(foreign_key="category.id")
 
+
 class Activity(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     lab_id: int = Field(foreign_key="lab.id")
-    type: str # "matching" | "sorting" - extensible for future types
-    prompt: str | None = None # e.g. instructions
+    type: str  # "matching" | "sorting" - extensible for future types
+    prompt: str | None = None  # e.g. instructions
 
 
 class Question(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     activity_id: int = Field(foreign_key="activity.id")
-    text: str = Field(max_length=500)  # e.g. "Australia" or the fact statement for sorting
+    text: str = Field(
+        max_length=500
+    )  # e.g. "Australia" or the fact statement for sorting
+
 
 class Option(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     question_id: int = Field(foreign_key="question.id")
     text: str = Field(max_length=500)  # e.g. "Canberra" or "True"/"Untrue"
-    is_correct: bool # whether this specific option is the correct answer for its question
+    is_correct: bool  # whether this specific option is the correct answer for its question
+
 
 class OptionRead(SQLModel):
     id: int
@@ -91,10 +96,12 @@ class OptionRead(SQLModel):
     # is_boolean is intentionally left out here
     # so that we don't send the answer to the frontend before the user submits
 
+
 class QuestionRead(SQLModel):
     id: int
     text: str
     options: list[OptionRead] = []
+
 
 class ActivityRead(SQLModel):
     id: int
@@ -102,9 +109,9 @@ class ActivityRead(SQLModel):
     prompt: str | None
     questions: list[QuestionRead] = []
 
+
 class LabRead(SQLModel):
     id: int
     title: str
     description: str | None
     activities: list[ActivityRead] = []
-
