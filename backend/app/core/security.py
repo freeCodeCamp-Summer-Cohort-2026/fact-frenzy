@@ -1,26 +1,95 @@
-import logging
+import datetime
+import uuid
 
+from jose import JWTError, jwt
 from pwdlib import PasswordHash
-from pwdlib.exceptions import UnknownHashError
+
+from app.core.config import settings
 
 password_hasher = PasswordHash.recommended()
 
-logger = logging.getLogger(__name__)
+
+def hash_password(password: str) -> str:
+    """Hash a plaintext password."""
+    return password_hasher.hash(password)
 
 
-def hash_password(plain_password: str) -> str:
-    """Hash a plaintext password for storage."""
-    return password_hasher.hash(plain_password)
+def verify_password(
+    plain_password: str,
+    hashed_password: str,
+) -> bool:
+    """Verify a plaintext password against its hash."""
+    return password_hasher.verify(
+        plain_password,
+        hashed_password,
+    )
 
 
-def verify_password(plain_password: str, stored_hash: str) -> bool:
-    """Verify a plaintext password against the stored hash.
+def create_access_token(user_id: uuid.UUID) -> str:
+    """Create a short-lived access token."""
 
-    Returns True if the password matches, False otherwise.
-    Raises an exception for unrecognized hash formats.
-    """
+    expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        minutes=settings.access_token_expire_minutes
+    )
+
+    payload = {
+        "sub": str(user_id),
+        "type": "access",
+        "exp": expire,
+    }
+
+    return jwt.encode(
+        payload,
+        settings.secret_key,
+        algorithm=settings.algorithm,
+    )
+
+
+def create_refresh_token(user_id: uuid.UUID) -> str:
+    """Create a long-lived refresh token."""
+
+    expire = datetime.datetime.now(datetime.UTC) + datetime.timedelta(
+        days=settings.refresh_token_expire_days
+    )
+
+    payload = {
+        "sub": str(user_id),
+        "type": "refresh",
+        "exp": expire,
+    }
+
+    return jwt.encode(
+        payload,
+        settings.secret_key,
+        algorithm=settings.algorithm,
+    )
+
+
+def verify_token(
+    token: str,
+    token_type: str = "access",
+) -> uuid.UUID:
+    """Verify a JWT and return the user ID."""
+
     try:
-        return password_hasher.verify(plain_password, stored_hash)
-    except UnknownHashError:
-        logger.warning("Unrecognized stored password hash format.")
-        raise
+        payload = jwt.decode(
+            token,
+            settings.secret_key,
+            algorithms=[settings.algorithm],
+        )
+    except JWTError as exc:
+        raise ValueError("Invalid or expired token.") from exc
+
+    user_id = payload.get("sub")
+    token_type_from_payload = payload.get("type")
+
+    if not user_id:
+        raise ValueError("Token does not contain a user ID.")
+
+    if token_type_from_payload != token_type:
+        raise ValueError("Invalid token type.")
+
+    try:
+        return uuid.UUID(user_id)
+    except ValueError as exc:
+        raise ValueError("Invalid or expired token.") from exc

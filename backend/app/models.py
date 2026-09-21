@@ -1,7 +1,7 @@
 import datetime
-import uuid
+from uuid import UUID, uuid4
 
-from pydantic import EmailStr, field_validator
+from pydantic import BaseModel, EmailStr, field_validator
 from sqlmodel import Field, SQLModel
 
 
@@ -24,31 +24,36 @@ class UserBase(SQLModel):
     @field_validator("email", mode="before")
     @classmethod
     def normalize_email(cls, email: str) -> str:
-        email = email.strip().lower()
+        if isinstance(email, str):
+            email = email.strip().lower()
 
-        if not email:
-            raise ValueError("Email cannot be empty.")
+            if not email:
+                raise ValueError("Email cannot be empty.")
 
         return email
-
-
-class UserRead(UserBase):
-    id: uuid.UUID
-    created_at: datetime.datetime
-    is_admin: bool
 
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, max_length=128)
 
 
+class UserRead(UserBase):
+    id: UUID
+    created_at: datetime.datetime
+    is_admin: bool
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
+
+
 class User(UserBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    id: UUID = Field(default_factory=uuid4, primary_key=True)
+    password_hash: str = Field(min_length=1, max_length=1024)
+    is_admin: bool = Field(default=False)
     created_at: datetime.datetime = Field(
         default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
-    password_hash: str = Field(min_length=1, max_length=1024)
-    is_admin: bool = Field(default=False)
 
 
 class Category(SQLModel, table=True):
