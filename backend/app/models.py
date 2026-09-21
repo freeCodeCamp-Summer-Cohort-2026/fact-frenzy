@@ -56,7 +56,9 @@ class User(UserBase, table=True):
     )
 
 
-class Category(SQLModel, table=True):
+class Category(
+    SQLModel, table=True
+):  # Category represents a "Topic" in our app's terminology
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(min_length=1, max_length=100, unique=True)
 
