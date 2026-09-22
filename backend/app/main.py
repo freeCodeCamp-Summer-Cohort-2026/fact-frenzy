@@ -2,10 +2,7 @@ from fastapi import FastAPI
 
 from app.routers import auth, users
 
-
-app = FastAPI(
-    title="Fact Frenzy", description="", version="0.0.0"
-)
+app = FastAPI(title="Fact Frenzy", description="", version="0.0.0")
 
 app.include_router(users.router)
 app.include_router(auth.router)
