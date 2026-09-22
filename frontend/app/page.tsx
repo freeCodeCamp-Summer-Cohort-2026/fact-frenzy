@@ -4,71 +4,70 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
+import { 
+	Lightbulb, 
+	Search, 
+	Trophy, 
+	Target, 
+	BookOpen,
+	Monitor,
+	Microscope,
+	Landmark,
+	Globe2, 
+} from "lucide-react";
+
+
 const howItWorks = [
 	{
 		number: "01",
 		title: "Choose a topic",
 		description:
 			"Explore different topics and choose an area you want to learn more about.",
-		icon: "📚",
+		icon: BookOpen,
 	},
 	{
 		number: "02",
 		title: "Learn & explore",
 		description:
 			"Go through interactive modules, tutorials, and practical labs designed to make learning engaging.",
-		icon: "🧠",
+		icon: Lightbulb,
 	},
 	{
 		number: "03",
 		title: "Test yourself",
 		description:
 			"Challenge your knowledge with quizzes, questions, and interactive challenges.",
-		icon: "🎯",
+		icon: Target,
 	},
 ];
 
-const learningFeatures = [
-	{
-		title: "Learning Modules",
-		description:
-			"Structured learning experiences that help you understand concepts step by step.",
-		icon: "📖",
-	},
-	{
-		title: "Interactive Tutorials",
-		description:
-			"Learn through engaging tutorials designed to turn complex ideas into simple concepts.",
-		icon: "💡",
-	},
-	{
-		title: "Practical Labs",
-		description:
-			"Put your knowledge into practice with hands-on challenges and interactive exercises.",
-		icon: "🧪",
-	},
-];
+
+
 
 const featuredTopics = [
 	{
 		title: "Technology",
-		description: "Explore software, AI, cybersecurity, and emerging technologies.",
-		icon: "💻",
+		description:
+			"Explore software, AI, cybersecurity, and emerging technologies.",
+		icon: Monitor,
 	},
 	{
 		title: "Science",
-		description: "Discover fascinating ideas from biology, physics, chemistry, and more.",
-		icon: "🔬",
+		description:
+			"Discover fascinating ideas from biology, physics, chemistry, and more.",
+		icon: Microscope,
 	},
 	{
 		title: "History",
-		description: "Travel through time and discover events that shaped our world.",
-		icon: "🏛️",
+		description:
+			"Travel through time and discover events that shaped our world.",
+		icon: Landmark,
 	},
 	{
 		title: "General Knowledge",
-		description: "Challenge yourself with interesting facts from around the world.",
-		icon: "🌍",
+		description:
+			"Challenge yourself with interesting facts from around the world.",
+		icon: Globe2,
 	},
 ];
 
@@ -77,9 +76,8 @@ export default function Home() {
 
 	return (
 		<main className="min-h-screen bg-slate-50 text-slate-900">
-			{/* =====================================================
-			    HERO SECTION
-			===================================================== */}
+
+
 			<section className="relative overflow-hidden bg-white">
 				{/* Background decoration */}
 				<div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-[#A60362]/10 blur-3xl" />
@@ -152,36 +150,16 @@ export default function Home() {
 								/>
 							</div>
 
-							{/* Floating score card */}
-							<div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-slate-200 bg-white p-4 shadow-xl sm:block">
-								<p className="text-xs font-medium text-slate-500">
-									Your progress
-								</p>
 
-								<div className="mt-1 flex items-center gap-3">
-									<div className="h-2 w-24 overflow-hidden rounded-full bg-slate-100">
-										<div className="h-full w-3/4 rounded-full bg-[#A60362]" />
-									</div>
 
-									<span className="text-sm font-bold text-slate-900">
-										75%
-									</span>
-								</div>
-							</div>
-
-							{/* Floating points card */}
-							<div className="absolute -right-4 -top-5 hidden rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-xl sm:block">
-								<p className="text-xs text-slate-500">Knowledge points</p>
-								<p className="text-xl font-bold text-[#A60362]">2,450 XP</p>
-							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			{/* =====================================================
-			    INTRODUCTION
-			===================================================== */}
+
+
+
 			<section className="bg-slate-50 py-20 sm:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="mx-auto max-w-3xl text-center">
@@ -202,10 +180,9 @@ export default function Home() {
 
 					<div className="mt-14 grid gap-6 md:grid-cols-3">
 						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-2xl">
-								🧠
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Lightbulb className="h-6 w-6" strokeWidth={2} />
 							</div>
-
 							<h3 className="mt-5 text-xl font-bold">Learn</h3>
 
 							<p className="mt-3 leading-7 text-slate-600">
@@ -215,8 +192,8 @@ export default function Home() {
 						</div>
 
 						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-2xl">
-								🔎
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Search className="h-6 w-6" strokeWidth={2} />
 							</div>
 
 							<h3 className="mt-5 text-xl font-bold">Explore</h3>
@@ -228,8 +205,8 @@ export default function Home() {
 						</div>
 
 						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-2xl">
-								🏆
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Trophy className="h-6 w-6" strokeWidth={2} />
 							</div>
 
 							<h3 className="mt-5 text-xl font-bold">Challenge</h3>
@@ -243,9 +220,8 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* =====================================================
-			    HOW IT WORKS
-			===================================================== */}
+
+
 			<section className="bg-white py-20 sm:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="max-w-2xl">
@@ -264,81 +240,40 @@ export default function Home() {
 					</div>
 
 					<div className="mt-14 grid gap-8 md:grid-cols-3">
-						{howItWorks.map((item) => (
-							<div key={item.number} className="relative">
-								<div className="flex items-start gap-5">
-									<div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#A60362] text-2xl text-white shadow-lg shadow-[#A60362]/20">
-										{item.icon}
+						{howItWorks.map((item) => {
+							const Icon = item.icon;
+
+							return (
+								<div
+									key={item.number}
+									className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg"
+								>
+									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362] text-white transition-all duration-300 group-hover:bg-[#A60362]/90">
+										<Icon className="h-5 w-5" strokeWidth={2} />
 									</div>
 
-									<div>
-										<span className="text-sm font-bold text-[#A60362]">
-											{item.number}
-										</span>
+									<span className="mt-5 block text-sm font-bold text-[#A60362]">
+										{item.number}
+									</span>
 
-										<h3 className="mt-1 text-xl font-bold text-slate-950">
-											{item.title}
-										</h3>
+									<h3 className="mt-1 text-lg font-bold text-slate-950">
+										{item.title}
+									</h3>
 
-										<p className="mt-2 leading-7 text-slate-600">
-											{item.description}
-										</p>
-									</div>
+									<p className="mt-2 text-sm leading-6 text-slate-600">
+										{item.description}
+									</p>
 								</div>
-							</div>
-						))}
+							);
+						})}
 					</div>
 				</div>
 			</section>
 
-			{/* =====================================================
-			    LEARNING MODULES
-			===================================================== */}
-			<section className="bg-slate-950 py-20 text-white sm:py-24">
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					<div className="mx-auto max-w-3xl text-center">
-						<p className="text-sm font-bold uppercase tracking-widest text-pink-400">
-							Learn Your Way
-						</p>
 
-						<h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-							More than just quizzes.
-						</h2>
 
-						<p className="mt-5 text-lg leading-8 text-slate-300">
-							Build real understanding through multiple ways of learning and
-							practising your knowledge.
-						</p>
-					</div>
 
-					<div className="mt-14 grid gap-6 md:grid-cols-3">
-						{learningFeatures.map((feature) => (
-							<div
-								key={feature.title}
-								className="rounded-2xl border border-white/10 bg-white/5 p-7 transition-colors hover:bg-white/10"
-							>
-								<div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#A60362] text-2xl">
-									{feature.icon}
-								</div>
 
-								<h3 className="mt-6 text-xl font-bold">{feature.title}</h3>
-
-								<p className="mt-3 leading-7 text-slate-300">
-									{feature.description}
-								</p>
-
-								<button className="mt-6 text-sm font-semibold text-pink-400 transition-colors hover:text-pink-300">
-									Explore →
-								</button>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-
-			{/* =====================================================
-			    FEATURED TOPICS
-			===================================================== */}
 			<section className="bg-slate-50 py-20 sm:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
@@ -356,41 +291,44 @@ export default function Home() {
 							</p>
 						</div>
 
-						<button className="font-semibold text-[#A60362] hover:underline">
+						<button 
+							onClick={() => router.push("/try")}
+							className="font-semibold text-[#A60362] hover:underline">
 							View all topics →
 						</button>
 					</div>
 
 					<div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-						{featuredTopics.map((topic) => (
-							<button
-								key={topic.title}
-								className="group rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg"
-							>
-								<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-2xl transition-colors group-hover:bg-[#A60362]/10">
-									{topic.icon}
-								</div>
+						{featuredTopics.map((topic) => {
+							const Icon = topic.icon;
 
-								<h3 className="mt-5 text-lg font-bold text-slate-950">
-									{topic.title}
-								</h3>
+							return (
+								<button
+									key={topic.title}
+									className="group rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg"
+								>
+									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors group-hover:bg-[#A60362]/10 group-hover:text-[#A60362]">
+										<Icon className="h-6 w-6" strokeWidth={2} />
+									</div>
 
-								<p className="mt-2 text-sm leading-6 text-slate-600">
-									{topic.description}
-								</p>
+									<h3 className="mt-5 text-lg font-bold text-slate-950">
+										{topic.title}
+									</h3>
 
-								<span className="mt-5 inline-block text-sm font-semibold text-[#A60362]">
-									Explore topic →
-								</span>
-							</button>
-						))}
+									<p className="mt-2 text-sm leading-6 text-slate-600">
+										{topic.description}
+									</p>
+
+
+								</button>
+							);
+						})}
 					</div>
 				</div>
 			</section>
 
-			{/* =====================================================
-			    FINAL CTA
-			===================================================== */}
+
+
 			<section className="bg-white py-20 sm:py-24">
 				<div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
 					<div className="relative overflow-hidden rounded-3xl bg-[#A60362] px-6 py-14 text-center text-white sm:px-12 sm:py-16">
