@@ -63,11 +63,17 @@ class Category(
     name: str = Field(min_length=1, max_length=100, unique=True)
 
 
+class Module(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = Field(min_length=1, max_length=200)
+    category_id: int = Field(foreign_key="category_id")
+
+
 class Lab(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     title: str = Field(min_length=1, max_length=200)
     description: str | None = Field(default=None, max_length=500)
-    category_id: int = Field(foreign_key="category.id")
+    module_id: int = Field(foreign_key="module.id")
 
 
 class Activity(SQLModel, table=True):
@@ -116,4 +122,5 @@ class LabRead(SQLModel):
     id: int
     title: str
     description: str | None
+    module_id: int
     activities: list[ActivityRead] = []

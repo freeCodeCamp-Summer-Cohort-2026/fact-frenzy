@@ -47,6 +47,7 @@ def _build_lab_read(lab: Lab, session: Session) -> LabRead:
         id=lab.id,
         title=lab.title,
         description=lab.description,
+        module_id=lab.module_id,
         activities=[_build_activity_read(a, session) for a in activities],
     )
 
