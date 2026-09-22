@@ -79,11 +79,11 @@ MODULE_CONTENT = {
                 "sorting_prompt": "Sort each fact into True or Untrue.",
                 "sorting_facts": [
                     (
-                        "Vatican City is the smallest country in the world by area.",
-                        True,
+                        "Ethiopia follows a calendar that is about 7–8 years behind the Gregorian calendar and has 12 months.",
+                        False,
                     ),
                     (
-                        "Russia spans more time zones than any other country. At the same moment, it can be morning in one part of Russia and night in another.",
+                        "Russia spans more time zones than any other country's contiguous territory. At the same moment, it can be morning in one part of Russia and night in another.",
                         True,
                     ),
                 ],
