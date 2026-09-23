@@ -79,7 +79,7 @@ return (
 
 				{/* Get Started */}
 				<Link
-					href="/login"
+					href="/signup"
 					className="inline-flex items-center justify-center rounded-lg bg-[#A60362] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#8c0253] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#A60362]/40 focus:ring-offset-2 sm:px-5"
 				>
 					Get Started
