@@ -115,7 +115,7 @@ export default function Footer() {
 				{/* Bottom footer */}
 				<div className="flex flex-col gap-4 border-t border-white/10 py-6 text-sm sm:flex-row sm:items-center sm:justify-between">
 					<p className="text-slate-500">
-						© 2026 Fact Frenzy. All rights reserved.
+						© 2026 Fact Frenzy · MIT License
 					</p>
 
 					<div className="flex items-center gap-5">
