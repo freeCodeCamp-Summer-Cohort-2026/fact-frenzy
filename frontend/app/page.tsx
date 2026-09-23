@@ -83,26 +83,26 @@ export default function Home() {
 				<div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-[#A60362]/10 blur-3xl" />
 				<div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-[#A60362]/5 blur-3xl" />
 
-				<div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
+				<div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:px-8 lg:py-28">
 					{/* Hero content */}
 					<div className="max-w-2xl">
 
 
-						<h1 className="text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+						<h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
 							Turn curiosity into{" "}
 							<span className="text-[#A60362]">knowledge.</span>
 						</h1>
 
-						<p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 sm:text-xl">
+						<p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
 							Fact Frenzy is an interactive learning and knowledge platform
 							that makes discovering facts, learning new concepts, and
 							challenging yourself fun and engaging.
 						</p>
 
-						<div className="mt-8 flex flex-col gap-3 sm:flex-row">
+						<div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
 							<button
 								onClick={() => router.push("/try")}
-								className="inline-flex h-12 items-center justify-center rounded-lg bg-[#A60362] px-7 font-semibold text-white shadow-lg shadow-[#A60362]/20 transition-all hover:bg-[#8c0253] hover:shadow-xl"
+								className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#A60362] px-7 font-semibold text-white shadow-lg shadow-[#A60362]/20 transition-all hover:bg-[#8c0253] hover:shadow-xl sm:w-auto"
 							>
 								Start Learning
 								<span className="ml-2">→</span>
@@ -110,14 +110,14 @@ export default function Home() {
 
 							<button
 								onClick={() => router.push("/about")}
-								className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-200 bg-white px-7 font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+								className="inline-flex h-12 w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-7 font-semibold text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
 							>
 								Explore Fact Frenzy
 							</button>
 						</div>
 
 						{/* Small trust/features row */}
-						<div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500">
+						<div className="mt-7 flex flex-wrap gap-x-4 gap-y-3 text-sm text-slate-500 sm:mt-8 sm:gap-x-6">
 							<span className="flex items-center gap-2">
 								<span className="text-[#A60362]">✓</span>
 								Interactive learning
@@ -137,10 +137,10 @@ export default function Home() {
 
 					{/* Hero visual */}
 					<div className="relative">
-						<div className="relative mx-auto max-w-lg">
+						<div className="relative mx-auto w-full max-w-lg">
 							<div className="absolute -inset-4 rounded-3xl bg-[#A60362]/10 blur-2xl" />
 
-							<div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl">
+							<div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl sm:p-3">
 								<Image
 									src="/placeholder-500x300.png"
 									alt="Fact Frenzy learning interface"
@@ -149,9 +149,6 @@ export default function Home() {
 									className="h-auto w-full rounded-xl object-cover"
 								/>
 							</div>
-
-
-
 						</div>
 					</div>
 				</div>
@@ -160,7 +157,7 @@ export default function Home() {
 
 
 
-			<section className="bg-slate-50 py-20 sm:py-24">
+			<section className="bg-slate-50 py-14 sm:py-20 lg:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="mx-auto max-w-3xl text-center">
 						<p className="text-sm font-bold uppercase tracking-widest text-[#A60362]">
@@ -171,15 +168,15 @@ export default function Home() {
 							Learning should be more than just reading.
 						</h2>
 
-						<p className="mt-5 text-lg leading-8 text-slate-600">
+						<p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
 							Fact Frenzy brings learning and interactive challenges together.
 							Instead of simply consuming information, you get to explore
 							topics, test your understanding, and apply what you've learned.
 						</p>
 					</div>
 
-					<div className="mt-14 grid gap-6 md:grid-cols-3">
-						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+					<div className="mt-10 grid gap-5 sm:mt-14 md:grid-cols-3">
+						<div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
 							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
 								<Lightbulb className="h-6 w-6" strokeWidth={2} />
 							</div>
@@ -222,7 +219,7 @@ export default function Home() {
 
 
 
-			<section className="bg-white py-20 sm:py-24">
+			<section className="bg-white py-14 sm:py-20 lg:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="max-w-2xl">
 						<p className="text-sm font-bold uppercase tracking-widest text-[#A60362]">
@@ -239,14 +236,14 @@ export default function Home() {
 						</p>
 					</div>
 
-					<div className="mt-14 grid gap-8 md:grid-cols-3">
+					<div className="mt-10 grid gap-5 sm:mt-14 sm:gap-8 md:grid-cols-3">
 						{howItWorks.map((item) => {
 							const Icon = item.icon;
 
 							return (
 								<div
 									key={item.number}
-									className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg"
+									className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg sm:p-6"
 								>
 									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362] text-white transition-all duration-300 group-hover:bg-[#A60362]/90">
 										<Icon className="h-5 w-5" strokeWidth={2} />
@@ -274,7 +271,7 @@ export default function Home() {
 
 
 
-			<section className="bg-slate-50 py-20 sm:py-24">
+			<section className="bg-slate-50 py-14 sm:py-20 lg:py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
 						<div>
@@ -291,21 +288,22 @@ export default function Home() {
 							</p>
 						</div>
 
-						<button 
+						<button
 							onClick={() => router.push("/try")}
-							className="font-semibold text-[#A60362] hover:underline">
+							className="w-fit py-2 font-semibold text-[#A60362] hover:underline"
+						>
 							View all topics →
 						</button>
 					</div>
 
-					<div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+					<div className="mt-8 grid gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
 						{featuredTopics.map((topic) => {
 							const Icon = topic.icon;
 
 							return (
 								<button
 									key={topic.title}
-									className="group rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg"
+									className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg sm:p-6"
 								>
 									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors group-hover:bg-[#A60362]/10 group-hover:text-[#A60362]">
 										<Icon className="h-6 w-6" strokeWidth={2} />
@@ -329,25 +327,25 @@ export default function Home() {
 
 
 
-			<section className="bg-white py-20 sm:py-24">
+			<section className="bg-white py-14 sm:py-20 lg:py-24">
 				<div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-					<div className="relative overflow-hidden rounded-3xl bg-[#A60362] px-6 py-14 text-center text-white sm:px-12 sm:py-16">
+					<div className="relative overflow-hidden rounded-3xl bg-[#A60362] px-5 py-12 text-center text-white sm:px-12 sm:py-16">
 						<div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
 						<div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-black/10 blur-3xl" />
 
 						<div className="relative">
-							<h2 className="text-3xl font-bold sm:text-4xl">
+							<h2 className="text-2xl font-bold leading-tight sm:text-4xl">
 								Ready to put your knowledge to the test?
 							</h2>
 
-							<p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-pink-100">
+							<p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-pink-100 sm:text-lg sm:leading-8">
 								Start exploring Fact Frenzy and discover a more engaging way
 								to learn, practise, and challenge yourself.
 							</p>
 
 							<button
 								onClick={() => router.push("/try")}
-								className="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-white px-7 font-semibold text-[#A60362] shadow-lg transition-all hover:bg-slate-100"
+								className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-lg bg-white px-7 font-semibold text-[#A60362] shadow-lg transition-all hover:bg-slate-100 sm:w-auto"
 							>
 								Start Your Journey →
 							</button>
