@@ -6,7 +6,10 @@ WORKDIR /code
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen --no-dev
+ENV UV_LINK_MODE=copy
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 
 #COPY ./requirements.txt /code/requirements.txt
 
@@ -14,4 +17,4 @@ RUN uv sync --frozen --no-dev
 
 COPY . .
 
-CMD ["uv", "run", "fastapi", "run", "app/main.py", "--port", "8000"]
+CMD ["uv", "run", "--no-sync", "fastapi", "run", "app/main.py", "--port", "8000"]
