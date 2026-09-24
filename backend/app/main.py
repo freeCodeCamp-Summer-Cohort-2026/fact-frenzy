@@ -1,27 +1,8 @@
-import logging
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 
-from app.database import create_db_table
 from app.routers import auth, users
 
-logger = logging.getLogger("uvicorn.error")
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    try:
-        create_db_table()
-    except Exception:
-        logger.exception("Failed to create database tables — aborting startup")
-        raise
-    yield
-
-
-app = FastAPI(
-    title="Fact Frenzy", description="", version="0.0.0", lifespan=lifespan
-)
+app = FastAPI(title="Fact Frenzy", description="", version="0.0.0")
 
 app.include_router(users.router)
 app.include_router(auth.router)
