@@ -59,7 +59,7 @@ export default function ProfilePage() {
                   A
                 </span>
                 <div className="flex flex-col">
-                  <span className="text-2xl font-bold">
+                  <span className="text-2xl font-bold text-black">
                     Teklu  Abayneh
                   </span>
                   <span className="text-[12px] pl-2 text-gray-500">
@@ -71,8 +71,8 @@ export default function ProfilePage() {
               {/* we will update them with real value  for now since we are just doing the rough UI */}
               <div className="flex gap-2 m-4">
                 {["activities", "Avg Score", "Strike"].map((item, idx) => (
-                  <div className="w-32 h-16 flex items-center justify-center flex-col bg-white rounded-2xl p-1">
-                    <span className="font-bold"> {idx}</span>
+                  <div key={idx} className="w-32 h-16 flex items-center justify-center flex-col bg-white rounded-2xl p-1">
+                    <span className="font-bold text-black"> {idx}</span>
                     <span className="text-[14px] pl-2 text-gray-500"> {item} </span>
                   </div>
 

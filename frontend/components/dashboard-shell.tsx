@@ -1,5 +1,5 @@
 "use client";
-import { FlaskConical, BookOpen, DoorClosedPackage, DatabaseZap } from "lucide-react";
+import { FlaskConical, BookOpen, DoorClosed, DatabaseZap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import StreakBadge from "@/components/streak-badge";
 
@@ -25,7 +25,7 @@ type DashboardShellProps = {
 const activity = [
   { icon: FlaskConical, title: "Networking Lab 2", meta: "Lab · today", result: "94%", tone: "text-emerald-600" },
   { icon: BookOpen, title: "Intro to Containers", meta: "Tutorial · yesterday", result: "Completed", tone: "text-slate-900" },
-  { icon: DoorClosedPackage, title: "Module 5: Storage", meta: "Module · 2 days ago", result: "88%", tone: "text-emerald-600" },
+  { icon: DoorClosed, title: "Module 5: Storage", meta: "Module · 2 days ago", result: "88%", tone: "text-emerald-600" },
   { icon: DatabaseZap, title: "Daily Challenge", meta: "Challenge · 3 days ago", result: "65%", tone: "text-amber-600" },
 ]
 
@@ -49,7 +49,7 @@ export default function DashboardShell({ user, role }: DashboardShellProps) {
 
   function handleSignOut() {
     // TODO: clear session/token here once auth is wired up
-    router.push("/");
+    router.push("/dashboard");
   }
 
   return (
@@ -58,20 +58,12 @@ export default function DashboardShell({ user, role }: DashboardShellProps) {
         {/* streak + sign out */}
         <div className="flex items-center justify-between gap-3">
           <StreakBadge streak={user.streak} />
-          <div className="flex  gap-3">
-            <button
-              onClick={handleSignOut}
-              className="flex h-10 items-center cursor-pointer justify-center rounded-full bg-slate-800 px-5 text-sm font-semibold text-gray-50 transition-colors hover:bg-slate-700"
-            >
-              Dashboard
-            </button>
-            <button
-              onClick={() => router.push("/profile")}
-              className="flex h-10 items-center justify-center cursor-pointer rounded-full bg-slate-800 px-5 text-sm font-semibold text-gray-50 transition-colors hover:bg-slate-700"
-            >
-              Account Setting
-            </button>
-          </div>
+          <button
+            onClick={() => router.push("/profile")}
+            className="flex h-10 items-center justify-center cursor-pointer rounded-full bg-slate-800 px-5 text-sm font-semibold text-gray-50 transition-colors hover:bg-slate-700"
+          >
+            Account Setting
+          </button>
 
 
         </div>
@@ -162,7 +154,9 @@ export default function DashboardShell({ user, role }: DashboardShellProps) {
           <ul className="divide-y divide-slate-900/10">
             {activity.map((a) => (
               <li key={a.title} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/50"><a.icon /></span>
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/50">
+                  <a.icon className=" text-black" />
+                </span>
                 <div className="text-sm text-slate-900">
                   {a.title}
                   <p className="text-xs text-slate-500">{a.meta}</p>
