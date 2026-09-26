@@ -106,18 +106,3 @@ def test_login_success(client: TestClient):
     assert "access_token" in body
     assert "token_type" in body
     assert body["token_type"] == "bearer"
-
-#def test_login_success(client: TestClient):
-    #user_data = {
-     #   "email": "jane.doe@example.com",
-      #  "password": "Supersecretpassword123",
-    #}
-    #response = client.post("/auth/login", json=user_data)
-
-    #assert response.status_code == 200
-    #body = response.json()
-    #assert "token" in body
-    #assert "user" in body
-    #assert body["user"]["email"] == "jane.doe@example.com"
-    #assert "id" in body["user"]
-    #assert "is_admin" in body["user"]
