@@ -91,15 +91,21 @@ def test_signup_normalizes_email_and_rejects_duplicate(client: TestClient):
 
 
 def test_login_success(client: TestClient):
-    client.post("/auth/signup", json={
-        "name": "Jane Doe",
-        "email": "jane.doe@example.com",
-        "password": "Supersecretpassword123",
-    })
-    response = client.post("/auth/signin", json={
-        "email": "jane.doe@example.com",
-        "password": "Supersecretpassword123",
-    })
+    client.post(
+        "/auth/signup",
+        json={
+            "name": "Jane Doe",
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
 
     assert response.status_code == 200
     body = response.json()
@@ -109,26 +115,34 @@ def test_login_success(client: TestClient):
 
 
 def test_login_invalid_password_returns_401(client: TestClient):
-    client.post("/auth/signup", json={
-        "name": "Jane Doe",
-        "email": "jane.doe@example.com",
-        "password": "Supersecretpassword123",
-    })
-    response = client.post("/auth/signin", json={
-        "email": "jane.doe@example.com",
-        "password": "Wrongpassword123",
-    })
+    client.post(
+        "/auth/signup",
+        json={
+            "name": "Jane Doe",
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "jane.doe@example.com",
+            "password": "Wrongpassword123",
+        },
+    )
 
     assert response.status_code == 401
     assert response.json()["detail"] == "Invalid email or password."
 
 
 def test_login_unknown_email_returns_401(client: TestClient):
-    response = client.post("/auth/signin", json={
-        "email": "unknown.email@example.com",
-        "password": "Supersecretpassword123",
-    })
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "unknown.email@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
 
     assert response.status_code == 401
     assert response.json()["detail"] == "Invalid email or password."
-    
