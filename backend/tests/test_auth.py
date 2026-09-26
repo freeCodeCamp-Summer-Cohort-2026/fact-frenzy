@@ -88,3 +88,36 @@ def test_signup_normalizes_email_and_rejects_duplicate(client: TestClient):
 
     assert response2.status_code == 409
     assert response2.json()["detail"] == "Email already registered."
+
+
+def test_login_success(client: TestClient):
+    client.post("/auth/signup", json={
+        "name": "Jane Doe",
+        "email": "jane.doe@example.com",
+        "password": "Supersecretpassword123",
+    })
+    response = client.post("/auth/signin", json={
+        "email": "jane.doe@example.com",
+        "password": "Supersecretpassword123",
+    })
+
+    assert response.status_code == 200
+    body = response.json()
+    assert "access_token" in body
+    assert "token_type" in body
+    assert body["token_type"] == "bearer"
+
+#def test_login_success(client: TestClient):
+    #user_data = {
+     #   "email": "jane.doe@example.com",
+      #  "password": "Supersecretpassword123",
+    #}
+    #response = client.post("/auth/login", json=user_data)
+
+    #assert response.status_code == 200
+    #body = response.json()
+    #assert "token" in body
+    #assert "user" in body
+    #assert body["user"]["email"] == "jane.doe@example.com"
+    #assert "id" in body["user"]
+    #assert "is_admin" in body["user"]
