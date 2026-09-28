@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.database import create_db_table
-from app.routers import auth, labs, users
+from app.routers import auth, labs, tutorials, users
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -26,6 +26,7 @@ app = FastAPI(
 app.include_router(users.router)
 app.include_router(auth.router)
 app.include_router(labs.router)
+app.include_router(tutorials.router)
 
 
 @app.get("/")

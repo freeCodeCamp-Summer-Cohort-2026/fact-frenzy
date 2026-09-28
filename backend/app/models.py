@@ -1,7 +1,7 @@
 import datetime
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, EmailStr, field_validator
+from pydantic import BaseModel, EmailStr, field_validator, model_validator
 from sqlmodel import Field, SQLModel
 
 
@@ -76,11 +76,28 @@ class Lab(SQLModel, table=True):
     module_id: int = Field(foreign_key="module.id")
 
 
+class Tutorial(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = Field(min_length=1, max_length=200)
+    description: str | None = Field(default=None, max_length=500)
+    module_id: int = Field(foreign_key="module.id")
+    content: str  # the "stuff to read/view to learn" text
+
+
 class Activity(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    lab_id: int = Field(foreign_key="lab.id")
+    lab_id: int | None = Field(default=None, foreign_key="lab.id")
+    tutorial_id: int | None = Field(default=None, foreign_key="tutorial.id")
     type: str  # "matching" | "sorting" - extensible for future types
     prompt: str | None = None  # e.g. instructions
+
+    @model_validator(mode="after")
+    def validate_exactly_one_parent(self) -> Activity:
+        if (self.lab_id is None) == (self.tutorial_id is None):
+            raise ValueError(
+                "Activity must belong to exactly one of lab_id or tutorial_id, not both or neither."
+            )
+        return self
 
 
 class Question(SQLModel, table=True):
@@ -123,4 +140,13 @@ class LabRead(SQLModel):
     title: str
     description: str | None
     module_id: int
+    activities: list[ActivityRead] = []
+
+
+class TutorialRead(SQLModel):
+    id: int
+    title: str
+    description: str | None
+    module_id: int
+    content: str
     activities: list[ActivityRead] = []
