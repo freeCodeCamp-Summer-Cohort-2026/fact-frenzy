@@ -1,7 +1,8 @@
 import datetime
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, EmailStr, field_validator, model_validator
+from pydantic import BaseModel, EmailStr, field_validator
+from sqlalchemy import CheckConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -85,19 +86,18 @@ class Tutorial(SQLModel, table=True):
 
 
 class Activity(SQLModel, table=True):
+    __table_args__ = (
+        CheckConstraint(
+            "(lab_id IS NULL) != (tutorial_id IS NULL)",
+            name="activity_exactly_one_parent",
+        ),
+    )
+
     id: int | None = Field(default=None, primary_key=True)
     lab_id: int | None = Field(default=None, foreign_key="lab.id")
     tutorial_id: int | None = Field(default=None, foreign_key="tutorial.id")
     type: str  # "matching" | "sorting" - extensible for future types
     prompt: str | None = None  # e.g. instructions
-
-    @model_validator(mode="after")
-    def validate_exactly_one_parent(self) -> Activity:
-        if (self.lab_id is None) == (self.tutorial_id is None):
-            raise ValueError(
-                "Activity must belong to exactly one of lab_id or tutorial_id, not both or neither."
-            )
-        return self
 
 
 class Question(SQLModel, table=True):

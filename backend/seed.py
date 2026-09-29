@@ -465,7 +465,10 @@ def seed_tutorials(session: Session) -> None:
 
             for tut_data in module_data["tutorials"]:
                 existing_tutorial = session.exec(
-                    select(Tutorial).where(Tutorial.title == tut_data["title"])
+                    select(Tutorial).where(
+                        Tutorial.title == tut_data["title"],
+                        Tutorial.module_id == module.id,
+                    )
                 ).first()
 
                 if existing_tutorial:
