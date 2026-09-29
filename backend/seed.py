@@ -282,28 +282,27 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Country Highlights",
-                    "content": "Every country has something that makes it stand out: a record, a quirky tradition, or a different way of doing things. Japan is an archipelago of thousands of islands, and Ethiopia even uses its own calendar. Let's see which highlights are true.",
-                    "type": "sorting",
-                    "prompt": "Sort each fact into True or Untrue.",
-                    "sorting_facts": [
-                        ("Japan is made up of more than 6,000 islands.", True),
-                        ("Ethiopia's calendar has 13 months.", True),
+                    "content": "Every country has something that makes it stand out — a record, a tradition, or a different way of doing things. Some countries have unusual customs that may seem surprising to outsiders. Others are known for natural features, inventions, or remarkable achievements. How much do you know about what makes different countries unique?",
+                    "prompt": "Match each country to its highlight.",
+                    "matching_pairs": [
+                        ("Ethiopia", "Has a 13-month calendar"),
                         (
-                            "The Great Pyramid of Giza is the tallest man-made structure in the world today.",
-                            False,
+                            "Russia",
+                            "Spans 11 time zones, more than any other country's contiguous territory",
                         ),
+                        ("Japan", "Made up of over 6,000 islands"),
+                        ("Colombia", "Home to vallenato music"),
                     ],
                 },
                 {
                     "title": "Match Capitals",
-                    "content": "A country's capital isn't always its biggest or best-known city. Nigeria's largest city is Lagos, but its capital is Abuja, and Canada's capital is Ottawa, not Toronto. Some countries even move their capitals on purpose. Match each country to its capital.",
-                    "type": "matching",
-                    "prompt": "Match each country to its capital.",
+                    "content": "A country's capital isn't always its biggest or best-known city. Some capitals were chosen for historical, political, or geographical reasons. Around the world, capital cities can have stories that are just as interesting as the countries they represent.",
+                    "prompt": "Match each capital to its country.",
                     "matching_pairs": [
-                        ("Canada", "Ottawa"),
-                        ("Nigeria", "Abuja"),
-                        ("Peru", "Lima"),
-                        ("Poland", "Warsaw"),
+                        ("Astana", "Kazakhstan"),
+                        ("Naypyidaw", "Myanmar"),
+                        ("Sri Jayawardenepura Kotte", "Sri Lanka"),
+                        ("Baku", "Azerbaijan"),
                     ],
                 },
             ],
@@ -313,31 +312,27 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "What Belongs Where?",
-                    "content": "Every continent has famous rivers and mountain ranges that help define it. The Nile flows through northeastern Africa, while the Andes run along the western edge of South America. Match each landmark to its continent.",
-                    "type": "matching",
-                    "prompt": "Match each landmark to its continent.",
+                    "content": "Every continent has famous rivers and mountain ranges that help define it. Some waterways stretch across enormous distances and have shaped civilizations for thousands of years. Mountain ranges can influence climate, wildlife, and even where people live.",
+                    "prompt": "Match each landmark to the continent it belongs to.",
                     "matching_pairs": [
-                        ("Nile River", "Africa"),
-                        ("Ganges River", "Asia"),
-                        ("Andes Mountains", "South America"),
-                        ("Danube River", "Europe"),
+                        ("Congo River", "Africa"),
+                        ("Sagarmatha", "Asia"),
+                        ("Amazon Rainforest", "South America"),
+                        ("The Alps", "Europe"),
                     ],
                 },
                 {
                     "title": "Continent Extremes",
-                    "content": "Continents hold some of the planet's biggest records. Asia is enormous, Antarctica is remarkably empty, and Africa is home to fast-growing cities. Let's sort a few extreme facts.",
-                    "type": "sorting",
-                    "prompt": "Sort each fact into True or Untrue.",
-                    "sorting_facts": [
+                    "content": "There are seven continents on Earth, and each one has its own remarkable extremes. Some stand out because of their size or geography, while others have unusual climates or population patterns. Which continent holds which surprising record?",
+                    "prompt": "Match each continent to its extreme.",
+                    "matching_pairs": [
+                        ("Asia", "Largest and most populated continent"),
+                        ("Antarctica", "No permanent residents"),
+                        ("Australia", "Flattest continent"),
                         (
-                            "Asia is both the largest and the most populated continent.",
-                            True,
+                            "Africa",
+                            "Only continent spanning all four hemispheres",
                         ),
-                        (
-                            "Africa has the largest population of any continent.",
-                            False,
-                        ),
-                        ("Antarctica has no permanent residents.", True),
                     ],
                 },
             ],
@@ -349,31 +344,36 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Organs & Functions",
-                    "content": "Every organ has a specific job. Your liver produces bile to help digest fats, and your lungs bring oxygen into your blood. Let's test what you know about a few organs.",
-                    "type": "sorting",
-                    "prompt": "Sort each fact into True or Untrue.",
-                    "sorting_facts": [
-                        ("The liver produces bile to help digest fats.", True),
+                    "content": "Your body contains organs that perform incredibly different jobs, often without you noticing. Many of them work around the clock to keep you alive and balanced. Some organs even perform several important tasks at once.",
+                    "prompt": "Match each organ or body part to its function.",
+                    "matching_pairs": [
                         (
-                            "Most nutrient absorption happens in the stomach.",
-                            False,
+                            "Adult human skeleton",
+                            "Supports the body and protects organs; made up of 206 bones",
                         ),
                         (
-                            "Humans have two lungs, and the left one is slightly smaller than the right.",
-                            True,
+                            "Lung",
+                            "Helps exchange gases; one of two respiratory organs containing alveoli",
+                        ),
+                        (
+                            "Small Intestine",
+                            "Absorbs most nutrients from digested food",
+                        ),
+                        (
+                            "Spinal Cord",
+                            "Carries signals between the brain and body",
                         ),
                     ],
                 },
                 {
                     "title": "Organs by System",
-                    "content": "Organs don't work alone. They team up in systems. The brain leads the nervous system, and the trachea carries air as part of the respiratory system. Match each organ to its system.",
-                    "type": "matching",
-                    "prompt": "Match each organ to its body system.",
+                    "content": "Organs don't work alone — they team up in systems. These systems constantly communicate and cooperate to keep your body functioning. A problem in one part can sometimes affect several others, showing just how connected the human body is.",
+                    "prompt": "Match each body system to an organ that belongs to it.",
                     "matching_pairs": [
-                        ("Trachea", "Respiratory System"),
-                        ("Bladder", "Urinary System"),
-                        ("Stomach", "Digestive System"),
-                        ("Brain", "Nervous System"),
+                        ("Lymphatic System", "Spleen"),
+                        ("Urinary System", "Kidneys"),
+                        ("Digestive and Endocrine Systems", "Pancreas"),
+                        ("Integumentary System", "Skin"),
                     ],
                 },
             ],
@@ -383,25 +383,39 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Animals & Habitats",
-                    "content": "Animals are built for the places they live. Thick fur helps polar bears survive freezing Arctic conditions, while meerkats thrive in dry desert environments. Match each animal to its habitat.",
-                    "type": "matching",
-                    "prompt": "Match each animal to its habitat.",
+                    "content": "Animals live in environments ranging from scorching deserts to freezing polar regions. Their bodies and behaviors often reflect the challenges of the places they inhabit. Some animals can survive conditions that would be extremely difficult for humans.",
+                    "prompt": "Match each habitat to the animal that calls it home.",
                     "matching_pairs": [
-                        ("Meerkat", "Desert"),
-                        ("Polar Bear", "Arctic"),
-                        ("Poison Dart Frog", "Rainforest"),
-                        ("Sea Otter", "Coastal Waters"),
+                        (
+                            "Deserts and Semi-Deserts of Southern Africa",
+                            "Meerkat",
+                        ),
+                        ("Madagascar's Dry Forests", "Fossa"),
+                        (
+                            "Tropical Rainforests of Central and South America",
+                            "Sloth",
+                        ),
+                        (
+                            "Temperate Coasts of Southern Australia",
+                            "Leafy Seadragon",
+                        ),
                     ],
                 },
                 {
                     "title": "Adaptations & Survival",
-                    "content": "Animals have some surprising survival tricks, and some mammals break the usual rules. Let's sort a few facts about how animals adapt.",
-                    "type": "sorting",
-                    "prompt": "Sort each fact into True or Untrue.",
-                    "sorting_facts": [
-                        ("Platypuses are mammals that lay eggs.", True),
-                        ("A camel's hump is filled with water.", False),
-                        ("Bats are completely blind.", False),
+                    "content": "Animals have evolved some truly surprising ways to survive. Some adaptations help them find food, avoid predators, or cope with harsh environments. Others are so unusual that they can completely change what you might expect from an animal.",
+                    "prompt": "Match each animal to its adaptation.",
+                    "matching_pairs": [
+                        ("Platypus", "One of the few mammals that lays eggs"),
+                        ("Camel", "Stores fat in its hump"),
+                        (
+                            "Narwhal",
+                            "Uses its thick blubber to stay warm in freezing Arctic waters",
+                        ),
+                        (
+                            "Fennec Fox",
+                            "Relies on its large ears to release heat in the Sahara Desert",
+                        ),
                     ],
                 },
             ],
@@ -458,9 +472,10 @@ def seed_tutorials(session: Session) -> None:
                 session.commit()
                 session.refresh(tutorial)
 
+                # We have only matching activity for each tutorial
                 activity = Activity(
                     tutorial_id=tutorial.id,
-                    type=tut_data["type"],
+                    type="matching",
                     prompt=tut_data["prompt"],
                 )
 
@@ -468,43 +483,20 @@ def seed_tutorials(session: Session) -> None:
                 session.commit()
                 session.refresh(activity)
 
-                if tut_data["type"] == "matching":
-                    for item, match in tut_data["matching_pairs"]:
-                        question = Question(activity_id=activity.id, text=item)
-                        session.add(question)
-                        session.commit()
-                        session.refresh(question)
+                for item, match in tut_data["matching_pairs"]:
+                    question = Question(activity_id=activity.id, text=item)
+                    session.add(question)
+                    session.commit()
+                    session.refresh(question)
 
-                        session.add(
-                            Option(
-                                question_id=question.id,
-                                text=match,
-                                is_correct=True,
-                            )
+                    session.add(
+                        Option(
+                            question_id=question.id,
+                            text=match,
+                            is_correct=True,
                         )
-                        session.commit()
-                else:  # for sorting
-                    for text, is_true in tut_data["sorting_facts"]:
-                        question = Question(activity_id=activity.id, text=text)
-                        session.add(question)
-                        session.commit()
-                        session.refresh(question)
-
-                        session.add_all(
-                            [
-                                Option(
-                                    question_id=question.id,
-                                    text="True",
-                                    is_correct=is_true,
-                                ),
-                                Option(
-                                    question_id=question.id,
-                                    text="Untrue",
-                                    is_correct=not is_true,
-                                ),
-                            ]
-                        )
-                        session.commit()
+                    )
+                    session.commit()
 
                 tutorial_count += 1
 
