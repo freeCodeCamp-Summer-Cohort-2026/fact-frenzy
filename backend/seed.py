@@ -297,12 +297,21 @@ TUTORIAL_CONTENT = {
                 {
                     "title": "Match Capitals",
                     "content": "A country's capital isn't always its biggest or best-known city. Some capitals were chosen for historical, political, or geographical reasons. Around the world, capital cities can have stories that are just as interesting as the countries they represent.",
-                    "prompt": "Match each capital to its country.",
+                    "prompt": "Match each capital to its country and a clue about it.",
                     "matching_pairs": [
-                        ("Astana", "Kazakhstan"),
-                        ("Naypyidaw", "Myanmar"),
-                        ("Sri Jayawardenepura Kotte", "Sri Lanka"),
-                        ("Baku", "Azerbaijan"),
+                        (
+                            "Astana",
+                            "Kazakhstan & one of the world's coldest capital cities",
+                        ),
+                        (
+                            "Naypyidaw",
+                            "Myanmar & a purpose-built capital with unusually wide roads",
+                        ),
+                        (
+                            "Sri Jayawardenepura Kotte",
+                            "Sri Lanka & the country's legislative capital, home to the country's Parliament",
+                        ),
+                        ("Baku", "Azerbaijan & known as the 'City of Winds'"),
                     ],
                 },
             ],
@@ -312,7 +321,7 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "What Belongs Where?",
-                    "content": "Every continent has famous rivers and mountain ranges that help define it. Some waterways stretch across enormous distances and have shaped civilizations for thousands of years. Mountain ranges can influence climate, wildlife, and even where people live.",
+                    "content": "Every continent has famous landmarks, like rivers and mountain ranges, that help define it. Some waterways stretch across enormous distances and have shaped civilizations for thousands of years. Mountain ranges can influence climate, wildlife, and even where people live.",
                     "prompt": "Match each landmark to the continent it belongs to.",
                     "matching_pairs": [
                         ("Congo River", "Africa"),
