@@ -13,7 +13,7 @@ import SortingExercise from "../../components/SortingExercise";
 export default function ChallengePage() {
     return (
 			<main className="bg-slate-50 dark:bg-[#0a0a0a] min-h-screen w-full max-w-6xl mx-auto px-4 py-8 flex flex-col gap-4">
-				<h1 className="text-3xl font-extrabold text-center text-[#A60362] dark:text-[#CB3A8E] mb-2 sm:text-4xl">
+				<h1 className="mt-4 text-3xl font-extrabold text-center text-[#A60362] dark:text-[#CB3A8E] mb-2 sm:text-4xl">
 					[Module_name] Challenge:{" "}
 					<span className="text-slate-900 dark:text-slate-200">
 						[Challenge_name]
@@ -31,20 +31,20 @@ export default function ChallengePage() {
 					</p>
 					<div className="text-slate-700 dark:text-slate-200">
 						<p className="mt-3 text-lg sm:text-xl">
-							In the activities below, drag boxes onto their correct answers. See
-							the bottom of the page for your scores.
+							In the activities below, drag boxes onto their correct answers.
+							See the bottom of the page for your scores.
 						</p>
 						<div className="mt-5 text-left text-lg sm:text-xl">
 							<p>
-								<strong>Challenge score:</strong> Each correct earns 10 challenge
-								points. But if you get any answers wrong, then you lose 10
-								challenge points.{" "}
+								<strong>Challenge score:</strong> Each correct earns 10
+								challenge points. But if you get any answers wrong, then you
+								lose 10 challenge points.{" "}
 							</p>
 							<p className="mt-3">
 								<strong>Leaderboard score:</strong> Your total challenge points
 								after the lab is complete are added to your weekly leaderboard
-								score (or deducted from that score, if the total challenge points
-								are negative).
+								score (or deducted from that score, if the total challenge
+								points are negative).
 							</p>
 						</div>
 					</div>
@@ -60,18 +60,22 @@ export default function ChallengePage() {
 				<hr className="border-t border-slate-400 dark:border-slate-900 my-2 max-w-xl w-full mx-auto" />
 
 				{/* Scores section: sample values hardcoded until we can hook up to scores in backend */}
-				<section className="mx-auto p-4 sm:px-6 text-center font-bold uppercase text-xl sm:text-2xl">
+				<section className="mx-auto p-4 sm:px-6 text-center">
 					{/* The idea is to set challenge points green if positive, red if negative (not done yet here) */}
-					<p>
-						Challenge points total:{" "}
-						<span className="text-emerald-600 dark:text-emerald-400">+50</span>
-					</p>
-					<p className="mt-5">
-						<span className="text-[#A60362] dark:text-[#CB3A8E]">
-							Leaderboard points total:
-						</span>{" "}
-						12550
-					</p>
+					<div className="font-semibold text-xl sm:text-2xl">
+						<p>
+							Challenge points total:{" "}
+							<span className="text-emerald-600 dark:text-emerald-400">
+								+50
+							</span>
+						</p>
+						<p>
+							<span className="text-[#A60362] dark:text-[#CB3A8E]">
+								Leaderboard points total:
+							</span>{" "}
+							12550
+						</p>
+					</div>
 				</section>
 			</main>
 		);
