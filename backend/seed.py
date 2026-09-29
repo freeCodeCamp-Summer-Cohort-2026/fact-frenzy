@@ -348,7 +348,7 @@ TUTORIAL_CONTENT = {
                     "prompt": "Match each organ or body part to its function.",
                     "matching_pairs": [
                         (
-                            "Adult human skeleton",
+                            "Adult Human Skeleton",
                             "Supports the body and protects organs; made up of 206 bones",
                         ),
                         (
