@@ -71,7 +71,12 @@ def get_lab(lab_id: int, session: Session = Depends(get_session)):
 
 @router.get("/activities/{activity_id}", response_model=ActivityRead)
 def get_activity(activity_id: int, session: Session = Depends(get_session)):
-    activity = session.get(Activity, activity_id)
+    activity = session.exec(
+        select(Activity).where(
+            Activity.id == activity_id,
+            Activity.lab_id.is_not(None),
+        )
+    ).first()
     if activity is None:
         raise HTTPException(status_code=404, detail="Activity not found")
 
