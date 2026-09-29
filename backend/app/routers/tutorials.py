@@ -66,12 +66,3 @@ def get_tutorial(tutorial_id: int, session: Session = Depends(get_session)):
         raise HTTPException(status_code=404, detail="Tutorial not found")
 
     return _build_tutorial_read(tutorial, session)
-
-
-@router.get("/activities/{activity_id}", response_model=ActivityRead)
-def get_activity(activity_id: int, session: Session = Depends(get_session)):
-    activity = session.get(Activity, activity_id)
-    if activity is None:
-        raise HTTPException(status_code=404, detail="Activity not found")
-
-    return _build_activity_read(activity, session)
