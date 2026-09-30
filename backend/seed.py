@@ -282,6 +282,7 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Country Highlights",
+                    "description": "See what makes countries around the world unique.",
                     "content": "Every country has something that makes it stand out — a record, a tradition, or a different way of doing things. Some countries have unusual customs that may seem surprising to outsiders. Others are known for natural features, inventions, or remarkable achievements. How much do you know about what makes different countries unique?",
                     "prompt": "Match each country to its highlight.",
                     "matching_pairs": [
@@ -296,6 +297,7 @@ TUTORIAL_CONTENT = {
                 },
                 {
                     "title": "Match Capitals",
+                    "description": "Learn the real capitals behind each country, plus a fun fact for each.",
                     "content": "A country's capital isn't always its biggest or best-known city. Some capitals were chosen for historical, political, or geographical reasons. Around the world, capital cities can have stories that are just as interesting as the countries they represent.",
                     "prompt": "Match each capital to its country and a clue about it.",
                     "matching_pairs": [
@@ -321,6 +323,7 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "What Belongs Where?",
+                    "description": "Mountains, rivers, and rainforests — can you tell which continent they're part of?",
                     "content": "Every continent has famous landmarks, like rivers and mountain ranges, that help define it. Some waterways stretch across enormous distances and have shaped civilizations for thousands of years. Mountain ranges can influence climate, wildlife, and even where people live.",
                     "prompt": "Match each landmark to the continent it belongs to.",
                     "matching_pairs": [
@@ -332,6 +335,7 @@ TUTORIAL_CONTENT = {
                 },
                 {
                     "title": "Continent Extremes",
+                    "description": "Discover the records that make each continent stand out.",
                     "content": "There are seven continents on Earth, and each one has its own remarkable extremes. Some stand out because of their size or geography, while others have unusual climates or population patterns. Which continent holds which surprising record?",
                     "prompt": "Match each continent to its extreme.",
                     "matching_pairs": [
@@ -353,6 +357,7 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Organs & Functions",
+                    "description": "Meet the body parts that keep you going every day.",
                     "content": "Your body contains organs that perform incredibly different jobs, often without you noticing. Many of them work around the clock to keep you alive and balanced. Some organs even perform several important tasks at once.",
                     "prompt": "Match each organ or body part to its function.",
                     "matching_pairs": [
@@ -376,6 +381,7 @@ TUTORIAL_CONTENT = {
                 },
                 {
                     "title": "Organs by System",
+                    "description": "See how your organs work together as a team.",
                     "content": "Organs don't work alone — they team up in systems. These systems constantly communicate and cooperate to keep your body functioning. A problem in one part can sometimes affect several others, showing just how connected the human body is.",
                     "prompt": "Match each body system to an organ that belongs to it.",
                     "matching_pairs": [
@@ -392,6 +398,7 @@ TUTORIAL_CONTENT = {
             "tutorials": [
                 {
                     "title": "Animals & Habitats",
+                    "description": "From dry forests to coastal waters — who lives where?",
                     "content": "Animals live in environments ranging from scorching deserts to freezing polar regions. Their bodies and behaviors often reflect the challenges of the places they inhabit. Some animals can survive conditions that would be extremely difficult for humans.",
                     "prompt": "Match each habitat to the animal that calls it home.",
                     "matching_pairs": [
@@ -412,6 +419,7 @@ TUTORIAL_CONTENT = {
                 },
                 {
                     "title": "Adaptations & Survival",
+                    "description": "Explore some fascinating traits that help animals survive.",
                     "content": "Animals have evolved some truly surprising ways to survive. Some adaptations help them find food, avoid predators, or cope with harsh environments. Others are so unusual that they can completely change what you might expect from an animal.",
                     "prompt": "Match each animal to its adaptation.",
                     "matching_pairs": [
@@ -476,7 +484,7 @@ def seed_tutorials(session: Session) -> None:
 
                 tutorial = Tutorial(
                     title=tut_data["title"],
-                    description=None,
+                    description=tut_data["description"],
                     module_id=module.id,
                     content=tut_data["content"],
                 )

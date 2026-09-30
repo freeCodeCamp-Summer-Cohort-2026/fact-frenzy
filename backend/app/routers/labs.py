@@ -17,17 +17,25 @@ router = APIRouter(prefix="/labs", tags=["labs"])
 
 
 def _build_question_read(question: Question, session: Session) -> QuestionRead:
+    assert question.id is not None
     options = session.exec(
         select(Option).where(Option.question_id == question.id)
     ).all()
+
+    options_read = []
+    for o in options:
+        assert o.id is not None
+        options_read.append(OptionRead(id=o.id, text=o.text))
+
     return QuestionRead(
         id=question.id,
         text=question.text,
-        options=[OptionRead(id=o.id, text=o.text) for o in options],
+        options=options_read,
     )
 
 
 def _build_activity_read(activity: Activity, session: Session) -> ActivityRead:
+    assert activity.id is not None
     questions = session.exec(
         select(Question).where(Question.activity_id == activity.id)
     ).all()
@@ -40,6 +48,7 @@ def _build_activity_read(activity: Activity, session: Session) -> ActivityRead:
 
 
 def _build_lab_read(lab: Lab, session: Session) -> LabRead:
+    assert lab.id is not None
     activities = session.exec(
         select(Activity).where(Activity.lab_id == lab.id)
     ).all()
