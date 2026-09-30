@@ -297,7 +297,7 @@ TUTORIAL_CONTENT = {
                 },
                 {
                     "title": "Match Capitals",
-                    "description": "Learn the real capitals behind each country, plus a fun fact for each.",
+                    "description": "Learn each country's capital, plus a fun fact about each one.",
                     "content": "A country's capital isn't always its biggest or best-known city. Some capitals were chosen for historical, political, or geographical reasons. Around the world, capital cities can have stories that are just as interesting as the countries they represent.",
                     "prompt": "Match each capital to its country and a clue about it.",
                     "matching_pairs": [
@@ -307,11 +307,11 @@ TUTORIAL_CONTENT = {
                         ),
                         (
                             "Naypyidaw",
-                            "Myanmar & a purpose-built capital with unusually wide roads",
+                            "Myanmar & a purpose-built capital famous for its unusually wide, almost empty roads",
                         ),
                         (
                             "Sri Jayawardenepura Kotte",
-                            "Sri Lanka & the country's legislative capital, home to the country's Parliament",
+                            "Sri Lanka & the country's legislative capital, where Parliament sits on a man-made island in a lake",
                         ),
                         ("Baku", "Azerbaijan & known as the 'City of Winds'"),
                     ],
