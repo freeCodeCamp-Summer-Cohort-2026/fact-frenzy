@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
@@ -11,7 +13,9 @@ from app.models import (
     OptionRead,
     Question,
     QuestionRead,
+    User,
 )
+from app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/labs", tags=["labs"])
 
@@ -62,7 +66,10 @@ def _build_lab_read(lab: Lab, session: Session) -> LabRead:
 
 
 @router.get("/", response_model=list[LabRead])
-def list_labs(session: Session = Depends(get_session)):
+def list_labs(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+):
     labs = session.exec(select(Lab)).all()
     return [_build_lab_read(lab, session) for lab in labs]
 
@@ -70,7 +77,11 @@ def list_labs(session: Session = Depends(get_session)):
 @router.get(
     "/{lab_id}", response_model=LabRead
 )  # we're getting an individual lab here
-def get_lab(lab_id: int, session: Session = Depends(get_session)):
+def get_lab(
+    lab_id: int,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+):
     lab = session.get(Lab, lab_id)
     if lab is None:
         raise HTTPException(status_code=404, detail="Lab not found")
@@ -79,7 +90,11 @@ def get_lab(lab_id: int, session: Session = Depends(get_session)):
 
 
 @router.get("/activities/{activity_id}", response_model=ActivityRead)
-def get_activity(activity_id: int, session: Session = Depends(get_session)):
+def get_activity(
+    activity_id: int,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+):
     activity = session.exec(
         select(Activity).where(
             Activity.id == activity_id,

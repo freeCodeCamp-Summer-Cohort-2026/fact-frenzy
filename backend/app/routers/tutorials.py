@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
@@ -11,7 +13,9 @@ from app.models import (
     QuestionRead,
     Tutorial,
     TutorialRead,
+    User,
 )
+from app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/tutorials", tags=["tutorials"])
 
@@ -63,13 +67,20 @@ def _build_tutorial_read(tutorial: Tutorial, session: Session) -> TutorialRead:
 
 
 @router.get("/", response_model=list[TutorialRead])
-def list_tutorials(session: Session = Depends(get_session)):
+def list_tutorials(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+):
     tutorials = session.exec(select(Tutorial)).all()
     return [_build_tutorial_read(t, session) for t in tutorials]
 
 
 @router.get("/{tutorial_id}", response_model=TutorialRead)
-def get_tutorial(tutorial_id: int, session: Session = Depends(get_session)):
+def get_tutorial(
+    tutorial_id: int,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+):
     tutorial = session.get(Tutorial, tutorial_id)
     if tutorial is None:
         raise HTTPException(status_code=404, detail="Tutorial not found")
