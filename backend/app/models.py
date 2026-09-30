@@ -88,7 +88,7 @@ class Tutorial(SQLModel, table=True):
 class Activity(SQLModel, table=True):
     __table_args__ = (
         CheckConstraint(
-            "(lab_id IS NULL) != (tutorial_id IS NULL)",
+            "(lab_id IS NULL) <> (tutorial_id IS NULL)",
             name="activity_exactly_one_parent",
         ),
     )
