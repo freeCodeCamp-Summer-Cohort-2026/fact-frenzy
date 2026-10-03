@@ -7,17 +7,17 @@ from app.database import get_session
 from app.models import (
     Activity,
     ActivityRead,
-    Lab,
-    LabRead,
     Option,
     OptionRead,
     Question,
     QuestionRead,
+    Tutorial,
+    TutorialRead,
     User,
 )
 from app.routers.auth import get_current_user
 
-router = APIRouter(prefix="/labs", tags=["labs"])
+router = APIRouter(prefix="/tutorials", tags=["tutorials"])
 
 
 def _build_question_read(question: Question, session: Session) -> QuestionRead:
@@ -51,57 +51,38 @@ def _build_activity_read(activity: Activity, session: Session) -> ActivityRead:
     )
 
 
-def _build_lab_read(lab: Lab, session: Session) -> LabRead:
-    assert lab.id is not None
+def _build_tutorial_read(tutorial: Tutorial, session: Session) -> TutorialRead:
+    assert tutorial.id is not None
     activities = session.exec(
-        select(Activity).where(Activity.lab_id == lab.id)
+        select(Activity).where(Activity.tutorial_id == tutorial.id)
     ).all()
-    return LabRead(
-        id=lab.id,
-        title=lab.title,
-        description=lab.description,
-        module_id=lab.module_id,
+    return TutorialRead(
+        id=tutorial.id,
+        title=tutorial.title,
+        description=tutorial.description,
+        module_id=tutorial.module_id,
+        content=tutorial.content,
         activities=[_build_activity_read(a, session) for a in activities],
     )
 
 
-@router.get("/", response_model=list[LabRead])
-def list_labs(
+@router.get("/", response_model=list[TutorialRead])
+def list_tutorials(
     current_user: Annotated[User, Depends(get_current_user)],
     session: Session = Depends(get_session),
 ):
-    labs = session.exec(select(Lab)).all()
-    return [_build_lab_read(lab, session) for lab in labs]
+    tutorials = session.exec(select(Tutorial)).all()
+    return [_build_tutorial_read(t, session) for t in tutorials]
 
 
-@router.get(
-    "/{lab_id}", response_model=LabRead
-)  # we're getting an individual lab here
-def get_lab(
-    lab_id: int,
+@router.get("/{tutorial_id}", response_model=TutorialRead)
+def get_tutorial(
+    tutorial_id: int,
     current_user: Annotated[User, Depends(get_current_user)],
     session: Session = Depends(get_session),
 ):
-    lab = session.get(Lab, lab_id)
-    if lab is None:
-        raise HTTPException(status_code=404, detail="Lab not found")
+    tutorial = session.get(Tutorial, tutorial_id)
+    if tutorial is None:
+        raise HTTPException(status_code=404, detail="Tutorial not found")
 
-    return _build_lab_read(lab, session)
-
-
-@router.get("/activities/{activity_id}", response_model=ActivityRead)
-def get_activity(
-    activity_id: int,
-    current_user: Annotated[User, Depends(get_current_user)],
-    session: Session = Depends(get_session),
-):
-    activity = session.exec(
-        select(Activity).where(
-            Activity.id == activity_id,
-            Activity.lab_id.is_not(None),
-        )
-    ).first()
-    if activity is None:
-        raise HTTPException(status_code=404, detail="Activity not found")
-
-    return _build_activity_read(activity, session)
+    return _build_tutorial_read(tutorial, session)
