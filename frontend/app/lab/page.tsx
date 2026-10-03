@@ -1,8 +1,8 @@
 import MatchingExercise from "../../components/MatchingExercise";
 import SortingExercise from "../../components/SortingExercise";
 
-// Draft template page for challenges. The idea would be to have everything here remain the same except the activities
-// section, which would change dynamically based on data from the backend. Hopefully, [Module_name], [Challenge_name], 
+// Draft template page for labs. The idea would be to have everything here remain the same except the activities
+// section, which would change dynamically based on data from the backend. Hopefully, [Module_name], [Lab_name], 
 // and [Activity_descriptions] below could also come from backend data once hooked up.
 
 // For the moment, the activities from the /try page are inserted here while working on how to pull dynamic data
@@ -10,13 +10,13 @@ import SortingExercise from "../../components/SortingExercise";
 
 // TO DO: connect page to backend to pull in data from API
 
-export default function ChallengePage() {
+export default function LabPage() {
     return (
 			<main className="bg-slate-50 dark:bg-[#0a0a0a] min-h-screen w-full max-w-6xl mx-auto px-4 py-8 flex flex-col gap-4">
 				<h1 className="mt-4 text-3xl font-extrabold text-center text-[#A60362] dark:text-[#CB3A8E] mb-2 sm:text-4xl">
-					[Module_name] Challenge:{" "}
+					[Module_name] Lab:{" "}
 					<span className="text-slate-900 dark:text-slate-200">
-						[Challenge_name]
+						[Lab_name]
 					</span>
 				</h1>
 
@@ -36,14 +36,14 @@ export default function ChallengePage() {
 						</p>
 						<div className="mt-5 text-left text-lg sm:text-xl">
 							<p>
-								<strong>Challenge score:</strong> Each correct earns 10
-								challenge points. But if you get any answers wrong, then you
-								lose 10 challenge points.{" "}
+								<strong>Lab score:</strong> Each correct earns 10
+								lab points. But if you get any answers wrong, then you
+								lose 10 lab points.{" "}
 							</p>
 							<p className="mt-3">
-								<strong>Leaderboard score:</strong> Your total challenge points
+								<strong>Leaderboard score:</strong> Your total lab points
 								after the lab is complete are added to your weekly leaderboard
-								score (or deducted from that score, if the total challenge
+								score (or deducted from that score, if the total lab
 								points are negative).
 							</p>
 						</div>
@@ -64,7 +64,7 @@ export default function ChallengePage() {
 					{/* The idea is to set challenge points green if positive, red if negative (not done yet here) */}
 					<div className="font-semibold text-xl sm:text-2xl">
 						<p>
-							Challenge points total:{" "}
+							Lab points total:{" "}
 							<span className="text-emerald-600 dark:text-emerald-400">
 								+50
 							</span>
