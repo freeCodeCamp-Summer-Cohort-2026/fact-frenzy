@@ -179,7 +179,8 @@ def seed_labs(session: Session) -> None:
         for module_data in modules:
             module = session.exec(
                 select(Module).where(
-                    Module.title == module_data["module_title"]
+                    Module.title == module_data["module_title"],
+                    Module.category_id == category.id,
                 )
             ).first()
 
@@ -458,7 +459,8 @@ def seed_tutorials(session: Session) -> None:
         for module_data in modules:
             module = session.exec(
                 select(Module).where(
-                    Module.title == module_data["module_title"]
+                    Module.title == module_data["module_title"],
+                    Module.category_id == category.id,
                 )
             ).first()
 
