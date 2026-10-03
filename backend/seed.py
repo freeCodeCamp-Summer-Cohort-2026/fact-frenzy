@@ -1,3 +1,6 @@
+import logging
+import os
+
 from sqlmodel import Session, select
 
 from app.core.security import hash_password
@@ -13,7 +16,7 @@ from app.models import (
     User,
 )
 
-SEED_PASSWORD = "dev-password123"  # Default password for seeded users
+SEED_PASSWORD = os.environ.get("SEED_PASSWORD", "dev-password123")
 
 USERS = [
     {
@@ -43,8 +46,14 @@ USERS = [
     },
 ]
 
+logger = logging.getLogger(__name__)
+
 
 def seed() -> None:
+    if "SEED_PASSWORD" not in os.environ:
+        logger.warning(
+            "SEED_PASSWORD not set in environment; using insecure default for local dev only."
+        )
     create_db_table()
 
     with Session(engine) as session:
