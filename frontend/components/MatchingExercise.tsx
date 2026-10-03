@@ -81,10 +81,10 @@ export default function MatchingExercise() {
 
                     return (
                         <div
-                        key={pair.id}
-						draggable
-                        onDragStart={(e) => handleDragStart(e, pair.id)}
-						className="p-3 bg-slate-800 text-white rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-slate-700 transition-colors select-none"
+                            key={pair.id}
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, pair.id)}
+                            className="p-3 bg-[#62d0f3] text-black rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-[#37BAE4] transition-colors select-none"
                         >
                             {pair.capital}
                         </div>
