@@ -54,17 +54,17 @@ export default function DashboardShell({ user, role }: DashboardShellProps) {
         {/* game mode buttons */}
         <section className="flex flex-col items-center gap-4 rounded-2xl bg-white/80 p-6 sm:flex-row sm:justify-center">
         <button
-        onClick={() => router.push("/practice")}
+        onClick={() => router.push("/geography")}
         className="flex h-12 w-full items-center justify-center rounded-full bg-slate-800 px-8 text-lg font-bold text-gray-50 transition-colors hover:bg-slate-700 sm:w-auto"
         >
-          Practice
+          Geography
         </button>
 
         <button
-        onClick={() => router.push("/challenge")}
+        onClick={() => router.push("/biology")}
         className="flex h-12 w-full items-center justify-center rounded-full bg-slate-800 px-8 text-lg font-bold text-gray-50 transition-colors hover:bg-slate-700 sm:w-auto"
         >
-          Challenge
+          Biology
         </button>
         </section>
 
