@@ -1,10 +1,22 @@
+import logging
+import os
+
 from sqlmodel import Session, select
 
 from app.core.security import hash_password
 from app.database import create_db_table, engine
-from app.models import Activity, Category, Lab, Module, Option, Question, User
+from app.models import (
+    Activity,
+    Category,
+    Lab,
+    Module,
+    Option,
+    Question,
+    Tutorial,
+    User,
+)
 
-SEED_PASSWORD = "dev-password123"  # Default password for seeded users
+SEED_PASSWORD = os.environ.get("SEED_PASSWORD", "dev-password123")
 
 USERS = [
     {
@@ -34,8 +46,14 @@ USERS = [
     },
 ]
 
+logger = logging.getLogger(__name__)
+
 
 def seed() -> None:
+    if "SEED_PASSWORD" not in os.environ:
+        logger.warning(
+            "SEED_PASSWORD not set in environment; using insecure default for local dev only."
+        )
     create_db_table()
 
     with Session(engine) as session:
@@ -55,6 +73,7 @@ def seed() -> None:
         print(f"Seeded {len(USERS)} users.")
 
         seed_labs(session)
+        seed_tutorials(session)
 
 
 # Content structure for Labs:  category (topic) name -> module title -> lab content
@@ -62,7 +81,7 @@ def seed() -> None:
 # and a sorting activity. This is draft content which will be refined once tutorial
 # content is finalized.
 
-MODULE_CONTENT = {
+LAB_CONTENT = {
     "Geography": [
         {
             "module_title": "Countries & Capitals",
@@ -155,7 +174,7 @@ MODULE_CONTENT = {
 def seed_labs(session: Session) -> None:
     lab_count = 0
 
-    for category_name, modules in MODULE_CONTENT.items():
+    for category_name, modules in LAB_CONTENT.items():
         category = session.exec(
             select(Category).where(Category.name == category_name)
         ).first()
@@ -169,7 +188,8 @@ def seed_labs(session: Session) -> None:
         for module_data in modules:
             module = session.exec(
                 select(Module).where(
-                    Module.title == module_data["module_title"]
+                    Module.title == module_data["module_title"],
+                    Module.category_id == category.id,
                 )
             ).first()
 
@@ -263,6 +283,255 @@ def seed_labs(session: Session) -> None:
             lab_count += 1
 
     print(f"Seeded {lab_count} labs.")
+
+
+TUTORIAL_CONTENT = {
+    "Geography": [
+        {
+            "module_title": "Countries & Capitals",
+            "tutorials": [
+                {
+                    "title": "Country Highlights",
+                    "description": "See what makes countries around the world unique.",
+                    "content": "Every country has something that makes it stand out — a record, a tradition, or a different way of doing things. Some countries have unusual customs that may seem surprising to outsiders. Others are known for natural features, inventions, or remarkable achievements. How much do you know about what makes different countries unique?",
+                    "prompt": "Match each country to its highlight.",
+                    "matching_pairs": [
+                        ("Ethiopia", "Has a 13-month calendar"),
+                        (
+                            "Russia",
+                            "Spans 11 time zones, more than any other country's contiguous territory",
+                        ),
+                        ("Japan", "Made up of over 6,000 islands"),
+                        ("Colombia", "Home to vallenato music"),
+                    ],
+                },
+                {
+                    "title": "Match Capitals",
+                    "description": "Learn each country's capital, plus a fun fact about each one.",
+                    "content": "A country's capital isn't always its biggest or best-known city. Some capitals were chosen for historical, political, or geographical reasons. Around the world, capital cities can have stories that are just as interesting as the countries they represent.",
+                    "prompt": "Match each capital to its country and a clue about it.",
+                    "matching_pairs": [
+                        (
+                            "Astana",
+                            "Kazakhstan & one of the world's coldest capital cities",
+                        ),
+                        (
+                            "Naypyidaw",
+                            "Myanmar & a purpose-built capital famous for its unusually wide, almost empty roads",
+                        ),
+                        (
+                            "Sri Jayawardenepura Kotte",
+                            "Sri Lanka & the country's legislative capital, where Parliament sits on a man-made island in a lake",
+                        ),
+                        ("Baku", "Azerbaijan & known as the 'City of Winds'"),
+                    ],
+                },
+            ],
+        },
+        {
+            "module_title": "Continents",
+            "tutorials": [
+                {
+                    "title": "What Belongs Where?",
+                    "description": "Mountains, rivers, and rainforests — can you tell which continent they're part of?",
+                    "content": "Every continent has famous landmarks, like rivers and mountain ranges, that help define it. Some waterways stretch across enormous distances and have shaped civilizations for thousands of years. Mountain ranges can influence climate, wildlife, and even where people live.",
+                    "prompt": "Match each landmark to the continent it belongs to.",
+                    "matching_pairs": [
+                        ("Congo River", "Africa"),
+                        ("Sagarmatha", "Asia"),
+                        ("Amazon Rainforest", "South America"),
+                        ("The Alps", "Europe"),
+                    ],
+                },
+                {
+                    "title": "Continent Extremes",
+                    "description": "Discover the records that make each continent stand out.",
+                    "content": "There are seven continents on Earth, and each one has its own remarkable extremes. Some stand out because of their size or geography, while others have unusual climates or population patterns. Which continent holds which surprising record?",
+                    "prompt": "Match each continent to its extreme.",
+                    "matching_pairs": [
+                        ("Asia", "Largest and most populated continent"),
+                        ("Antarctica", "No permanent residents"),
+                        ("Australia", "Flattest continent"),
+                        (
+                            "Africa",
+                            "Only continent spanning all four hemispheres",
+                        ),
+                    ],
+                },
+            ],
+        },
+    ],
+    "Biology": [
+        {
+            "module_title": "Human Body",
+            "tutorials": [
+                {
+                    "title": "Organs & Functions",
+                    "description": "Meet the body parts that keep you going every day.",
+                    "content": "Your body contains organs that perform incredibly different jobs, often without you noticing. Many of them work around the clock to keep you alive and balanced. Some organs even perform several important tasks at once.",
+                    "prompt": "Match each organ or body part to its function.",
+                    "matching_pairs": [
+                        (
+                            "Adult Human Skeleton",
+                            "Supports the body and protects organs; made up of 206 bones",
+                        ),
+                        (
+                            "Lung",
+                            "Helps exchange gases; one of two respiratory organs containing alveoli",
+                        ),
+                        (
+                            "Small Intestine",
+                            "Absorbs most nutrients from digested food",
+                        ),
+                        (
+                            "Spinal Cord",
+                            "Carries signals between the brain and body",
+                        ),
+                    ],
+                },
+                {
+                    "title": "Organs by System",
+                    "description": "See how your organs work together as a team.",
+                    "content": "Organs don't work alone — they team up in systems. These systems constantly communicate and cooperate to keep your body functioning. A problem in one part can sometimes affect several others, showing just how connected the human body is.",
+                    "prompt": "Match each body system to an organ that belongs to it.",
+                    "matching_pairs": [
+                        ("Lymphatic System", "Spleen"),
+                        ("Urinary System", "Kidneys"),
+                        ("Digestive and Endocrine Systems", "Pancreas"),
+                        ("Integumentary System", "Skin"),
+                    ],
+                },
+            ],
+        },
+        {
+            "module_title": "Animal Adaptations",
+            "tutorials": [
+                {
+                    "title": "Animals & Habitats",
+                    "description": "From dry forests to coastal waters — who lives where?",
+                    "content": "Animals live in environments ranging from scorching deserts to freezing polar regions. Their bodies and behaviors often reflect the challenges of the places they inhabit. Some animals can survive conditions that would be extremely difficult for humans.",
+                    "prompt": "Match each habitat to the animal that calls it home.",
+                    "matching_pairs": [
+                        (
+                            "Deserts and Semi-Deserts of Southern Africa",
+                            "Meerkat",
+                        ),
+                        ("Madagascar's Dry Forests", "Fossa"),
+                        (
+                            "Tropical Rainforests of Central and South America",
+                            "Sloth",
+                        ),
+                        (
+                            "Temperate Coasts of Southern Australia",
+                            "Leafy Seadragon",
+                        ),
+                    ],
+                },
+                {
+                    "title": "Adaptations & Survival",
+                    "description": "Explore some fascinating traits that help animals survive.",
+                    "content": "Animals have evolved some truly surprising ways to survive. Some adaptations help them find food, avoid predators, or cope with harsh environments. Others are so unusual that they can completely change what you might expect from an animal.",
+                    "prompt": "Match each animal to its adaptation.",
+                    "matching_pairs": [
+                        ("Platypus", "One of the few mammals that lays eggs"),
+                        ("Camel", "Stores fat in its hump"),
+                        (
+                            "Narwhal",
+                            "Uses its thick blubber to stay warm in freezing Arctic waters",
+                        ),
+                        (
+                            "Fennec Fox",
+                            "Relies on its large ears to release heat in the Sahara Desert",
+                        ),
+                    ],
+                },
+            ],
+        },
+    ],
+}
+
+
+def seed_tutorials(session: Session) -> None:
+    tutorial_count = 0
+
+    for category_name, modules in TUTORIAL_CONTENT.items():
+        category = session.exec(
+            select(Category).where(Category.name == category_name)
+        ).first()
+
+        if category is None:
+            category = Category(name=category_name)
+            session.add(category)
+            session.commit()
+            session.refresh(category)
+
+        for module_data in modules:
+            module = session.exec(
+                select(Module).where(
+                    Module.title == module_data["module_title"],
+                    Module.category_id == category.id,
+                )
+            ).first()
+
+            if module is None:
+                module = Module(
+                    title=module_data["module_title"],
+                    category_id=category.id,
+                )
+                session.add(module)
+                session.commit()
+                session.refresh(module)
+
+            for tut_data in module_data["tutorials"]:
+                existing_tutorial = session.exec(
+                    select(Tutorial).where(
+                        Tutorial.title == tut_data["title"],
+                        Tutorial.module_id == module.id,
+                    )
+                ).first()
+
+                if existing_tutorial:
+                    continue
+
+                tutorial = Tutorial(
+                    title=tut_data["title"],
+                    description=tut_data["description"],
+                    module_id=module.id,
+                    content=tut_data["content"],
+                )
+                session.add(tutorial)
+                session.commit()
+                session.refresh(tutorial)
+
+                # We have only matching activity for each tutorial
+                activity = Activity(
+                    tutorial_id=tutorial.id,
+                    type="matching",
+                    prompt=tut_data["prompt"],
+                )
+
+                session.add(activity)
+                session.commit()
+                session.refresh(activity)
+
+                for item, match in tut_data["matching_pairs"]:
+                    question = Question(activity_id=activity.id, text=item)
+                    session.add(question)
+                    session.commit()
+                    session.refresh(question)
+
+                    session.add(
+                        Option(
+                            question_id=question.id,
+                            text=match,
+                            is_correct=True,
+                        )
+                    )
+                    session.commit()
+
+                tutorial_count += 1
+
+    print(f"Seeded {tutorial_count} tutorials.")
 
 
 if __name__ == "__main__":
