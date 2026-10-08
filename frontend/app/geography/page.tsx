@@ -15,7 +15,7 @@ export default function Geography() {
           <h2 className="text-6xl font-bold text-center flex-col text-black">Modules</h2>
           <div className="flex flex-row space-x-6">
             <section className="flex rounded-2xl flex-col border-3 p-3 gap-5 w-70 border-black">
-              <h3 className="text-2xl font-bold text-center">
+              <h3 className="text-2xl font-bold text-center text-black">
                 Module 1: Countries & Capitals
               </h3>
               <button
@@ -37,7 +37,7 @@ export default function Geography() {
                 className="flex rounded-full flex-col bg-slate-800 p-4 text-gray-50 hover:bg-slate-700"
                 onClick={() => router.push("/geography/country-challenge")}
               >
-                Lab 1: Country Challenge
+                Lab: Country Challenge
               </button>
             </section>
             <section className="flex rounded-2xl flex-col border-3 p-3 gap-4 w-70 border-black">
@@ -63,7 +63,7 @@ export default function Geography() {
                 className="flex rounded-full flex-col bg-slate-800 p-4 text-gray-50 hover:bg-slate-700"
                 onClick={() => router.push("/geography/world-explorer")}
               >
-                Lab 2: World Explorer
+                Lab: World Explorer
               </button>
             </section>
           </div>

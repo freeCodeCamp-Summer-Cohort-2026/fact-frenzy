@@ -12,7 +12,7 @@ export default function Biology() {
           Biology
         </h1>
         <section className="flex rounded-2xl bg-slate-100 flex-col gap-8 p-5 h-auto items-center justify-center m-auto border-3 border-black">
-          <h2 className="text-6xl font-bold text-center flex-col">Modules</h2>
+          <h2 className="text-6xl font-bold text-center flex-col text-black">Modules</h2>
           <div className="flex flex-row ml-3 space-x-6">
             <section className="flex rounded-2xl flex-col border-3 p-3 gap-4 w-70 border-black">
               <h3 className="text-2xl font-bold text-center text-black">
