@@ -1,43 +1,358 @@
+
 "use client";
+
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-/* Still to do (an incomplete list)
-- colour scheme is just to get something started; not finalized at all (and haven't touched dark scheme yet)
-- there are no breakpoints for responsive design yet; those need to be added
-*/
+import { 
+	Lightbulb, 
+	Search, 
+	Trophy, 
+	Target, 
+	BookOpen,
+	Monitor,
+	Microscope,
+	Landmark,
+	Globe2, 
+} from "lucide-react";
+
+
+const howItWorks = [
+	{
+		number: "01",
+		title: "Choose a topic",
+		description:
+			"Explore different topics and choose an area you want to learn more about.",
+		icon: BookOpen,
+	},
+	{
+		number: "02",
+		title: "Learn & explore",
+		description:
+			"Go through interactive modules, tutorials, and practical labs designed to make learning engaging.",
+		icon: Lightbulb,
+	},
+	{
+		number: "03",
+		title: "Test yourself",
+		description:
+			"Challenge your knowledge with quizzes, questions, and interactive challenges.",
+		icon: Target,
+	},
+];
+
+
+
+
+const featuredTopics = [
+	{
+		title: "Technology",
+		description:
+			"Explore software, AI, cybersecurity, and emerging technologies.",
+		icon: Monitor,
+	},
+	{
+		title: "Science",
+		description:
+			"Discover fascinating ideas from biology, physics, chemistry, and more.",
+		icon: Microscope,
+	},
+	{
+		title: "History",
+		description:
+			"Travel through time and discover events that shaped our world.",
+		icon: Landmark,
+	},
+	{
+		title: "General Knowledge",
+		description:
+			"Challenge yourself with interesting facts from around the world.",
+		icon: Globe2,
+	},
+];
 
 export default function Home() {
 	const router = useRouter();
+
 	return (
-		<div className="flex flex-col flex-1 items-center justify-center bg-[#2F3E49] font-sans">
-			<main className="flex flex-1 w-full max-w-5xl flex-col items-center justify-between pt-20 pb-10 px-16 bg-[#2F3E49]">
-				<div className="flex flex-col items-center gap-6 text-center">
-					<h1 className="text-5xl font-bold leading-10 text-neutral-100">
-						FACT FRENZY!
-					</h1>
-					<p className="text-lg leading-8 text-neutral-200">
-						<strong>Game description goes here:</strong> Lorem ipsum dolor sit
-						amet, consectetur adipiscing elit. Nulla scelerisque ut dolor non
-						tristique. Vestibulum.
-					</p>
+		<main className="min-h-screen bg-slate-50 text-slate-900">
+
+
+			<section className="relative overflow-hidden bg-white">
+				{/* Background decoration */}
+				<div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-[#A60362]/10 blur-3xl" />
+				<div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-[#A60362]/5 blur-3xl" />
+
+				<div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:px-8 lg:py-28">
+					{/* Hero content */}
+					<div className="max-w-2xl">
+
+
+						<h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+							Turn curiosity into{" "}
+							<span className="text-[#A60362]">knowledge.</span>
+						</h1>
+
+						<p className="mt-5 max-w-xl text-base leading-7 text-slate-600 sm:mt-6 sm:text-xl sm:leading-8">
+							Fact Frenzy is an interactive learning and knowledge platform
+							that makes discovering facts, learning new concepts, and
+							challenging yourself fun and engaging.
+						</p>
+
+						<div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
+							<button
+								onClick={() => router.push("/try")}
+								className="inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#A60362] px-7 font-semibold text-white shadow-lg shadow-[#A60362]/20 transition-all hover:bg-[#8c0253] hover:shadow-xl sm:w-auto"
+							>
+								Start Learning
+								<span className="ml-2">→</span>
+							</button>
+
+							<button
+								onClick={() => router.push("/about")}
+								className="inline-flex h-12 w-full items-center justify-center rounded-lg border border-slate-200 bg-white px-7 font-semibold text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
+							>
+								Explore Fact Frenzy
+							</button>
+						</div>
+
+						{/* Small trust/features row */}
+						<div className="mt-7 flex flex-wrap gap-x-4 gap-y-3 text-sm text-slate-500 sm:mt-8 sm:gap-x-6">
+							<span className="flex items-center gap-2">
+								<span className="text-[#A60362]">✓</span>
+								Interactive learning
+							</span>
+
+							<span className="flex items-center gap-2">
+								<span className="text-[#A60362]">✓</span>
+								Knowledge challenges
+							</span>
+
+							<span className="flex items-center gap-2">
+								<span className="text-[#A60362]">✓</span>
+								Practical labs
+							</span>
+						</div>
+					</div>
+
+					{/* Hero visual */}
+					<div className="relative">
+						<div className="relative mx-auto w-full max-w-lg">
+							<div className="absolute -inset-4 rounded-3xl bg-[#A60362]/10 blur-2xl" />
+
+							<div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl sm:p-3">
+								<Image
+									src="/placeholder-500x300.png"
+									alt="Fact Frenzy learning interface"
+									width={700}
+									height={450}
+									className="h-auto w-full rounded-xl object-cover"
+								/>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div className="my-6 flex flex-col w-1/4 text-xl font-bold sm:flex-row">
-					<button
-						className="flex h-12 w-full items-center justify-center rounded-full bg-[#ea058c] px-5 text-slate-900 transition-colors hover:bg-slate-200"
-						onClick={() => router.push("/try")}
-					>
-						Try it!
-					</button>
+			</section>
+
+
+
+
+			<section className="bg-slate-50 py-14 sm:py-20 lg:py-24">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto max-w-3xl text-center">
+						<p className="text-sm font-bold uppercase tracking-widest text-[#A60362]">
+							About Fact Frenzy
+						</p>
+
+						<h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+							Learning should be more than just reading.
+						</h2>
+
+						<p className="mt-5 text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+							Fact Frenzy brings learning and interactive challenges together.
+							Instead of simply consuming information, you get to explore
+							topics, test your understanding, and apply what you've learned.
+						</p>
+					</div>
+
+					<div className="mt-10 grid gap-5 sm:mt-14 md:grid-cols-3">
+						<div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Lightbulb className="h-6 w-6" strokeWidth={2} />
+							</div>
+							<h3 className="mt-5 text-xl font-bold">Learn</h3>
+
+							<p className="mt-3 leading-7 text-slate-600">
+								Build your understanding through structured content and
+								interactive learning experiences.
+							</p>
+						</div>
+
+						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Search className="h-6 w-6" strokeWidth={2} />
+							</div>
+
+							<h3 className="mt-5 text-xl font-bold">Explore</h3>
+
+							<p className="mt-3 leading-7 text-slate-600">
+								Discover interesting topics and expand your knowledge beyond
+								the classroom.
+							</p>
+						</div>
+
+						<div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+							<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362]/10 text-[#A60362]">
+								<Trophy className="h-6 w-6" strokeWidth={2} />
+							</div>
+
+							<h3 className="mt-5 text-xl font-bold">Challenge</h3>
+
+							<p className="mt-3 leading-7 text-slate-600">
+								Test what you know through quizzes, challenges, and practical
+								exercises.
+							</p>
+						</div>
+					</div>
 				</div>
-				<Image
-					className="my-4 border-2 border-gray-300"
-					src="/placeholder-500x300.png"
-					alt="placeholder image"
-					width={500}
-					height={300}
-				/>
-			</main>
-		</div>
+			</section>
+
+
+
+			<section className="bg-white py-14 sm:py-20 lg:py-24">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="max-w-2xl">
+						<p className="text-sm font-bold uppercase tracking-widest text-[#A60362]">
+							How It Works
+						</p>
+
+						<h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+							A simple way to keep learning.
+						</h2>
+
+						<p className="mt-4 text-lg leading-8 text-slate-600">
+							Start with a topic, learn at your own pace, and put your
+							knowledge to the test.
+						</p>
+					</div>
+
+					<div className="mt-10 grid gap-5 sm:mt-14 sm:gap-8 md:grid-cols-3">
+						{howItWorks.map((item) => {
+							const Icon = item.icon;
+
+							return (
+								<div
+									key={item.number}
+									className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg sm:p-6"
+								>
+									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#A60362] text-white transition-all duration-300 group-hover:bg-[#A60362]/90">
+										<Icon className="h-5 w-5" strokeWidth={2} />
+									</div>
+
+									<span className="mt-5 block text-sm font-bold text-[#A60362]">
+										{item.number}
+									</span>
+
+									<h3 className="mt-1 text-lg font-bold text-slate-950">
+										{item.title}
+									</h3>
+
+									<p className="mt-2 text-sm leading-6 text-slate-600">
+										{item.description}
+									</p>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</section>
+
+
+
+
+
+			<section className="bg-slate-50 py-14 sm:py-20 lg:py-24">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+						<div>
+							<p className="text-sm font-bold uppercase tracking-widest text-[#A60362]">
+								Explore
+							</p>
+
+							<h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+								Featured topics
+							</h2>
+
+							<p className="mt-4 max-w-xl text-lg leading-8 text-slate-600">
+								Find something interesting and start exploring.
+							</p>
+						</div>
+
+						<button
+							onClick={() => router.push("/try")}
+							className="w-fit py-2 font-semibold text-[#A60362] hover:underline"
+						>
+							View all topics →
+						</button>
+					</div>
+
+					<div className="mt-8 grid gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
+						{featuredTopics.map((topic) => {
+							const Icon = topic.icon;
+
+							return (
+								<button
+									key={topic.title}
+									className="group rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition-all hover:-translate-y-1 hover:border-[#A60362]/30 hover:shadow-lg sm:p-6"
+								>
+									<div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700 transition-colors group-hover:bg-[#A60362]/10 group-hover:text-[#A60362]">
+										<Icon className="h-6 w-6" strokeWidth={2} />
+									</div>
+
+									<h3 className="mt-5 text-lg font-bold text-slate-950">
+										{topic.title}
+									</h3>
+
+									<p className="mt-2 text-sm leading-6 text-slate-600">
+										{topic.description}
+									</p>
+
+
+								</button>
+							);
+						})}
+					</div>
+				</div>
+			</section>
+
+
+
+			<section className="bg-white py-14 sm:py-20 lg:py-24">
+				<div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+					<div className="relative overflow-hidden rounded-3xl bg-[#A60362] px-5 py-12 text-center text-white sm:px-12 sm:py-16">
+						<div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+						<div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-black/10 blur-3xl" />
+
+						<div className="relative">
+							<h2 className="text-2xl font-bold leading-tight sm:text-4xl">
+								Ready to put your knowledge to the test?
+							</h2>
+
+							<p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-pink-100 sm:text-lg sm:leading-8">
+								Start exploring Fact Frenzy and discover a more engaging way
+								to learn, practise, and challenge yourself.
+							</p>
+
+							<button
+								onClick={() => router.push("/try")}
+								className="mt-8 inline-flex h-12 w-full items-center justify-center rounded-lg bg-white px-7 font-semibold text-[#A60362] shadow-lg transition-all hover:bg-slate-100 sm:w-auto"
+							>
+								Start Your Journey →
+							</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
 	);
 }
