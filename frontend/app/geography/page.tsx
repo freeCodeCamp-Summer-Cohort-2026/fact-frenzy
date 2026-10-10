@@ -54,7 +54,7 @@ export default function Geography() {
               <button
                 type="button"
                 className="flex rounded-full flex-col bg-[#ea058c] p-4 text-gray-50 hover:bg-slate-700"
-                onClick={() => router.push("/geography/contintents-tutorial")}
+                onClick={() => router.push("/geography/continents-tutorial")}
               >
                 Tutorial 2: Continent Extremes
               </button>

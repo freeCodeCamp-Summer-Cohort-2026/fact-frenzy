@@ -61,7 +61,7 @@ export default function Biology() {
               <button
                 type="button"
                 className="flex rounded-full flex-col bg-slate-800 p-3 text-gray-50 hover:bg-slate-700"
-                onClick={() => router.push("/geography/animal-survival")}
+                onClick={() => router.push("/biology/animal-survival")}
               >
                 Lab: Animal Survival Challenge
               </button>
