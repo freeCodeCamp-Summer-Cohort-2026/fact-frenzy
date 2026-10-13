@@ -372,19 +372,13 @@ export default function SignupPage() {
                 </span>
               </label>
 
-              <div className="space-y-3">
-                    <button
-                        type="submit"
-                        disabled
-                        className="inline-flex h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-[#A60362] px-5 font-semibold text-white opacity-70"
-                    >
-                        Signup coming soon
-                    </button>
-
-                    <p className="text-center text-sm text-slate-500">
-                        Account registration will be available soon.
-                    </p>
-                </div>
+                <button
+                type="submit"
+                disabled={loading}
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#A60362] px-5 font-semibold text-white transition hover:bg-[#8D0354] disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                {loading ? "Creating account..." : "Create account"}
+                </button>
             </form>
 
             <div className="relative my-7">
