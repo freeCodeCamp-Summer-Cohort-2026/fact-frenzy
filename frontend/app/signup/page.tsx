@@ -50,9 +50,6 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
 
 
 
@@ -67,17 +64,16 @@ export default function SignupPage() {
     }));
   };
 
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
 
-        // Validate password confirmation
-        if (password !== confirmPassword) {
+        if (formData.password !== formData.confirmPassword) {
             setError("Passwords do not match");
             return;
         }
 
-        // Validate terms acceptance
         if (!acceptedTerms) {
             setError("You must accept the terms");
             return;
@@ -86,16 +82,8 @@ export default function SignupPage() {
         setLoading(true);
 
         try {
-            // TODO: Replace this with your actual signup API request.
-            // Example:
-            // await signup({
-            //   fullName,
-            //   username,
-            //   email,
-            //   password,
-            // });
-
-            setError("Signup API is not connected yet. Please try again later.");
+            // Replace with your actual signup API request.
+            throw new Error("Signup API is not connected yet.");
         } catch (err) {
             setError(
             err instanceof Error
