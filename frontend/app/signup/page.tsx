@@ -50,6 +50,12 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+
+
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -61,9 +67,45 @@ export default function SignupPage() {
     }));
   };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  		e.preventDefault();
-	};
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError("");
+
+        // Validate password confirmation
+        if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        // Validate terms acceptance
+        if (!acceptedTerms) {
+            setError("You must accept the terms");
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // TODO: Replace this with your actual signup API request.
+            // Example:
+            // await signup({
+            //   fullName,
+            //   username,
+            //   email,
+            //   password,
+            // });
+
+            setError("Signup API is not connected yet. Please try again later.");
+        } catch (err) {
+            setError(
+            err instanceof Error
+                ? err.message
+                : "Something went wrong. Please try again."
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 
   const inputClass =
     "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#A60362] focus:ring-4 focus:ring-[#A60362]/10";
