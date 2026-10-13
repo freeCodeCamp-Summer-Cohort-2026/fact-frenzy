@@ -64,34 +64,21 @@ export default function SignupPage() {
   };
 
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
 
         if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match");
+            setError("Passwords do not match.");
             return;
         }
 
         if (!acceptedTerms) {
-            setError("You must accept the terms");
+            setError("You must accept the terms to continue.");
             return;
         }
 
-        setLoading(true);
-
-        try {
-            // Replace with your actual signup API request.
-            throw new Error("Signup API is not connected yet.");
-        } catch (err) {
-            setError(
-            err instanceof Error
-                ? err.message
-                : "Something went wrong. Please try again."
-            );
-        } finally {
-            setLoading(false);
-        }
+        setError("Account registration is coming soon. Please check back later.");
     };
 
   const inputClass =
