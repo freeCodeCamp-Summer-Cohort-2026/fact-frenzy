@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   Eye,
   EyeOff,
-  Lightbulb,
   Loader2,
   Target,
   Trophy,
@@ -62,63 +61,9 @@ export default function SignupPage() {
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError("");
-
-    if (formData.password.length < 8) {
-      setError("Your password must be at least 8 characters.");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Your passwords do not match.");
-      return;
-    }
-
-    if (!acceptedTerms) {
-      setError("Please accept the terms to continue.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      // Connect your signup API here.
-      // Example:
-      //
-      // const response = await fetch("/api/auth/signup", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     full_name: formData.fullName,
-      //     username: formData.username,
-      //     email: formData.email,
-      //     password: formData.password,
-      //   }),
-      // });
-      //
-      // const data = await response.json();
-      //
-      // if (!response.ok) {
-      //   throw new Error(data.detail || "Signup failed.");
-      // }
-      //
-      // router.push("/login");
-
-      setError(
-        "The signup API is not connected yet. Connect your backend to create an account."
-      );
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  		e.preventDefault();
+	};
 
   const inputClass =
     "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#A60362] focus:ring-4 focus:ring-[#A60362]/10";
@@ -385,23 +330,19 @@ export default function SignupPage() {
                 </span>
               </label>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#A60362] px-5 font-semibold text-white shadow-lg shadow-[#A60362]/20 transition-all hover:bg-[#8c0253] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Creating account...
-                  </>
-                ) : (
-                  <>
-                    Create account
-                    <ArrowRight size={18} />
-                  </>
-                )}
-              </button>
+              <div className="space-y-3">
+                    <button
+                        type="submit"
+                        disabled
+                        className="inline-flex h-12 w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-[#A60362] px-5 font-semibold text-white opacity-70"
+                    >
+                        Signup coming soon
+                    </button>
+
+                    <p className="text-center text-sm text-slate-500">
+                        Account registration will be available soon.
+                    </p>
+                </div>
             </form>
 
             <div className="relative my-7">
@@ -437,6 +378,3 @@ export default function SignupPage() {
   );
 }
 
-function SparkleIcon() {
-  return <Lightbulb size={16} />;
-}
