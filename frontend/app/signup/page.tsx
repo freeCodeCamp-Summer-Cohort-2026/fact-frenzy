@@ -340,10 +340,10 @@ export default function SignupPage() {
 
                 <button
                 type="submit"
-                disabled={loading}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#A60362] px-5 font-semibold text-white transition hover:bg-[#8D0354] disabled:cursor-not-allowed disabled:opacity-70"
+                disabled
+                className="inline-flex h-12 w-full cursor-not-allowed items-center justify-center rounded-xl bg-[#A60362] px-5 font-semibold text-white opacity-70"
                 >
-                {loading ? "Creating account..." : "Create account"}
+                Signup coming soon
                 </button>
             </form>
 
