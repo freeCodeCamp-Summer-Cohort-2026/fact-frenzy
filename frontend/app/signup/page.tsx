@@ -37,7 +37,6 @@ export default function SignupPage() {
 
   const [formData, setFormData] = useState({
     fullName: "",
-    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -200,27 +199,6 @@ export default function SignupPage() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="username"
-                  className="mb-2 block text-sm font-semibold text-slate-700"
-                >
-                  Username
-                </label>
-
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  autoComplete="username"
-                  placeholder="Choose a username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  className={inputClass}
-                  required
-                  minLength={3}
-                />
-              </div>
 
               <div>
                 <label
