@@ -2,6 +2,7 @@ import datetime
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, EmailStr, field_validator
+from sqlalchemy import CheckConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -76,9 +77,26 @@ class Lab(SQLModel, table=True):
     module_id: int = Field(foreign_key="module.id")
 
 
-class Activity(SQLModel, table=True):
+class Tutorial(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    lab_id: int = Field(foreign_key="lab.id")
+    title: str = Field(min_length=1, max_length=200)
+    description: str | None = Field(default=None, max_length=500)
+    module_id: int = Field(foreign_key="module.id")
+    content: str  # the "stuff to read/view to learn" text
+
+
+class Activity(SQLModel, table=True):
+    __table_args__ = (
+        CheckConstraint(
+            "(lab_id IS NOT NULL AND tutorial_id IS NULL) "
+            "OR (lab_id IS NULL AND tutorial_id IS NOT NULL)",
+            name="activity_exactly_one_parent",
+        ),
+    )
+
+    id: int | None = Field(default=None, primary_key=True)
+    lab_id: int | None = Field(default=None, foreign_key="lab.id")
+    tutorial_id: int | None = Field(default=None, foreign_key="tutorial.id")
     type: str  # "matching" | "sorting" - extensible for future types
     prompt: str | None = None  # e.g. instructions
 
@@ -123,4 +141,13 @@ class LabRead(SQLModel):
     title: str
     description: str | None
     module_id: int
+    activities: list[ActivityRead] = []
+
+
+class TutorialRead(SQLModel):
+    id: int
+    title: str
+    description: str | None
+    module_id: int
+    content: str
     activities: list[ActivityRead] = []
