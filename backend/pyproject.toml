@@ -25,5 +25,7 @@ dev = [
 ]
 
 [tool.ruff]
-# Set the maximum line length to 79.
 line-length = 79
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path"]

@@ -49,6 +49,39 @@ export default function ProfilePage() {
           <h2 className="text-xl font-bold text-slate-900">
             Profile information
           </h2>
+          <div className="flex ">
+
+            <div>
+
+
+              <div className="flex gap-1">
+                <span className="bg-black rounded-full w-10 h-10 text-center pt-2 p-1 text-white">
+                  A
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-2xl font-bold text-black">
+                    Teklu  Abayneh
+                  </span>
+                  <span className="text-[12px] pl-2 text-gray-500">
+                    member since Aug 1991
+                  </span>
+                </div>
+              </div>
+
+              {/* we will update them with real value  for now since we are just doing the rough UI */}
+              <div className="flex gap-2 m-4">
+                {["activities", "Avg Score", "Strike"].map((item, idx) => (
+                  <div key={idx} className="w-32 h-16 flex items-center justify-center flex-col bg-white rounded-2xl p-1">
+                    <span className="font-bold text-black"> {idx}</span>
+                    <span className="text-[14px] pl-2 text-gray-500"> {item} </span>
+                  </div>
+
+                ))
+                }
+              </div>
+            </div>
+
+          </div>
           <form onSubmit={handleProfileSubmit} className="flex flex-col gap-4">
             <label className="flex flex-col gap-1 text-sm font-semibold text-slate-900">
               Name
@@ -129,7 +162,7 @@ export default function ProfilePage() {
             </button>
           </form>
         </section>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

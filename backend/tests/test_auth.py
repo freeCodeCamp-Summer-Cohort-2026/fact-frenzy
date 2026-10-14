@@ -88,3 +88,61 @@ def test_signup_normalizes_email_and_rejects_duplicate(client: TestClient):
 
     assert response2.status_code == 409
     assert response2.json()["detail"] == "Email already registered."
+
+
+def test_login_success(client: TestClient):
+    client.post(
+        "/auth/signup",
+        json={
+            "name": "Jane Doe",
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert "access_token" in body
+    assert "token_type" in body
+    assert body["token_type"] == "bearer"
+
+
+def test_login_invalid_password_returns_401(client: TestClient):
+    client.post(
+        "/auth/signup",
+        json={
+            "name": "Jane Doe",
+            "email": "jane.doe@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "jane.doe@example.com",
+            "password": "Wrongpassword123",
+        },
+    )
+
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Invalid email or password."
+
+
+def test_login_unknown_email_returns_401(client: TestClient):
+    response = client.post(
+        "/auth/signin",
+        json={
+            "email": "unknown.email@example.com",
+            "password": "Supersecretpassword123",
+        },
+    )
+
+    assert response.status_code == 401
+    assert response.json()["detail"] == "Invalid email or password."

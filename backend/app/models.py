@@ -2,6 +2,7 @@ import datetime
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, EmailStr, field_validator
+from sqlalchemy import CheckConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -56,37 +57,97 @@ class User(UserBase, table=True):
     )
 
 
-class Category(SQLModel, table=True):
+class Category(
+    SQLModel, table=True
+):  # Category represents a "Topic" in our app's terminology
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(min_length=1, max_length=100, unique=True)
 
 
-class Quiz(SQLModel, table=True):
+class Module(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = Field(min_length=1, max_length=200)
+    category_id: int = Field(foreign_key="category.id")
+
+
+class Lab(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     title: str = Field(min_length=1, max_length=200)
     description: str | None = Field(default=None, max_length=500)
-    category_id: int = Field(foreign_key="category.id")
+    module_id: int = Field(foreign_key="module.id")
+
+
+class Tutorial(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = Field(min_length=1, max_length=200)
+    description: str | None = Field(default=None, max_length=500)
+    module_id: int = Field(foreign_key="module.id")
+    content: str  # the "stuff to read/view to learn" text
+
+
+class Activity(SQLModel, table=True):
+    __table_args__ = (
+        CheckConstraint(
+            "(lab_id IS NOT NULL AND tutorial_id IS NULL) "
+            "OR (lab_id IS NULL AND tutorial_id IS NOT NULL)",
+            name="activity_exactly_one_parent",
+        ),
+    )
+
+    id: int | None = Field(default=None, primary_key=True)
+    lab_id: int | None = Field(default=None, foreign_key="lab.id")
+    tutorial_id: int | None = Field(default=None, foreign_key="tutorial.id")
+    type: str  # "matching" | "sorting" - extensible for future types
+    prompt: str | None = None  # e.g. instructions
 
 
 class Question(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    question: str = Field(min_length=1, max_length=500)
+    activity_id: int = Field(foreign_key="activity.id")
+    text: str = Field(
+        max_length=500
+    )  # e.g. "Australia" or the fact statement for sorting
 
-    option_a: str = Field(min_length=1, max_length=200)
-    option_b: str = Field(min_length=1, max_length=200)
-    option_c: str = Field(min_length=1, max_length=200)
-    option_d: str = Field(min_length=1, max_length=200)
 
-    correct_answer: str = Field(min_length=1, max_length=1)
+class Option(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    question_id: int = Field(foreign_key="question.id")
+    text: str = Field(max_length=500)  # e.g. "Canberra" or "True"/"Untrue"
+    is_correct: bool  # whether this specific option is the correct answer for its question
 
-    @field_validator("correct_answer")
-    @classmethod
-    def validate_correct_answer(cls, value: str) -> str:
-        value = value.upper()
 
-        if value not in {"A", "B", "C", "D"}:
-            raise ValueError("Correct answer must be A, B, C, or D.")
+class OptionRead(SQLModel):
+    id: int
+    text: str
+    # is_boolean is intentionally left out here
+    # so that we don't send the answer to the frontend before the user submits
 
-        return value
 
-    quiz_id: int = Field(foreign_key="quiz.id")
+class QuestionRead(SQLModel):
+    id: int
+    text: str
+    options: list[OptionRead] = []
+
+
+class ActivityRead(SQLModel):
+    id: int
+    type: str
+    prompt: str | None
+    questions: list[QuestionRead] = []
+
+
+class LabRead(SQLModel):
+    id: int
+    title: str
+    description: str | None
+    module_id: int
+    activities: list[ActivityRead] = []
+
+
+class TutorialRead(SQLModel):
+    id: int
+    title: str
+    description: str | None
+    module_id: int
+    content: str
+    activities: list[ActivityRead] = []
