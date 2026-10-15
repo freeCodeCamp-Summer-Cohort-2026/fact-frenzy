@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import create_db_table
-from app.routers import auth, labs, tutorials, users
+from app.routers import auth, labs, submitions, tutorials, users
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -40,6 +40,8 @@ async def db_exception_handler(request: Request, exc: SQLAlchemyError):
 app.include_router(users.router)
 app.include_router(auth.router)
 app.include_router(labs.router)
+
+app.include_router(submitions.router)
 app.include_router(tutorials.router)
 
 

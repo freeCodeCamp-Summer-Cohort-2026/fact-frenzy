@@ -116,6 +116,15 @@ class Option(SQLModel, table=True):
     is_correct: bool  # whether this specific option is the correct answer for its question
 
 
+class Answers(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    submission_id: int
+    question_id: int = Field(foreign_key="question.id")
+    answer: str
+    is_correct: bool
+    attempt_number: int
+
+
 class OptionRead(SQLModel):
     id: int
     text: str
@@ -142,6 +151,11 @@ class LabRead(SQLModel):
     description: str | None
     module_id: int
     activities: list[ActivityRead] = []
+
+
+class SubmissionCreate(SQLModel):
+    userAnswer: int
+    submission_id: int
 
 
 class TutorialRead(SQLModel):
