@@ -1,14 +1,15 @@
-from app.database import get_session
-from app.routers.auth import get_current_user
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func
+from sqlmodel import Session, select
+
+from app.database import get_session
 from app.models import (
     Answers,
     Option,
     SubmissionCreate,
     User,
 )
-from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
+from app.routers.auth import get_current_user
 
 router = APIRouter(prefix="/answers", tags=["submissions"])
 

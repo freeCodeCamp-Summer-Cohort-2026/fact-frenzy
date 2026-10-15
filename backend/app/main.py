@@ -6,9 +6,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import create_db_table
-
-from app.routers import auth, labs, submitions, users, tutorials
-
+from app.routers import auth, labs, submitions, tutorials, users
 
 logger = logging.getLogger("uvicorn.error")
 
