@@ -119,7 +119,7 @@ class Option(SQLModel, table=True):
 class Answers(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id")
-    submission_id: int = Field(foreign_key="submissionCreate.id")
+    submission_id: int = Field(foreign_key="submission.id")
     question_id: int = Field(foreign_key="question.id")
     answer: str
     is_correct: bool
@@ -127,6 +127,11 @@ class Answers(SQLModel, table=True):
     created_at: datetime.datetime = Field(
         default_factory=datetime.datetime.utcnow
     )
+
+
+# TODO: Update this model to support the submission workflow.
+class Submission(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
 
 
 class OptionRead(SQLModel):
