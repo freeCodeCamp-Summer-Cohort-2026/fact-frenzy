@@ -124,7 +124,9 @@ class Answers(SQLModel, table=True):
     answer: str
     is_correct: bool
     attempt_number: int
-    created_at: datetime.datetime
+    created_at: datetime.datetime = Field(
+        default_factory=datetime.datetime.utcnow
+    )
 
 
 class OptionRead(SQLModel):
