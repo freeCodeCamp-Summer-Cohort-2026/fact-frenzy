@@ -124,7 +124,7 @@ class Answers(SQLModel, table=True):
     answer: str
     is_correct: bool
     attempt_number: int
-    created_at: datetime.timedelta
+    created_at: datetime.datetime
 
 
 class OptionRead(SQLModel):
