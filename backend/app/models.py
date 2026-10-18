@@ -118,11 +118,13 @@ class Option(SQLModel, table=True):
 
 class Answers(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    submission_id: int
+    user_id: int = Field(foreign_key="user.id")
+    submission_id: int = Field(foreign_key="submissionCreate.id")
     question_id: int = Field(foreign_key="question.id")
     answer: str
     is_correct: bool
     attempt_number: int
+    created_at: datetime.timedelta
 
 
 class OptionRead(SQLModel):
