@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { sortingFact } from "../app/try/data";
+import { Sorting } from "@/types/matching-sorting-types";
 
 type FeedbackState = "correct" | "wrong" | null;
 
-export default function SortingExercise() {
+export default function SortingExercise({ questions }: { questions: Sorting }) { // TODO: change to Sorting[] and fix below to work with a list
     const [feedback, setFeedback] = useState<FeedbackState>(null);
 	const [solved, setSolved] = useState(false);
     const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
@@ -25,7 +25,7 @@ export default function SortingExercise() {
 
         setSelectedBin(binIsTrue);
 
-        const isCorrect=binIsTrue===sortingFact.isTrue;
+        const isCorrect=binIsTrue===questions.isTrue; // need to change to deal with a list
 
         if (isCorrect) {
             setFeedback("correct");
@@ -45,7 +45,7 @@ export default function SortingExercise() {
     
     // Drag and drop handlers
     function handleDragStart(e: React.DragEvent) {
-        e.dataTransfer.setData("text/plain", sortingFact.id)
+        e.dataTransfer.setData("text/plain", questions.id) // need to change to deal with a list
     }
 
     function handleDragOver(e: React.DragEvent) {
@@ -73,7 +73,7 @@ export default function SortingExercise() {
 							: "cursor-grab active:cursor-grabbing hover:bg-[#37BAE4]"
 					}`}
 				>
-					<span>{sortingFact.text}</span>
+					<span>{questions.text}</span>
 					{solved && <span className="ml-2 font-bold text-emerald-600">✓</span>}
 				</div>
 

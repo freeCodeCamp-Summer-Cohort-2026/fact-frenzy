@@ -1,5 +1,6 @@
 import MatchingExercise from "../../components/MatchingExercise";
 import SortingExercise from "../../components/SortingExercise";
+import { countryCapitalPairs, sortingFact } from "./data";
 
 export default function TryPage() {
     return (
@@ -9,13 +10,15 @@ export default function TryPage() {
             </h1>
             
 			<section className="exercise-section">
-                <MatchingExercise />
+                <MatchingExercise
+                    questions={countryCapitalPairs} />
             </section>
             
 			<hr className="border-t border-slate-200 dark:border-slate-800 my-2 max-w-xl w-full mx-auto" />
             
             <section className="exercise-section">
-                <SortingExercise />
+                <SortingExercise
+                    questions={sortingFact} />
             </section>
             
         </main>
