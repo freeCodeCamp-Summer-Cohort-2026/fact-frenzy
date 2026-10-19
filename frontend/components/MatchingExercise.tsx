@@ -33,9 +33,9 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 
 	const allMatched = Object.keys(matched).length === questions.length;
 
-	// This is for remembering which capital card is being dragged
-	function handleDragStart(e: React.DragEvent, capitalId: string) { // TODO: change name of "capitalId"
-		e.dataTransfer.setData("text/plain", capitalId);
+	// This is for remembering which draggable card is being dragged
+	function handleDragStart(e: React.DragEvent, draggableId: string) { 
+		e.dataTransfer.setData("text/plain", draggableId);
 	}
 
 	// Required for onDrop to fire since browsers block drops by default
@@ -43,27 +43,27 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 		e.preventDefault();
 	}
 
-	// This is called when a capital card is dropped onto a country card's drop zone
-	function handleDrop(e: React.DragEvent, countryId: string) { // TODO: change name of "countryId"
+	// This is called when a draggable card is dropped onto a static card's drop zone
+	function handleDrop(e: React.DragEvent, staticId: string) { 
 		e.preventDefault();
 
-		// Early return if this country is already matched
-		if (matched[countryId]) return;
+		// Early return if this static card is already matched
+		if (matched[staticId]) return;
 
-		const droppedCapitalId = e.dataTransfer.getData("text/plain");
+		const droppedDraggableId = e.dataTransfer.getData("text/plain");
 
-		if (droppedCapitalId === countryId) {
+		if (droppedDraggableId === staticId) {
 			// if they share the same ID, it means it's the correct match
-			setMatched((prev) => ({ ...prev, [countryId]: true }));
-			setFeedback((prev) => ({ ...prev, [countryId]: "correct" }));
+			setMatched((prev) => ({ ...prev, [staticId]: true }));
+			setFeedback((prev) => ({ ...prev, [staticId]: "correct" }));
 		} else {
 			// wrong - show brief ref feedback and then clear it so they can try again
-			setFeedback((prev) => ({ ...prev, [countryId]: "wrong" }));
+			setFeedback((prev) => ({ ...prev, [staticId]: "wrong" }));
 
 			if (timerRef.current) clearTimeout(timerRef.current);
 
 			timerRef.current = setTimeout(() => {
-				setFeedback((prev) => ({ ...prev, [countryId]: null }));
+				setFeedback((prev) => ({ ...prev, [staticId]: null }));
 			}, 800);
 		}
 	}
@@ -87,7 +87,7 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
                             onDragStart={(e) => handleDragStart(e, pair.id)}
                             className="p-3 bg-[#62d0f3] text-black rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-[#37BAE4] transition-colors select-none"
                         >
-                            {pair.capital} {/* TODO: change name here */}
+                            {pair.draggable} 
                         </div>
                     );
                 })}
@@ -114,10 +114,10 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 							onDrop={(e) => handleDrop(e, pair.id)}
 							className={`p-3 rounded-lg text-center text-sm font-semibold flex flex-col items-center justify-center min-h-16 transition-colors ${zoneStyle}`}
 						>
-							<span>{pair.country}</span> {/* TODO: change name here */}
+							<span>{pair.static}</span> 
 							{isMatched && (
 								<span className="text-xs mt-1 text-emerald-700 dark:text-emerald-400">
-									→ {pair.capital} {/* TODO: change name here */}
+									→ {pair.draggable}
 								</span>
 							)}
 						</div>

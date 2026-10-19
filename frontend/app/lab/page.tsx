@@ -1,5 +1,6 @@
 import MatchingExercise from "../../components/MatchingExercise";
 import SortingExercise from "../../components/SortingExercise";
+import { countryCapitalPairs, sortingFact } from "../try/data";
 
 // Draft template page for labs. The idea would be to have everything here remain the same except the activities
 // section, which would change dynamically based on data from the backend. Hopefully, [Module_name], [Lab_name], 
@@ -53,9 +54,11 @@ export default function LabPage() {
 
 				{/* Activities section. This would pull in the activities, including [Activity_descriptions], from the backend */}
 				<section className="mx-auto w-full max-w-4xl">
-					<MatchingExercise />
+					<MatchingExercise
+						questions={countryCapitalPairs} />
 					<hr className="border-t border-slate-300 dark:border-slate-800 my-2 max-w-xl w-full mx-auto" />
-					<SortingExercise />
+					<SortingExercise
+						questions={sortingFact} />
 				</section>
 				<hr className="border-t border-slate-400 dark:border-slate-900 my-2 max-w-xl w-full mx-auto" />
 

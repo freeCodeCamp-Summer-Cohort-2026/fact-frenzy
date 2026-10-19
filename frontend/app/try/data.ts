@@ -5,10 +5,10 @@ import { Matching, Sorting } from "@/types/matching-sorting-types";
 // will come from backend/content system once that's built out
 
 export const countryCapitalPairs: Matching[] = [
-	{ id: "1", country: "Australia", capital: "Canberra" },
-	{ id: "2", country: "Zimbabwe", capital: "Harare" },
-	{ id: "3", country: "Ethiopia", capital: "Addis Ababa" },
-	{ id: "4", country: "Turkey", capital: "Ankara" },
+	{ id: "1", static: "Australia", draggable: "Canberra" },
+	{ id: "2", static: "Zimbabwe", draggable: "Harare" },
+	{ id: "3", static: "Ethiopia", draggable: "Addis Ababa" },
+	{ id: "4", static: "Turkey", draggable: "Ankara" },
 ];
 
 export const sortingFact: Sorting = { 
