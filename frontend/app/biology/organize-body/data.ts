@@ -1,19 +1,27 @@
-import { Matching, Sorting } from "@/types/matching-sorting-types";
+import { Question } from "@/types/questions";
 
-export const bodySystemPairs: Matching[] = [
-    { id: "1", static: "Respiratory System", draggable: "Alveoli" },
-    { id: "2", static: "Urinary System", draggable: "Kidneys" },
-    { id: "3", static: "Digestive System", draggable: "Small Intestine" },
-    { id: "4", static: "Nervous System", draggable: "Spinal Cord" },
+export const bodySystemPairs: Question[] = [
+	{ id: 13, text: "Alveoli", options: [{ id: 17, text: "Respiratory System" }] },
+	{ id: 14, text: "Kidneys", options: [{ id: 18, text: "Urinary System" }] },
+	{ id: 15, text: "Small Intestine", options: [{ id: 19, text: "Digestive System" }] },
+	{ id: 16, text: "Spinal Cord", options: [{ id: 20, text: "Nervous System" }] },
 ];
 
-// TODO: create a list and add the other sorting fact below for this lab
-// Do this after fix SortingExercise.tsx to take a list
-
-export const bodySorting: Sorting = { 
-    id: "1",
-    text: "The human body has 206 bones as an adult.",
-    isTrue: true, 
-};
-
-
+export const bodySorting: Question[] = [
+    {
+	id: 17,
+	text: "The human body has 206 bones as an adult.",
+	options: [
+        { id: 21, text: "True" },
+        { id: 22, text: "Untrue"}
+        ]
+    },
+    {
+    id: 18,
+    text: "Humans have four lungs.",
+    options: [
+        { id: 23, text: "True" },
+        { id: 24, text: "Untrue"}
+        ]
+    }
+]

@@ -1,132 +1,139 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Sorting } from "@/types/matching-sorting-types";
+import { Question } from "@/types/questions";
+
+// Note: this doesn't work with new API data shape yet
 
 type FeedbackState = "correct" | "wrong" | null;
 
-export default function SortingExercise({ questions }: { questions: Sorting }) { // TODO: change to Sorting[] and fix below to work with a list
-    const [feedback, setFeedback] = useState<FeedbackState>(null);
+export default function SortingExercise({
+	questions,
+}: {
+	questions: Question[];
+}) {
+	// TODO: fix the below to work with a list (right now it just works with one question and one option per question)
+	const [feedback, setFeedback] = useState<FeedbackState>(null);
 	const [solved, setSolved] = useState(false);
-    const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
+	const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
 
-    // reference to track the timeout timer
-    const timerRef=useRef<ReturnType<typeof setTimeout> | null>(null);
+	// reference to track the timeout timer
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // automatically clear the timer if component unmounts
-    useEffect(()=>{
-        return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, []);
+	// automatically clear the timer if component unmounts
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) clearTimeout(timerRef.current);
+		};
+	}, []);
 
-    function evaluateChoice(binIsTrue: boolean) {
-        if (solved) return;
+	function evaluateChoice(binIsTrue: boolean) {
+		if (solved) return;
 
-        setSelectedBin(binIsTrue);
+		setSelectedBin(binIsTrue);
 
-        const isCorrect=binIsTrue===questions.isTrue; // need to change to deal with a list
+		const isCorrect = binIsTrue === questions.isTrue; // TODO: change to deal with a list and with new data shape
 
-        if (isCorrect) {
-            setFeedback("correct");
-            setSolved(true);
-        } else {
-            setFeedback("wrong");
+		if (isCorrect) {
+			setFeedback("correct");
+			setSolved(true);
+		} else {
+			setFeedback("wrong");
 
-            // clear any existing timer before starting a new one
-            if (timerRef.current) clearTimeout(timerRef.current);
+			// clear any existing timer before starting a new one
+			if (timerRef.current) clearTimeout(timerRef.current);
 
-            timerRef.current = setTimeout(() => {
-                setFeedback(null);
-                setSelectedBin(null);
-            }, 1000);
-        }
-    }
-    
-    // Drag and drop handlers
-    function handleDragStart(e: React.DragEvent) {
-        e.dataTransfer.setData("text/plain", questions.id) // need to change to deal with a list
-    }
+			timerRef.current = setTimeout(() => {
+				setFeedback(null);
+				setSelectedBin(null);
+			}, 1000);
+		}
+	}
 
-    function handleDragOver(e: React.DragEvent) {
+	// Drag and drop handlers
+	function handleDragStart(e: React.DragEvent) {
+		e.dataTransfer.setData("text/plain", questions.id); // TODO: change to deal with a list and with new data shape
+	}
+
+	function handleDragOver(e: React.DragEvent) {
 		e.preventDefault();
 	}
 
-    // binIsTrue tells us which bin (True or Untrue) the card was dropped in
-    function handleDrop(e: React.DragEvent, binIsTrue: boolean) {
-        e.preventDefault();
-        evaluateChoice(binIsTrue);
-    }
+	// binIsTrue tells us which bin (True or Untrue) the card was dropped in
+	function handleDrop(e: React.DragEvent, binIsTrue: boolean) {
+		e.preventDefault();
+		evaluateChoice(binIsTrue);
+	}
 
-    return (
-			<div className="flex flex-col gap-4 max-w-xl mx-auto py-2">
-				<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-					Sort the fact
-				</h2>
+	return (
+		<div className="flex flex-col gap-4 max-w-xl mx-auto py-2">
+			<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+				Sort the fact
+			</h2>
 
-				<div
-					draggable={!solved}
-					onDragStart={handleDragStart}
-					className={`p-6 w-full mx-auto max-w-fit rounded-xl bg-[#62d0f3] text-black font-medium text-center shadow-md transition-all select-none ${
-						solved
-							? "opacity-75 cursor-default ring-2 ring-emerald-500"
-							: "cursor-grab active:cursor-grabbing hover:bg-[#37BAE4]"
+			<div
+				draggable={!solved}
+				onDragStart={handleDragStart}
+				className={`p-6 w-full mx-auto max-w-fit rounded-xl bg-[#62d0f3] text-black font-medium text-center shadow-md transition-all select-none ${
+					solved
+						? "opacity-75 cursor-default ring-2 ring-emerald-500"
+						: "cursor-grab active:cursor-grabbing hover:bg-[#37BAE4]"
+				}`}
+			>
+				<span>{questions.text}</span>
+				{solved && <span className="ml-2 font-bold text-emerald-600">✓</span>}
+			</div>
+
+			<div className="grid grid-cols-2 gap-4">
+				<button
+					type="button"
+					disabled={solved}
+					onDragOver={(e) => !solved && handleDragOver(e)}
+					onDrop={(e) => handleDrop(e, true)}
+					onClick={() => evaluateChoice(true)}
+					className={`p-4 rounded-lg font-semibold transition-colors ${
+						selectedBin === true && feedback === "correct"
+							? "bg-emerald-600 text-white ring-2 ring-emerald-400"
+							: selectedBin === true && feedback === "wrong"
+								? "bg-rose-600 text-white ring-2 ring-rose-400"
+								: "border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-slate-500 disabled:pointer-events-none"
 					}`}
 				>
-					<span>{questions.text}</span>
-					{solved && <span className="ml-2 font-bold text-emerald-600">✓</span>}
-				</div>
+					True
+				</button>
 
-				<div className="grid grid-cols-2 gap-4">
-					<button
-						type="button"
-						disabled={solved}
-						onDragOver={(e) => !solved && handleDragOver(e)}
-						onDrop={(e) => handleDrop(e, true)}
-						onClick={() => evaluateChoice(true)}
-						className={`p-4 rounded-lg font-semibold transition-colors ${
-							selectedBin === true && feedback === "correct"
-								? "bg-emerald-600 text-white ring-2 ring-emerald-400"
-								: selectedBin === true && feedback === "wrong"
-									? "bg-rose-600 text-white ring-2 ring-rose-400"
-									: "border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-slate-500 disabled:pointer-events-none"
-						}`}
-					>
-						True
-					</button>
-
-					<button
-						type="button"
-						disabled={solved}
-						onDragOver={(e) => !solved && handleDragOver(e)}
-						onDrop={(e) => handleDrop(e, false)}
-						onClick={() => evaluateChoice(false)}
-						className={`p-4 rounded-lg font-semibold transition-colors ${
-							selectedBin === false && feedback === "correct"
-								? "bg-emerald-600 text-white ring-2 ring-emerald-400"
-								: selectedBin === false && feedback === "wrong"
-									? "bg-rose-600 text-white ring-2 ring-rose-400"
-									: "border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-slate-500 disabled:pointer-events-none"
-						}`}
-					>
-						Untrue
-					</button>
-				</div>
-
-				{solved && (
-					<p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center">
-						Correct!
-					</p>
-				)}
-
-				{feedback === "wrong" && (
-					<p
-						className="text-rose-600 dark:text-rose-400 font-semibold text-center"
-						aria-live="polite"
-					>
-						Incorrect. Try again!
-					</p>
-				)}
+				<button
+					type="button"
+					disabled={solved}
+					onDragOver={(e) => !solved && handleDragOver(e)}
+					onDrop={(e) => handleDrop(e, false)}
+					onClick={() => evaluateChoice(false)}
+					className={`p-4 rounded-lg font-semibold transition-colors ${
+						selectedBin === false && feedback === "correct"
+							? "bg-emerald-600 text-white ring-2 ring-emerald-400"
+							: selectedBin === false && feedback === "wrong"
+								? "bg-rose-600 text-white ring-2 ring-rose-400"
+								: "border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/80 text-slate-900 dark:text-slate-100 hover:border-slate-400 dark:hover:border-slate-500 disabled:pointer-events-none"
+					}`}
+				>
+					Untrue
+				</button>
 			</div>
-		);
+
+			{solved && (
+				<p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center">
+					Correct!
+				</p>
+			)}
+
+			{feedback === "wrong" && (
+				<p
+					className="text-rose-600 dark:text-rose-400 font-semibold text-center"
+					aria-live="polite"
+				>
+					Incorrect. Try again!
+				</p>
+			)}
+		</div>
+	);
 }
