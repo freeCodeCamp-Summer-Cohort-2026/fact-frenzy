@@ -2,7 +2,7 @@ import datetime
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, EmailStr, field_validator
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -117,6 +117,14 @@ class Option(SQLModel, table=True):
 
 
 class Answers(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "question_id",
+            "attempt_number",
+            name="unique_answer_user_question_attempt",
+        ),
+    )
     id: int | None = Field(default=None, primary_key=True)
     user_id: UUID = Field(foreign_key="user.id", index=True)
     submission_id: int | None = Field(
@@ -127,7 +135,7 @@ class Answers(SQLModel, table=True):
     is_correct: bool
     attempt_number: int
     created_at: datetime.datetime = Field(
-        default_factory=datetime.datetime.utcnow
+        default_factory=lambda: datetime.datetime.now(datetime.UTC)
     )
 
 
@@ -166,7 +174,6 @@ class LabRead(SQLModel):
 
 class SubmissionCreate(SQLModel):
     userAnswer: int
-    submission_id: int | None = None
 
 
 class TutorialRead(SQLModel):
