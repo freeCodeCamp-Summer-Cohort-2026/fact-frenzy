@@ -1,20 +1,26 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Matching } from "@/types/matching-sorting-types";
+import { Question } from "@/types/questions";
+
+// Note: this doesn't work with new API data shape yet
 
 function shuffle<T>(array: T[]): T[] {
-    const result=[...array]
-    for (let i=result.length-1; i>0; i--) {
-        const j: number=Math.floor(Math.random()*(i+1));
-        [result[i], result[j]]=[result[j], result[i]]
-    }
-    return result;
+	const result = [...array];
+	for (let i = result.length - 1; i > 0; i--) {
+		const j: number = Math.floor(Math.random() * (i + 1));
+		[result[i], result[j]] = [result[j], result[i]];
+	}
+	return result;
 }
 
-type FeedbackState="correct" | "wrong" | null
+type FeedbackState = "correct" | "wrong" | null;
 
-export default function MatchingExercise({ questions }: { questions: Matching[] }) {
+export default function MatchingExercise({
+	questions,
+}: {
+	questions: Question[];
+}) {
 	const [matched, setMatched] = useState<Record<string, boolean>>({});
 	const [feedback, setFeedback] = useState<Record<string, FeedbackState>>({});
 	const [shuffledPairs, setShuffledPairs] = useState(questions);
@@ -34,8 +40,9 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 	const allMatched = Object.keys(matched).length === questions.length;
 
 	// This is for remembering which draggable card is being dragged
-	function handleDragStart(e: React.DragEvent, draggableId: string) { 
-		e.dataTransfer.setData("text/plain", draggableId);
+	function handleDragStart(e: React.DragEvent, countryId: string) {
+		// TODO: fix this
+		e.dataTransfer.setData("text/plain", countryId);
 	}
 
 	// Required for onDrop to fire since browsers block drops by default
@@ -44,26 +51,27 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 	}
 
 	// This is called when a draggable card is dropped onto a static card's drop zone
-	function handleDrop(e: React.DragEvent, staticId: string) { 
+	function handleDrop(e: React.DragEvent, capitalId: string) {
+		// TODO: fix this
 		e.preventDefault();
 
 		// Early return if this static card is already matched
-		if (matched[staticId]) return;
+		if (matched[countryId]) return; // TODO: fix this
 
 		const droppedDraggableId = e.dataTransfer.getData("text/plain");
 
-		if (droppedDraggableId === staticId) {
+		if (droppedDraggableId === countryId) {
 			// if they share the same ID, it means it's the correct match
-			setMatched((prev) => ({ ...prev, [staticId]: true }));
-			setFeedback((prev) => ({ ...prev, [staticId]: "correct" }));
+			setMatched((prev) => ({ ...prev, [countryId]: true })); // TODO: fix this
+			setFeedback((prev) => ({ ...prev, [countryId]: "correct" }));
 		} else {
 			// wrong - show brief ref feedback and then clear it so they can try again
-			setFeedback((prev) => ({ ...prev, [staticId]: "wrong" }));
+			setFeedback((prev) => ({ ...prev, [countryId]: "wrong" })); // TODO: fix this
 
 			if (timerRef.current) clearTimeout(timerRef.current);
 
 			timerRef.current = setTimeout(() => {
-				setFeedback((prev) => ({ ...prev, [staticId]: null }));
+				setFeedback((prev) => ({ ...prev, [countryId]: null }));
 			}, 800);
 		}
 	}
@@ -72,26 +80,26 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 		<div className="flex flex-col gap-6 max-w-2xl mx-auto p-4">
 			{/* TODO: change the below so as to print different instructions when called on different pages */}
 			<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-				Match each capital to its country 
-			</h2> 
+				Match each capital to its country
+			</h2>
 
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 				{shuffledPairs.map((pair) => {
 					// after a pair has been matched successfully, hide it from the draggable pool
 					if (matched[pair.id]) return null;
 
-                    return (
-                        <div
-                            key={pair.id}
-                            draggable
-                            onDragStart={(e) => handleDragStart(e, pair.id)}
-                            className="p-3 bg-[#62d0f3] text-black rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-[#37BAE4] transition-colors select-none"
-                        >
-                            {pair.draggable} 
-                        </div>
-                    );
-                })}
-            </div>
+					return (
+						<div
+							key={pair.id}
+							draggable
+							onDragStart={(e) => handleDragStart(e, pair.id)}
+							className="p-3 bg-[#62d0f3] text-black rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-[#37BAE4] transition-colors select-none"
+						>
+							{pair.capital}
+						</div>
+					);
+				})}
+			</div>
 
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 				{questions.map((pair) => {
@@ -114,10 +122,10 @@ export default function MatchingExercise({ questions }: { questions: Matching[] 
 							onDrop={(e) => handleDrop(e, pair.id)}
 							className={`p-3 rounded-lg text-center text-sm font-semibold flex flex-col items-center justify-center min-h-16 transition-colors ${zoneStyle}`}
 						>
-							<span>{pair.static}</span> 
+							<span>{pair.country}</span>
 							{isMatched && (
 								<span className="text-xs mt-1 text-emerald-700 dark:text-emerald-400">
-									→ {pair.draggable}
+									→ {pair.capital}
 								</span>
 							)}
 						</div>
