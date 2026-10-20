@@ -22,13 +22,10 @@ def submit_answer(
     current_user: User = Depends(get_current_user),
 ):
 
-    option = session.get(Option, body.userAnswer)
-    if option is None:
-        raise HTTPException(status_code=404, detail="Option not found")
-
     # Find the selected option belonging to this question.
     option = session.exec(
         select(Option).where(
+            Option.id == body.userAnswer,
             Option.question_id == question_id,
         )
     ).first()
@@ -38,21 +35,20 @@ def submit_answer(
             status_code=404,
             detail="Option not found for this question",
         )
-        return
 
     # Check whether the selected option is correct.
-    is_correct = option.question_id == question_id and option.is_correct
+    is_correct = option.is_correct
 
     previous_attempt = session.exec(
         select(func.max(Answers.attempt_number)).where(
-            Answers.user_id == current_user.user_id,
+            Answers.user_id == current_user.id,
             Answers.question_id == question_id,
         )
     ).one()
 
     # Save the answer.
     answer = Answers(
-        user_id=current_user.user_id,
+        user_id=current_user.id,
         question_id=question_id,
         submission_id=body.submission_id,
         answer=str(option.id),
