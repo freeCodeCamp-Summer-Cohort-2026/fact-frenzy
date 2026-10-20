@@ -118,8 +118,10 @@ class Option(SQLModel, table=True):
 
 class Answers(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    user_id: int = Field(foreign_key="user.id")
-    submission_id: int = Field(foreign_key="submission.id")
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    submission_id: int | None = Field(
+        default=None, foreign_key="submission.id"
+    )
     question_id: int = Field(foreign_key="question.id")
     answer: str
     is_correct: bool
@@ -164,7 +166,7 @@ class LabRead(SQLModel):
 
 class SubmissionCreate(SQLModel):
     userAnswer: int
-    submission_id: int
+    submission_id: int | None = None
 
 
 class TutorialRead(SQLModel):
