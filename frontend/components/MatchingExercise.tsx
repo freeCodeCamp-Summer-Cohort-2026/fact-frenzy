@@ -3,7 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { Question } from "@/types/questions";
 
-// Note: this doesn't work with new API data shape yet
+// This now uses the shape of the API data and matching logic is adjusted accordingly
+// "draggableId" is for the card that can be dragged; "staticId" is for the card that doesn't move
+// "correctId" is for checking whether the dragged card is dropped onto the right static card
+
+// TODO: as noted in the <h2> below, figure out how to have  different instructions 
+// appear when the function is called on different pages. Right now it says "Match each
+// capital to its country," which only fits one kind of question.
 
 function shuffle<T>(array: T[]): T[] {
 	const result = [...array];
@@ -40,9 +46,9 @@ export default function MatchingExercise({
 	const allMatched = Object.keys(matched).length === questions.length;
 
 	// This is for remembering which draggable card is being dragged
-	function handleDragStart(e: React.DragEvent, countryId: string) {
-		// TODO: fix this
-		e.dataTransfer.setData("text/plain", countryId);
+	function handleDragStart(e: React.DragEvent, draggableId: number) {
+		// the id needs to be converted to a string to be processed in the data envelope
+		e.dataTransfer.setData("text/plain", draggableId.toString());
 	}
 
 	// Required for onDrop to fire since browsers block drops by default
@@ -51,34 +57,35 @@ export default function MatchingExercise({
 	}
 
 	// This is called when a draggable card is dropped onto a static card's drop zone
-	function handleDrop(e: React.DragEvent, capitalId: string) {
-		// TODO: fix this
+	function handleDrop(e: React.DragEvent, staticId: number, correctId: number) {
 		e.preventDefault();
 
 		// Early return if this static card is already matched
-		if (matched[countryId]) return; // TODO: fix this
+		if (matched[staticId]) return; 
 
-		const droppedDraggableId = e.dataTransfer.getData("text/plain");
+		const droppedDraggableId = e.dataTransfer.getData("text/plain"); 
 
-		if (droppedDraggableId === countryId) {
-			// if they share the same ID, it means it's the correct match
-			setMatched((prev) => ({ ...prev, [countryId]: true })); // TODO: fix this
-			setFeedback((prev) => ({ ...prev, [countryId]: "correct" }));
+		// checking if the draggable card id matches the card with the correct id (set below)
+		// need to change the correctId to a string to compare with the text-based data in the envelope
+		if (droppedDraggableId === correctId.toString()) { 
+			// record that they are matched and record the feedback
+			setMatched((prev) => ({ ...prev, [staticId]: true })); 
+			setFeedback((prev) => ({ ...prev, [staticId]: "correct" }));
 		} else {
 			// wrong - show brief ref feedback and then clear it so they can try again
-			setFeedback((prev) => ({ ...prev, [countryId]: "wrong" })); // TODO: fix this
+			setFeedback((prev) => ({ ...prev, [staticId]: "wrong" }));
 
 			if (timerRef.current) clearTimeout(timerRef.current);
 
 			timerRef.current = setTimeout(() => {
-				setFeedback((prev) => ({ ...prev, [countryId]: null }));
+				setFeedback((prev) => ({ ...prev, [staticId]: null }));
 			}, 800);
 		}
 	}
 
 	return (
 		<div className="flex flex-col gap-6 max-w-2xl mx-auto p-4">
-			{/* TODO: change the below so as to print different instructions when called on different pages */}
+			{/* TODO: figure out how this can change when the function is called on different pages */}
 			<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
 				Match each capital to its country
 			</h2>
@@ -92,10 +99,10 @@ export default function MatchingExercise({
 						<div
 							key={pair.id}
 							draggable
-							onDragStart={(e) => handleDragStart(e, pair.id)}
+							onDragStart={(e) => handleDragStart(e, pair.options[0].id)}
 							className="p-3 bg-[#62d0f3] text-black rounded-lg text-center font-medium cursor-grab active:cursor-grabbing shadow hover:bg-[#37BAE4] transition-colors select-none"
 						>
-							{pair.capital}
+							{pair.options[0].text} 
 						</div>
 					);
 				})}
@@ -119,13 +126,13 @@ export default function MatchingExercise({
 						<div
 							key={pair.id}
 							onDragOver={(e) => !isMatched && handleDragOver(e)}
-							onDrop={(e) => handleDrop(e, pair.id)}
+							onDrop={(e) => handleDrop(e, pair.id, pair.options[0].id)}
 							className={`p-3 rounded-lg text-center text-sm font-semibold flex flex-col items-center justify-center min-h-16 transition-colors ${zoneStyle}`}
 						>
-							<span>{pair.country}</span>
+							<span>{pair.text}</span>
 							{isMatched && (
 								<span className="text-xs mt-1 text-emerald-700 dark:text-emerald-400">
-									→ {pair.capital}
+									→ {pair.options[0].text}
 								</span>
 							)}
 						</div>
