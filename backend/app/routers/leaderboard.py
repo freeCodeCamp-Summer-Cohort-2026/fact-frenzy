@@ -6,6 +6,7 @@ from sqlmodel import Session, select
 from app.database import get_session
 from app.models import User
 from app.routers.auth import get_current_user
+from app.scoring import get_weekly_score
 
 router = APIRouter(tags=["leaderboard"])
 
@@ -15,7 +16,7 @@ def leaderboard(
     current_user: Annotated[User, Depends(get_current_user)],
     session: Session = Depends(get_session),
 ):
-    scores = get_weekly_scores(session)
+    scores = get_weekly_score(session)
     users = {
         u.id: u
         for u in session.exec(

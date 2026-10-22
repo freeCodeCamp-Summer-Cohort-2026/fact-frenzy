@@ -3,6 +3,8 @@ from uuid import UUID
 
 from sqlmodel import Session, select
 
+from app.models import Activity, Answers, Question
+
 POINTS = 10
 
 
@@ -58,3 +60,9 @@ def get_weekly_score(
         )
 
     return scores
+
+
+def get_lifetime_bank(user_id) -> int:
+    # first submission per question, tutorial activities only
+    # count the ones where is_correct is True
+    return
