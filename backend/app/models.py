@@ -2,7 +2,7 @@ import datetime
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, EmailStr, field_validator
-from sqlalchemy import CheckConstraint
+from sqlalchemy import CheckConstraint, UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
@@ -116,6 +116,34 @@ class Option(SQLModel, table=True):
     is_correct: bool  # whether this specific option is the correct answer for its question
 
 
+class Answers(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "question_id",
+            "attempt_number",
+            name="unique_answer_user_question_attempt",
+        ),
+    )
+    id: int | None = Field(default=None, primary_key=True)
+    user_id: UUID = Field(foreign_key="user.id", index=True)
+    submission_id: int | None = Field(
+        default=None, foreign_key="submission.id"
+    )
+    question_id: int = Field(foreign_key="question.id")
+    answer: str
+    is_correct: bool
+    attempt_number: int
+    created_at: datetime.datetime = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.UTC)
+    )
+
+
+# TODO: Update this model to support the submission workflow.
+class Submission(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+
+
 class OptionRead(SQLModel):
     id: int
     text: str
@@ -142,6 +170,10 @@ class LabRead(SQLModel):
     description: str | None
     module_id: int
     activities: list[ActivityRead] = []
+
+
+class SubmissionCreate(SQLModel):
+    userAnswer: int
 
 
 class TutorialRead(SQLModel):
