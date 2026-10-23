@@ -8,6 +8,10 @@ from app.models import Activity, Answers, Question
 POINTS = 10
 
 
+def _naive_utc(dt: datetime.datetime) -> datetime.datetime:
+    return dt.replace(tzinfo=None) if dt.tzinfo else dt
+
+
 def apply_answer(score: int, is_correct: bool, is_challenge: bool) -> int:
     if is_correct:
         return score + POINTS
@@ -27,7 +31,7 @@ def get_weekly_score(
 ) -> dict[
     UUID, int
 ]:  # Each UUID represents a user's ID, and the integer represents that user's weekly score
-    start = week_start(now or datetime.datetime.now(datetime.UTC))
+    start = _naive_utc(week_start(now or datetime.datetime.now(datetime.UTC)))
     rows = session.exec(
         select(Answers, Activity)
         .join(Question, Question.id == Answers.question_id)
@@ -42,7 +46,7 @@ def get_weekly_score(
     for answer, activity in rows:
         key = (answer.user_id, answer.question_id)
         is_challenge = activity.lab_id is not None
-        in_week = answer.created_at >= start
+        in_week = _naive_utc(answer.created_at) >= start
 
         if is_challenge:
             if not in_week or key in seen_challenge:
@@ -62,7 +66,53 @@ def get_weekly_score(
     return scores
 
 
-def get_lifetime_bank(user_id) -> int:
-    # first submission per question, tutorial activities only
-    # count the ones where is_correct is True
-    return
+def get_lifetime_bank(session: Session, user_id: UUID) -> int:
+    # Practice only: first attempt per question, count the correct ones
+    answers = session.exec(
+        select(Answers)
+        .join(Question, Question.id == Answers.question_id)
+        .join(Activity, Activity.id == Question.activity_id)
+        .where(
+            Answers.user_id == user_id,
+            Activity.tutorial_id.is_not(None),
+        )
+        .order_by(Answers.created_at)
+    ).all()
+
+    seen: set[int] = set()
+    correct = 0  # initial number of correct answers set to 0
+    for answer in answers:
+        if answer.question_id in seen:
+            continue  # only first attempt counts per card per lifetime
+        seen.add(answer.question_id)
+        if answer.is_correct:
+            correct += 1
+    return correct * POINTS
+
+
+def get_lab_scores(
+    session: Session, user_id: UUID, now=None
+) -> dict[int, int]:
+    # This week's net points per lab for one user (first attempt per question)
+    start = _naive_utc(week_start(now or datetime.datetime.now(datetime.UTC)))
+    rows = session.exec(
+        select(Answers, Activity)
+        .join(Question, Question.id == Answers.question_id)
+        .join(Activity, Activity.id == Question.activity_id)
+        .where(
+            Answers.user_id == user_id,
+            Activity.lab_id.is_not(None),
+        )
+        .order_by(Answers.created_at)
+    ).all()
+
+    seen: set[int] = set()
+    totals: dict[int, int] = {}
+
+    for answer, activity in rows:
+        if _naive_utc(answer.created_at) < start or answer.question_id in seen:
+            continue
+        seen.add(answer.question_id)
+        delta = POINTS if answer.is_correct else -POINTS
+        totals[activity.lab_id] = totals.get(activity.lab_id, 0) + delta
+    return totals

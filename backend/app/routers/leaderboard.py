@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from app.database import get_session
 from app.models import User
 from app.routers.auth import get_current_user
-from app.scoring import get_weekly_score
+from app.scoring import get_lab_scores, get_lifetime_bank, get_weekly_score
 
 router = APIRouter(tags=["leaderboard"])
 
@@ -39,3 +39,23 @@ def leaderboard(
         }
         for i, (uid, s) in enumerate(ranked, start=1)
     ]
+
+
+@router.get("/scores/me")
+def my_scores(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Session = Depends(get_session),
+    lab_id: int | None = None,
+):
+    weekly = get_weekly_score(session)
+    lab_scores = get_lab_scores(session, current_user.id)
+    if lab_id is not None:
+        lab_scores = {lab_id: lab_scores.get(lab_id, 0)}
+    return {
+        "weekly_score": weekly.get(current_user.id, 0),
+        "lifetime_bank": get_lifetime_bank(session, current_user.id),
+        "lab_scores": [
+            {"lab_id": lid, "score": score}
+            for lid, score in lab_scores.items()
+        ],
+    }
