@@ -142,7 +142,7 @@ export default function Home() {
 
 							<div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl sm:p-3">
 								<Image
-									src="/placeholder-500x300.png"
+									src="/fact-frenzy-hero.png"
 									alt="Fact Frenzy learning interface"
 									width={700}
 									height={450}
