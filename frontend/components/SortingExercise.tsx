@@ -3,16 +3,19 @@
 import { useState, useRef, useEffect } from "react";
 import { Question } from "@/types/questions";
 
-// Note: this doesn't work with new API data shape yet
-
 type FeedbackState = "correct" | "wrong" | null;
 
-export default function SortingExercise({
-	questions,
-}: {
-	questions: Question[];
-}) {
-	// TODO: fix the below to work with a list (right now it just works with one question and one option per question)
+// this wrapper takes the list of sorting questions and separates them out so each question goes into `SortingCard`
+export default function SortingExercise({ questions }: { questions: Question[] }) {
+  return (
+    <div className="flex flex-col gap-6">
+      <h2 className="text-xl font-bold">Sort the facts</h2>
+      {questions.map((q) => <SortingCard key={q.id} question={q} />)}
+    </div>
+  );
+}
+
+function SortingCard({ question }: { question: Question }) {
 	const [feedback, setFeedback] = useState<FeedbackState>(null);
 	const [solved, setSolved] = useState(false);
 	const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
@@ -27,13 +30,13 @@ export default function SortingExercise({
 		};
 	}, []);
 
+	// TODO: change this to use `submitAnswer` from `lib/api.ts`
 	function evaluateChoice(binIsTrue: boolean) {
 		if (solved) return;
 
 		setSelectedBin(binIsTrue);
 
-		const isCorrect = binIsTrue === questions.isTrue; // TODO: change to deal with a list and with new data shape
-
+		const isCorrect = binIsTrue === question.isTrue; 
 		if (isCorrect) {
 			setFeedback("correct");
 			setSolved(true);
@@ -52,7 +55,7 @@ export default function SortingExercise({
 
 	// Drag and drop handlers
 	function handleDragStart(e: React.DragEvent) {
-		e.dataTransfer.setData("text/plain", questions.id); // TODO: change to deal with a list and with new data shape
+		e.dataTransfer.setData("text/plain", question.id.toString()); 
 	}
 
 	function handleDragOver(e: React.DragEvent) {
@@ -67,10 +70,6 @@ export default function SortingExercise({
 
 	return (
 		<div className="flex flex-col gap-4 max-w-xl mx-auto py-2">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-				Sort the fact
-			</h2>
-
 			<div
 				draggable={!solved}
 				onDragStart={handleDragStart}
@@ -80,7 +79,7 @@ export default function SortingExercise({
 						: "cursor-grab active:cursor-grabbing hover:bg-[#37BAE4]"
 				}`}
 			>
-				<span>{questions.text}</span>
+				<span>{question.text}</span>
 				{solved && <span className="ml-2 font-bold text-emerald-600">✓</span>}
 			</div>
 
@@ -131,7 +130,7 @@ export default function SortingExercise({
 					className="text-rose-600 dark:text-rose-400 font-semibold text-center"
 					aria-live="polite"
 				>
-					Incorrect. Try again!
+					Incorrect.
 				</p>
 			)}
 		</div>
