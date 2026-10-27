@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Question } from "@/types/questions";
+import { submitAnswer } from "@/lib/api";
 
 type FeedbackState = "correct" | "wrong" | null;
 
@@ -9,6 +10,7 @@ type FeedbackState = "correct" | "wrong" | null;
 export default function SortingExercise({ questions }: { questions: Question[] }) {
   return (
     <div className="flex flex-col gap-6">
+	{/* TODO: adjust horizontal placement of h2 so it fits with h2 of MatchingExercise */}
       <h2 className="text-xl font-bold">Sort the facts</h2>
       {questions.map((q) => <SortingCard key={q.id} question={q} />)}
     </div>
@@ -30,27 +32,17 @@ function SortingCard({ question }: { question: Question }) {
 		};
 	}, []);
 
-	// TODO: change this to use `submitAnswer` from `lib/api.ts`
-	function evaluateChoice(binIsTrue: boolean) {
-		if (solved) return;
-
-		setSelectedBin(binIsTrue);
-
-		const isCorrect = binIsTrue === question.isTrue; 
-		if (isCorrect) {
-			setFeedback("correct");
-			setSolved(true);
-		} else {
-			setFeedback("wrong");
-
-			// clear any existing timer before starting a new one
-			if (timerRef.current) clearTimeout(timerRef.current);
-
-			timerRef.current = setTimeout(() => {
-				setFeedback(null);
-				setSelectedBin(null);
-			}, 1000);
-		}
+	// evaluate by submitting answer to api and awaiting response, since .isCorrect is only on the server
+	async function evaluateChoice(binIsTrue: boolean) {
+  		if (solved) return;
+  		const option = question.options.find(
+    		(o) => o.text === (binIsTrue ? "True" : "Untrue")
+  		);
+  		if (!option) return;
+  		setSelectedBin(binIsTrue);
+  		const { is_correct } = await submitAnswer(question.id, option.id);
+  		setFeedback(is_correct ? "correct" : "wrong");
+  		setSolved(true); // locking the card, in labs the first answer is final
 	}
 
 	// Drag and drop handlers
@@ -80,7 +72,7 @@ function SortingCard({ question }: { question: Question }) {
 				}`}
 			>
 				<span>{question.text}</span>
-				{solved && <span className="ml-2 font-bold text-emerald-600">✓</span>}
+				{(feedback === "correct") && <span className="ml-2 font-bold text-emerald-600">✓</span>}
 			</div>
 
 			<div className="grid grid-cols-2 gap-4">
@@ -119,7 +111,7 @@ function SortingCard({ question }: { question: Question }) {
 				</button>
 			</div>
 
-			{solved && (
+			{(feedback === "correct") && (
 				<p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center">
 					Correct!
 				</p>
@@ -130,7 +122,7 @@ function SortingCard({ question }: { question: Question }) {
 					className="text-rose-600 dark:text-rose-400 font-semibold text-center"
 					aria-live="polite"
 				>
-					Incorrect.
+					Incorrect
 				</p>
 			)}
 		</div>
