@@ -9,9 +9,10 @@ type FeedbackState = "correct" | "wrong" | null;
 // this wrapper takes the list of sorting questions and separates them out so each question goes into `SortingCard`
 export default function SortingExercise({ questions }: { questions: Question[] }) {
   return (
-    <div className="flex flex-col gap-6">
-	{/* TODO: adjust horizontal placement of h2 so it fits with h2 of MatchingExercise */}
-      <h2 className="text-xl font-bold">Sort the facts</h2>
+    <div className="flex flex-col gap-6 max-w-2xl mx-auto p-4">
+      <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+		Sort the facts into true or untrue
+	</h2>
       {questions.map((q) => <SortingCard key={q.id} question={q} />)}
     </div>
   );
@@ -66,7 +67,7 @@ function SortingCard({ question }: { question: Question }) {
 				draggable={!solved}
 				onDragStart={handleDragStart}
 				className={`p-6 w-full mx-auto max-w-fit rounded-xl bg-[#62d0f3] text-black font-medium text-center shadow-md transition-all select-none ${
-					solved
+					feedback === "correct"
 						? "opacity-75 cursor-default ring-2 ring-emerald-500"
 						: "cursor-grab active:cursor-grabbing hover:bg-[#37BAE4]"
 				}`}
@@ -117,7 +118,7 @@ function SortingCard({ question }: { question: Question }) {
 				</p>
 			)}
 
-			{feedback === "wrong" && (
+			{(feedback === "wrong") && (
 				<p
 					className="text-rose-600 dark:text-rose-400 font-semibold text-center"
 					aria-live="polite"

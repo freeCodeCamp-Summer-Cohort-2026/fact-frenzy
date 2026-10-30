@@ -43,7 +43,11 @@ export default function LabPage() {
                 </section>
                 <hr className="border-t border-slate-400 dark:border-slate-900 my-2 max-w-xl w-full mx-auto" />
 
+			     
                 <section className="mx-auto w-full max-w-4xl">
+                    <h2 className="flex flex-col gap-6 max-w-2xl mx-auto p-4 text-xl font-bold text-slate-900 dark:text-slate-100">
+				        Match each body system to the body parts
+			        </h2>
                     <MatchingExercise
                         questions={bodySystemPairs} />
                     <hr className="border-t border-slate-300 dark:border-slate-800 my-2 max-w-xl w-full mx-auto" />

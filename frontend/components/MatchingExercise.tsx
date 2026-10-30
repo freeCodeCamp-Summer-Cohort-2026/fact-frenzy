@@ -7,10 +7,6 @@ import { Question } from "@/types/questions";
 // "draggableId" is for the card that can be dragged; "staticId" is for the card that doesn't move
 // "correctId" is for checking whether the dragged card is dropped onto the right static card
 
-// TODO: as noted in the <h2> below, figure out how to have  different instructions 
-// appear when the function is called on different pages. Right now it says "Match each
-// capital to its country," which only fits one kind of question.
-
 function shuffle<T>(array: T[]): T[] {
 	const result = [...array];
 	for (let i = result.length - 1; i > 0; i--) {
@@ -85,11 +81,6 @@ export default function MatchingExercise({
 
 	return (
 		<div className="flex flex-col gap-6 max-w-2xl mx-auto p-4">
-			{/* TODO: figure out how this can change when the function is called on different pages */}
-			<h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-				Match each capital to its country
-			</h2>
-
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 				{shuffledPairs.map((pair) => {
 					// after a pair has been matched successfully, hide it from the draggable pool

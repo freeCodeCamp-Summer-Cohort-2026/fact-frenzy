@@ -17,10 +17,10 @@ export const countryCapitalPairs: Question[] = [
 export const sortingFact: Question[] = [
 	{
 	id: 5,
-	text: "The capital of Canada is Toronto.",
+	text: "Ethiopia follows a calendar that is about 7-8 years behind the Gregorian calendar and has 12 months.",
 	options: [
-		{ id: 50, text: "True" },
-		{ id: 60, text: "False" },
+		{ id: 5, text: "True" },
+		{ id: 6, text: "Untrue" },
 		],
 	},
 ]
