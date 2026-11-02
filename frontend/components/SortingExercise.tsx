@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Question } from "@/types/questions";
 import { submitAnswer } from "@/lib/api";
 
@@ -22,16 +22,6 @@ function SortingCard({ question }: { question: Question }) {
 	const [feedback, setFeedback] = useState<FeedbackState>(null);
 	const [solved, setSolved] = useState(false);
 	const [selectedBin, setSelectedBin] = useState<boolean | null>(null); // Track targeted bin
-
-	// reference to track the timeout timer
-	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-	// automatically clear the timer if component unmounts
-	useEffect(() => {
-		return () => {
-			if (timerRef.current) clearTimeout(timerRef.current);
-		};
-	}, []);
 
 	// evaluate by submitting answer to api and awaiting response, since .isCorrect is only on the server
 	async function evaluateChoice(binIsTrue: boolean) {
