@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Question } from "@/types/questions";
 import { submitAnswer } from "@/lib/api";
 
-type FeedbackState = "correct" | "wrong" | null;
+type FeedbackState = "correct" | "wrong" | "error" | null;
 
 // this wrapper takes the list of sorting questions and separates them out so each question goes into `SortingCard`
 export default function SortingExercise({ questions }: { questions: Question[] }) {
@@ -41,9 +41,15 @@ function SortingCard({ question }: { question: Question }) {
   		);
   		if (!option) return;
   		setSelectedBin(binIsTrue);
-  		const { is_correct } = await submitAnswer(question.id, option.id);
-  		setFeedback(is_correct ? "correct" : "wrong");
-  		setSolved(true); // locking the card, in labs the first answer is final
+		try {
+  			const { is_correct } = await submitAnswer(question.id, option.id);
+  			setFeedback(is_correct ? "correct" : "wrong");
+  			setSolved(true); // locking the card, in labs the first answer is final
+		} catch (error) {
+			console.error(error)
+			setSelectedBin(null);
+			setFeedback("error");
+		}
 	}
 
 	// Drag and drop handlers
@@ -113,17 +119,25 @@ function SortingCard({ question }: { question: Question }) {
 			</div>
 
 			{(feedback === "correct") && (
-				<p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center">
+				<p className="text-emerald-600 dark:text-emerald-400 font-semibold text-center text-lg">
 					Correct!
 				</p>
 			)}
 
 			{(feedback === "wrong") && (
 				<p
-					className="text-rose-600 dark:text-rose-400 font-semibold text-center"
+					className="text-rose-600 dark:text-rose-400 font-semibold text-center text-lg"
 					aria-live="polite"
 				>
 					Incorrect
+				</p>
+			)}
+
+			{(feedback === "error") && (
+				<p
+					className="text-[#A60362] dark:text-[#CB3A8E] font-semibold italic text-center text-lg"
+				>
+					Submission error, please try again
 				</p>
 			)}
 		</div>
