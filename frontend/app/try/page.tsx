@@ -1,21 +1,27 @@
 import MatchingExercise from "../../components/MatchingExercise";
 import SortingExercise from "../../components/SortingExercise";
+import { countryCapitalPairs, sortingFact } from "./data";
 
 export default function TryPage() {
     return (
         <main className="min-h-screen max-w-3xl mx-auto px-4 py-8 flex flex-col gap-4">
             <h1 className="text-3xl font-extrabold text-center text-slate-900 dark:text-slate-100 mb-2">
-                Try Fact Frenzy
+            Try Fact Frenzy
             </h1>
-            
-			<section className="exercise-section">
-                <MatchingExercise />
+        
+			<section className="exercise-section flex flex-col gap-6 max-w-2xl mx-auto p-4">
+			     <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+				    Match each capital to its country
+			    </h2>
+                <MatchingExercise
+                    questions={countryCapitalPairs} />
             </section>
             
 			<hr className="border-t border-slate-200 dark:border-slate-800 my-2 max-w-xl w-full mx-auto" />
             
             <section className="exercise-section">
-                <SortingExercise />
+                <SortingExercise
+                    questions={sortingFact} />
             </section>
             
         </main>
