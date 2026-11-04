@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import create_db_table
-from app.routers import auth, labs, submitions, tutorials, users
+from app.routers import auth, labs, leaderboard, submitions, tutorials, users
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -51,6 +51,7 @@ app.include_router(labs.router)
 
 app.include_router(submitions.router)
 app.include_router(tutorials.router)
+app.include_router(leaderboard.router)
 
 
 @app.get("/")
